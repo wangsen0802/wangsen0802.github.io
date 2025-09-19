@@ -27,6 +27,7 @@ pnpm preview
    - Source 选择 "GitHub Actions"
 
 2. **推送代码**：
+
    ```bash
    git add .
    git commit -m "feat: 配置 TypeScript + Vue 项目自动部署"

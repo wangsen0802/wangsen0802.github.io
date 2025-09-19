@@ -6,10 +6,10 @@ export default defineConfig({
   plugins: [vue()],
   server: {
     fs: {
-      strict: false
-    }
+      strict: false,
+    },
   },
   optimizeDeps: {
-    include: ['vue']
-  }
+    include: ['vue'],
+  },
 })

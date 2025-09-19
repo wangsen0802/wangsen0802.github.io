@@ -6,14 +6,20 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "vue": "^3.5.21"
   },
   "devDependencies": {
+    "@prettier/plugin-pug": "^3.4.2",
     "@vitejs/plugin-vue": "^5.1.4",
     "@vue/tsconfig": "^0.8.1",
+    "prettier": "^3.6.2",
+    "prettier-plugin-vue": "^1.1.6",
+    "sass": "^1.92.1",
     "typescript": "~5.8.3",
     "vite": "^5.4.8",
     "vue-tsc": "^2.1.6"

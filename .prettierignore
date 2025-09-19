@@ -1,0 +1,27 @@
+# 依赖和构建产物
+node_modules/
+dist/
+build/
+
+# 锁文件
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# 环境文件
+.env
+.env.local
+.env.*.local
+
+# 日志文件
+*.log
+logs/
+
+# 缓存
+.cache/
+.vscode/
+.idea/
+
+# 其他
+coverage/
+.nyc_output/

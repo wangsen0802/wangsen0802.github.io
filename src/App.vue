@@ -1,30 +1,39 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+
+  <div class="app">
+
+    <div class="text">this is a test</div>
+
+    <div>test3</div>
+
+    <div>这是一个测试文件</div>
+
+    <div>asjldkfjlkasdj</div>
+
   </div>
-  <HelloWorld msg="Vite + Vue" />
+
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+<script setup lang="ts">
+import { onMounted } from 'vue'
+
+const some = () => {
+  console.log('some')
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+
+onMounted(() => {
+  console.log('onMounted')
+})
+</script>
+
+<style scoped lang="scss">
+.app{
+  color:#0e100f;
+  width: 100vw;
+  height: 100vh;
+  // background-color: #d52626;
+  background-image: linear-gradient( 114.41deg, #0ae448 20.74%, #abff84 65.5% ), url('./assets/images/texture.png');
+  background-blend-mode: color-dodge;
 }
 </style>
+
