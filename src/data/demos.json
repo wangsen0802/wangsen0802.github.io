@@ -1,0 +1,70 @@
+{
+  "categories": [
+    {
+      "id": "mapbox",
+      "name": "Mapbox",
+      "description": "Mapbox GL JS 交互示例",
+      "icon": "📍",
+      "color": "#4264FB"
+    },
+    {
+      "id": "openlayers",
+      "name": "OpenLayers",
+      "description": "OpenLayers 功能演示",
+      "icon": "🗺️",
+      "color": "#1A6AA5"
+    },
+    {
+      "id": "leaflet",
+      "name": "Leaflet",
+      "description": "Leaflet 轻量级示例",
+      "icon": "🍃",
+      "color": "#199933"
+    },
+    {
+      "id": "webgl",
+      "name": "WebGL",
+      "description": "WebGL 3D地图演示",
+      "icon": "🎮",
+      "color": "#990000"
+    }
+  ],
+  "demos": [
+    {
+      "id": "mapbox-interactive-map",
+      "title": "交互式地图基础",
+      "category": "mapbox",
+      "description": "学习Mapbox地图的基础交互功能",
+      "component": "InteractiveMapDemo.vue",
+      "tags": ["mapbox", "交互", "基础"],
+      "difficulty": "beginner",
+      "featured": true,
+      "codeFiles": ["main.js", "style.css"],
+      "liveUrl": "/demos/mapbox/interactive-map"
+    },
+    {
+      "id": "mapbox-custom-markers",
+      "title": "自定义标记点样式",
+      "category": "mapbox",
+      "description": "创建和使用自定义地图标记",
+      "component": "CustomMarkersDemo.vue",
+      "tags": ["mapbox", "标记", "自定义"],
+      "difficulty": "intermediate",
+      "featured": true,
+      "codeFiles": ["main.js", "style.css", "markers.js"],
+      "liveUrl": "/demos/mapbox/custom-markers"
+    },
+    {
+      "id": "openlayers-wms",
+      "title": "WMS图层服务集成",
+      "category": "openlayers",
+      "description": "集成和显示WMS地图服务",
+      "component": "WMSDemo.vue",
+      "tags": ["openlayers", "WMS", "图层"],
+      "difficulty": "intermediate",
+      "featured": false,
+      "codeFiles": ["main.js", "wms-config.js"],
+      "liveUrl": "/demos/openlayers/wms"
+    }
+  ]
+}

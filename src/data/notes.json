@@ -1,0 +1,80 @@
+{
+  "categories": [
+    {
+      "id": "mapbox",
+      "name": "Mapbox",
+      "description": "Mapbox GL JS 相关技术和示例",
+      "icon": "📍",
+      "color": "#4264FB"
+    },
+    {
+      "id": "openlayers",
+      "name": "OpenLayers",
+      "description": "OpenLayers 地图库开发",
+      "icon": "🗺️",
+      "color": "#1A6AA5"
+    },
+    {
+      "id": "leaflet",
+      "name": "Leaflet",
+      "description": "Leaflet 轻量级地图开发",
+      "icon": "🍃",
+      "color": "#199933"
+    },
+    {
+      "id": "webgl",
+      "name": "WebGL",
+      "description": "WebGL 3D地图渲染技术",
+      "icon": "🎮",
+      "color": "#990000"
+    },
+    {
+      "id": "gis-theory",
+      "name": "GIS理论",
+      "description": "地理信息系统理论基础",
+      "icon": "📚",
+      "color": "#FF6B35"
+    }
+  ],
+  "notes": [
+    {
+      "id": "mapbox-basics",
+      "title": "Mapbox GL JS 入门指南",
+      "category": "mapbox",
+      "excerpt": "从零开始学习Mapbox GL JS，掌握基础地图操作和交互功能",
+      "content": "mapbox-basics.md",
+      "tags": ["mapbox", "入门", "基础教程"],
+      "createdAt": "2024-01-15",
+      "updatedAt": "2024-01-20",
+      "readTime": 15,
+      "difficulty": "beginner",
+      "featured": true
+    },
+    {
+      "id": "openlayers-vector-tiles",
+      "title": "OpenLayers 矢量瓦片实战",
+      "category": "openlayers",
+      "excerpt": "深入理解矢量瓦片技术，使用OpenLayers构建高性能地图应用",
+      "content": "openlayers-vector-tiles.md",
+      "tags": ["openlayers", "矢量瓦片", "性能优化"],
+      "createdAt": "2024-01-10",
+      "updatedAt": "2024-01-18",
+      "readTime": 20,
+      "difficulty": "intermediate",
+      "featured": true
+    },
+    {
+      "id": "leaflet-plugins",
+      "title": "Leaflet 插件生态系统",
+      "category": "leaflet",
+      "excerpt": "探索Leaflet丰富的插件生态，扩展地图功能",
+      "content": "leaflet-plugins.md",
+      "tags": ["leaflet", "插件", "扩展"],
+      "createdAt": "2024-01-08",
+      "updatedAt": "2024-01-12",
+      "readTime": 12,
+      "difficulty": "beginner",
+      "featured": false
+    }
+  ]
+}
