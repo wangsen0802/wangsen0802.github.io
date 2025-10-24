@@ -71,20 +71,37 @@
             </div>
 
             <!-- 空状态 -->
-            <a-empty
-              v-if="!loading && posts.length === 0"
-              description="该分类下暂无文章"
-              class="empty-state"
-            >
-              <template #image>
-                <FileTextOutlined style="font-size: 64px; color: #d9d9d9;" />
-              </template>
-              <template #extra>
-                <a-button type="primary" @click="$router.push('/posts')">
-                  查看所有文章
+            <div class="empty-state" v-if="!loading && posts.length === 0">
+              <div class="empty-content">
+                <div class="empty-icon">
+                  <FileTextOutlined />
+                </div>
+                <h2>该分类下暂无文章</h2>
+                <p>{{ getCategoryDescription(category) || '这个分类还没有文章，请稍后再来看看' }}</p>
+                <a-button type="primary" size="large" @click="$router.push('/posts')">
+                  <BookOutlined /> 查看所有文章
                 </a-button>
-              </template>
-            </a-empty>
+                <div class="empty-suggestions">
+                  <h3>推荐分类：</h3>
+                  <div class="suggestion-cards">
+                    <a-card
+                      v-for="cat in getOtherCategories()"
+                      :key="cat.path"
+                      size="small"
+                      hoverable
+                      @click="$router.push(`/posts/${cat.path}`)"
+                      class="suggestion-card"
+                    >
+                      <div class="suggestion-info">
+                        <h4>{{ cat.name }}</h4>
+                        <p>{{ cat.description }}</p>
+                        <span class="post-count">{{ cat.count }} 篇文章</span>
+                      </div>
+                    </a-card>
+                  </div>
+                </div>
+              </div>
+            </div>
           </a-spin>
         </div>
       </a-layout-content>
@@ -113,6 +130,7 @@ const router = useRouter()
 const posts = ref<PostMeta[]>([])
 const loading = ref(true)
 const category = ref('')
+const otherCategories = ref<any[]>([])
 
 // 方法
 const loadPosts = async () => {
@@ -126,11 +144,24 @@ const loadPosts = async () => {
     }
 
     posts.value = await getPostsByCategory(category.value)
+
+    // 同时加载其他分类
+    await loadOtherCategories(category.value)
   } catch (error) {
     console.error('加载分类文章失败:', error)
     message.error('加载文章失败')
   } finally {
     loading.value = false
+  }
+}
+
+const loadOtherCategories = async (currentCategory: string) => {
+  try {
+    const allCategories = await import('@/utils/posts').then(m => m.getCategories())
+    otherCategories.value = allCategories.filter(cat => cat.path !== currentCategory)
+  } catch (error) {
+    console.error('获取其他分类失败:', error)
+    otherCategories.value = []
   }
 }
 
@@ -166,6 +197,10 @@ const getCategoryDescription = (category: string) => {
 
 const formatDate = (date: string) => {
   return new Date(date).toLocaleDateString('zh-CN')
+}
+
+const getOtherCategories = () => {
+  return otherCategories.value
 }
 
 // 监听路由变化
@@ -250,6 +285,95 @@ onMounted(() => {
 .content-wrapper {
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.empty-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  padding: 40px 24px;
+}
+
+.empty-content {
+  text-align: center;
+  max-width: 500px;
+
+  .empty-icon {
+    font-size: 80px;
+    color: var(--text-tertiary);
+    margin-bottom: 24px;
+    opacity: 0.6;
+  }
+
+  h2 {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+
+  p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+
+  .empty-suggestions {
+    margin-top: 48px;
+    text-align: left;
+
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+    }
+
+    .suggestion-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .suggestion-card {
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-medium);
+        border-color: var(--accent-primary);
+      }
+
+      .suggestion-info {
+        h4 {
+          font-size: 16px;
+          font-weight: 600;
+          color: var(--text-primary);
+          margin-bottom: 8px;
+        }
+
+        p {
+          font-size: 14px;
+          color: var(--text-secondary);
+          margin-bottom: 12px;
+          line-height: 1.5;
+        }
+
+        .post-count {
+          display: inline-block;
+          background: var(--accent-primary);
+          color: white;
+          padding: 2px 8px;
+          border-radius: 12px;
+          font-size: 12px;
+        }
+      }
+    }
+  }
 }
 
 .posts-grid {

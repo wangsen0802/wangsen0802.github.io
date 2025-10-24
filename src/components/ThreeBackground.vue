@@ -25,12 +25,12 @@ const getParticleCount = () => {
   return 2000 // 桌面端
 }
 
-// 根据主题获取粒子颜色
+// 根据主题获取粒子颜色 - 增强亮度和对比度
 const getParticleColors = () => {
   const isDark = appStore.theme === 'dark'
   return {
-    color: isDark ? 0x4a9eff : 0x0066cc,
-    emissive: isDark ? 0x2a7fff : 0x004499
+    color: isDark ? 0x00d4dd : 0x0099dd,  // 更亮的颜色
+    emissive: isDark ? 0x00a8aa : 0x0066aa  // 增强发光效果
   }
 }
 
@@ -110,12 +110,12 @@ const createParticles = () => {
   geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
   geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
 
-  // 简化的材质
+  // 增强的材质 - 提高可见度
   const material = new THREE.PointsMaterial({
     size: 2,
     vertexColors: true,
     transparent: true,
-    opacity: 0.8,
+    opacity: 0.9,
     blending: THREE.AdditiveBlending,
     depthWrite: false
   })
@@ -143,23 +143,27 @@ const animate = () => {
   animationId = requestAnimationFrame(animate)
 
   if (particles && renderer && scene && camera) {
-    // 基础旋转
-    particles.rotation.y += 0.001
-    particles.rotation.x += 0.0005
+    // 增强的基础旋转
+    particles.rotation.y += 0.002
+    particles.rotation.x += 0.001
 
-    // 鼠标跟随效果 - 根据鼠标位置调整粒子系统旋转
-    const targetRotationX = mousePosition.y * 0.5
-    const targetRotationY = mousePosition.x * 0.5
+    // 增强的鼠标跟随效果 - 更灵敏的响应
+    const targetRotationX = mousePosition.y * 0.8
+    const targetRotationY = mousePosition.x * 0.8
 
-    // 平滑过渡到目标旋转
-    particles.rotation.x += (targetRotationX - particles.rotation.x) * 0.05
-    particles.rotation.y += (targetRotationY - particles.rotation.y) * 0.05
+    // 更平滑的过渡
+    particles.rotation.x += (targetRotationX - particles.rotation.x) * 0.08
+    particles.rotation.y += (targetRotationY - particles.rotation.y) * 0.08
 
-    // 粒子系统位置微调，创建视差效果
-    const targetX = mousePosition.x * 5
-    const targetY = mousePosition.y * 5
-    particles.position.x += (targetX - particles.position.x) * 0.02
-    particles.position.y += (targetY - particles.position.y) * 0.02
+    // 增强的视差效果 - 更明显的位移
+    const targetX = mousePosition.x * 8
+    const targetY = mousePosition.y * 8
+    particles.position.x += (targetX - particles.position.x) * 0.03
+    particles.position.y += (targetY - particles.position.y) * 0.03
+
+    // 添加轻微的缩放呼吸效果
+    const breatheScale = 1 + Math.sin(Date.now() * 0.001) * 0.02
+    particles.scale.setScalar(breatheScale)
 
     renderer.render(scene, camera)
   }
@@ -228,8 +232,9 @@ onUnmounted(() => {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 1;
+  z-index: 5;
   pointer-events: none;
+  opacity: 0.9;
 }
 
 .three-background canvas {

@@ -151,7 +151,7 @@ onMounted(() => {
   padding: 80px 24px;
   text-align: center;
   position: relative;
-  z-index: 5;
+  z-index: 15;
 
   .hero-content {
     max-width: 800px;
@@ -183,7 +183,7 @@ onMounted(() => {
   padding: 60px 24px;
   background-color: transparent;
   position: relative;
-  z-index: 3;
+  z-index: 15;
 }
 
 .features,

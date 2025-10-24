@@ -116,20 +116,29 @@
 
         <!-- 文章不存在 -->
         <div class="post-not-found" v-else-if="!loading">
-          <a-result
-            status="404"
-            title="文章不存在"
-            sub-title="抱歉，您访问的文章不存在或已被删除"
-          >
-            <template #extra>
-              <a-button type="primary" @click="goBack">
+          <div class="not-found-content">
+            <div class="not-found-icon">
+              <FileTextOutlined />
+            </div>
+            <h1>文章不存在</h1>
+            <p>抱歉，您访问的文章不存在或已被删除</p>
+            <div class="not-found-actions">
+              <a-button type="primary" size="large" @click="goBack">
                 <ArrowLeftOutlined /> 返回上一页
               </a-button>
-              <a-button @click="$router.push('/posts')">
+              <a-button size="large" @click="$router.push('/posts')">
                 <BookOutlined /> 查看所有文章
               </a-button>
-            </template>
-          </a-result>
+            </div>
+            <div class="not-found-suggestions">
+              <h3>可能的原因：</h3>
+              <ul>
+                <li>文章链接已过期</li>
+                <li>文章已被作者删除</li>
+                <li>输入的网址有误</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </a-layout-content>
     </a-layout>
@@ -458,15 +467,107 @@ onUnmounted(() => {
 }
 
 .post-not-found {
-  max-width: 600px;
-  margin: 80px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 40px 24px;
+}
+
+.not-found-content {
   text-align: center;
+  max-width: 500px;
+
+  .not-found-icon {
+    font-size: 80px;
+    color: var(--text-tertiary);
+    margin-bottom: 24px;
+    opacity: 0.6;
+  }
+
+  h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+
+  p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+
+  .not-found-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+  }
+
+  .not-found-suggestions {
+    text-align: left;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid var(--border-primary);
+
+    h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--text-secondary);
+
+      li {
+        margin-bottom: 8px;
+        line-height: 1.5;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
 }
 
 // 响应式设计
 @media (max-width: 768px) {
   .content-wrapper {
     padding: 0 16px;
+  }
+
+  .post-not-found {
+    padding: 20px 16px;
+    min-height: 50vh;
+  }
+
+  .not-found-content {
+    .not-found-icon {
+      font-size: 64px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 24px;
+    }
+
+    .not-found-actions {
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .not-found-suggestions {
+      padding: 20px;
+    }
   }
 
   .post-header {
