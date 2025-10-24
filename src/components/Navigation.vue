@@ -59,8 +59,8 @@ const navigateTo = (path: string) => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--bg-secondary);
-  border-bottom: 1px solid var(--border-primary);
+  background-color: transparent;
+  border-bottom: none;
   padding: 0 24px;
   height: 64px;
 

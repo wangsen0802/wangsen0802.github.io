@@ -1,26 +1,29 @@
 <template>
-  <a-layout class="app">
-    <a-layout-header class="header">
-      <div class="header-content">
-        <Navigation />
-      </div>
-    </a-layout-header>
-
-    <a-layout-content class="main">
-      <router-view />
-    </a-layout-content>
-
-    <a-layout-footer class="footer">
+   <a-layout class="app"
+    > <a-layout-header class="header"
+      >
+      <div class="header-content"> <Navigation /> </div>
+       </a-layout-header
+    > <a-layout-content class="main"> <router-view /> </a-layout-content>
+    <a-layout-footer class="footer"
+      >
       <div class="footer-content">
+
         <p>&copy; 2024 王森的个人网站. All rights reserved.</p>
+
         <div class="footer-links">
-          <a href="https://github.com/wangsen0802" target="_blank" rel="noopener">
-            <GithubOutlined />
-          </a>
+           <a
+            href="https://github.com/wangsen0802"
+            target="_blank"
+            rel="noopener"
+            > <GithubOutlined /> </a
+          >
         </div>
+
       </div>
-    </a-layout-footer>
-  </a-layout>
+       </a-layout-footer
+    > </a-layout
+  >
 </template>
 
 <script setup lang="ts">
@@ -31,14 +34,24 @@ import Navigation from '@/components/Navigation.vue'
 <style scoped lang="scss">
 .app {
   min-height: 100vh;
-  background-color: var(--bg-primary);
+  background-color: transparent;
 }
 
 .header {
-  background-color: var(--bg-secondary) !important;
-  border-bottom: 1px solid var(--border-primary);
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding: 0;
-  box-shadow: var(--shadow-light);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 100;
+
+  // 暗色主题下的透明效果
+  [data-theme="dark"] & {
+    background: rgba(0, 0, 0, 0.3) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
 
   .header-content {
     max-width: 1200px;
@@ -52,12 +65,21 @@ import Navigation from '@/components/Navigation.vue'
 
 .main {
   flex: 1;
-  background-color: var(--bg-primary);
+  background-color: transparent;
 }
 
 .footer {
-  background-color: var(--bg-secondary) !important;
-  border-top: 1px solid var(--border-primary);
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 100;
+
+  // 暗色主题下的透明效果
+  [data-theme="dark"] & {
+    background: rgba(0, 0, 0, 0.3) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
 
   .footer-content {
     max-width: 1200px;

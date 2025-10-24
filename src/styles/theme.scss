@@ -81,21 +81,35 @@ body {
 
 /* Ant Design 主题定制 */
 .ant-layout {
-  background-color: var(--bg-primary) !important;
+  background-color: transparent !important;
 }
 
 .ant-layout-header {
-  background-color: var(--bg-secondary) !important;
-  border-bottom: 1px solid var(--border-primary) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-theme="dark"] .ant-layout-header {
+  background: rgba(0, 0, 0, 0.3) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
 }
 
 .ant-layout-content {
-  background-color: var(--bg-primary) !important;
+  background-color: transparent !important;
 }
 
 .ant-layout-footer {
-  background-color: var(--bg-secondary) !important;
-  border-top: 1px solid var(--border-primary) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-theme="dark"] .ant-layout-footer {
+  background: rgba(0, 0, 0, 0.3) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
 /* 卡片组件主题 */

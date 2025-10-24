@@ -143,9 +143,23 @@ const animate = () => {
   animationId = requestAnimationFrame(animate)
 
   if (particles && renderer && scene && camera) {
-    // 旋转粒子系统
+    // 基础旋转
     particles.rotation.y += 0.001
     particles.rotation.x += 0.0005
+
+    // 鼠标跟随效果 - 根据鼠标位置调整粒子系统旋转
+    const targetRotationX = mousePosition.y * 0.5
+    const targetRotationY = mousePosition.x * 0.5
+
+    // 平滑过渡到目标旋转
+    particles.rotation.x += (targetRotationX - particles.rotation.x) * 0.05
+    particles.rotation.y += (targetRotationY - particles.rotation.y) * 0.05
+
+    // 粒子系统位置微调，创建视差效果
+    const targetX = mousePosition.x * 5
+    const targetY = mousePosition.y * 5
+    particles.position.x += (targetX - particles.position.x) * 0.02
+    particles.position.y += (targetY - particles.position.y) * 0.02
 
     renderer.render(scene, camera)
   }
@@ -214,7 +228,7 @@ onUnmounted(() => {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
+  z-index: 1;
   pointer-events: none;
 }
 

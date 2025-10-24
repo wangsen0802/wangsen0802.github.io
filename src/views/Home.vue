@@ -1,51 +1,93 @@
 <template>
+
   <div class="home">
-    <ThreeBackground />
+
     <div class="hero">
+
       <div class="hero-content">
+
         <h1 class="title">你好，我是王森</h1>
+
         <p class="subtitle">专注于前端开发和GIS技术的个人博客</p>
+
         <div class="actions">
-          <a-button type="primary" size="large" @click="goToPosts">浏览文章</a-button>
-          <a-button size="large" @click="goToAbout">了解我</a-button>
+           <a-button type="primary" size="large" @click="goToPosts"
+            >浏览文章</a-button
+          > <a-button size="large" @click="goToAbout">了解我</a-button>
         </div>
+
       </div>
+
     </div>
 
     <div class="content">
+
       <div class="features">
+
         <h2>技术栈</h2>
+
         <div class="feature-grid">
+
           <div class="feature">
+
             <h3>Vue.js</h3>
+
             <p>Vue 3 生态开发，Composition API，组件设计</p>
+
           </div>
+
           <div class="feature">
+
             <h3>GIS开发</h3>
+
             <p>OpenLayers, Mapbox，地理信息系统开发</p>
+
           </div>
+
           <div class="feature">
+
             <h3>前端技术</h3>
+
             <p>现代CSS，JavaScript，TypeScript，构建工具</p>
+
           </div>
+
         </div>
+
       </div>
 
       <div class="recent-posts">
+
         <h2>最新文章</h2>
+
         <div class="posts-grid">
-          <div v-for="post in recentPosts" :key="post.id" class="post-card" @click="goToPost(post)">
+
+          <div
+            v-for="post in recentPosts"
+            :key="post.id"
+            class="post-card"
+            @click="goToPost(post)">
+
             <h3>{{ post.title }}</h3>
+
             <p>{{ post.description }}</p>
+
             <div class="post-meta">
-              <span class="category">{{ post.category }}</span>
-              <span class="date">{{ formatDate(post.date) }}</span>
+               <span class="category">{{ post.category }}</span
+              > <span class="date">{{ formatDate(post.date) }}</span
+              >
             </div>
+
           </div>
+
         </div>
+
       </div>
+
     </div>
+     <ThreeBackground />
   </div>
+
 </template>
 
 <script setup lang="ts">
@@ -101,15 +143,15 @@ onMounted(() => {
 
 .hero {
   background: linear-gradient(135deg,
-    rgba(74, 158, 255, 0.9),
-    rgba(147, 51, 234, 0.9)
+    rgba(74, 158, 255, 0.3),
+    rgba(147, 51, 234, 0.3)
   );
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(15px);
   color: white;
   padding: 80px 24px;
   text-align: center;
   position: relative;
-  z-index: 1;
+  z-index: 5;
 
   .hero-content {
     max-width: 800px;
@@ -139,9 +181,9 @@ onMounted(() => {
   max-width: 1200px;
   margin: 0 auto;
   padding: 60px 24px;
-  background-color: var(--bg-primary);
+  background-color: transparent;
   position: relative;
-  z-index: 1;
+  z-index: 3;
 }
 
 .features,
@@ -155,6 +197,13 @@ h2 {
   font-weight: 600;
   margin-bottom: 48px;
   color: var(--text-primary);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 4;
+
+  [data-theme="dark"] & {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  }
 }
 
 .feature-grid {
@@ -168,13 +217,28 @@ h2 {
   text-align: center;
   padding: 32px;
   border-radius: 16px;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-primary);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   transition: all 0.3s ease;
+  position: relative;
+  z-index: 4;
+
+  // 暗色主题适配
+  [data-theme="dark"] & {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
 
   &:hover {
     transform: translateY(-8px);
-    box-shadow: var(--shadow-heavy);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.15);
+
+    [data-theme="dark"] & {
+      background: rgba(0, 0, 0, 0.5);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+    }
   }
 
   h3 {
@@ -197,15 +261,31 @@ h2 {
 .post-card {
   padding: 24px;
   border-radius: 12px;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-primary);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
   transition: all 0.3s ease;
+  position: relative;
+  z-index: 4;
+
+  // 暗色主题适配
+  [data-theme="dark"] & {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: var(--shadow-medium);
-    border-color: var(--accent-primary);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.15);
+
+    [data-theme="dark"] & {
+      background: rgba(0, 0, 0, 0.5);
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
   }
 
   h3 {

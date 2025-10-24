@@ -20,7 +20,7 @@ export interface Category {
 }
 
 // 动态导入所有文章
-const postModules = import.meta.glob('/src/posts/**/*.md', { as: 'raw' })
+const postModules = import.meta.glob('/src/posts/**/*.md', { query: '?raw', import: 'default' })
 
 export async function getAllPosts(): Promise<PostMeta[]> {
   const posts: PostMeta[] = []
