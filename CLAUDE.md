@@ -1,79 +1,79 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+此文件为 Claude Code (claude.ai/code) 在该代码库中工作时提供指导。
 
-## Project Overview
+## 项目概述
 
-This is a Vue 3 personal website built with TypeScript and Vite, configured for automatic deployment to GitHub Pages. The project follows modern Vue.js development patterns with Vue Router for navigation and Pinia for state management.
+这是一个使用 Vue 3、TypeScript 和 Vite 构建的个人网站，配置了自动部署到 GitHub Pages。项目遵循现代 Vue.js 开发模式，使用 Vue Router 进行导航，Pinia 进行状态管理。
 
-## Architecture Overview
+## 架构概述
 
-### Technology Stack
+### 技术栈
 
-- **Vue 3** (Composition API)
-- **TypeScript** (strict mode enabled)
-- **Vite 5.x** for build tooling
-- **Vue Router 4** for routing
-- **Pinia 3** for state management
-- **SCSS** for styling with Tailwind-like utility classes
-- **Prettier** for code formatting
+- **Vue 3** (组合式 API)
+- **TypeScript** (启用严格模式)
+- **Vite 5.x** 构建工具
+- **Vue Router 4** 路由管理
+- **Pinia 3** 状态管理
+- **SCSS** 样式，包含类似 Tailwind 的工具类
+- **Prettier** 代码格式化
 
-### Project Structure
+### 项目结构
 
 ```
 src/
-├── App.vue              # Root component with navigation and layout
-├── main.ts              # Application entry point
-├── style.css            # Global styles
-├── vite-env.d.ts        # TypeScript environment declarations
-├── router/              # Vue Router configuration
-│   └── index.ts         # Routes and navigation guards
-├── stores/              # Pinia stores
-│   └── index.ts         # App and user state management
-├── components/          # Reusable components (currently empty)
-├── views/               # Page components
-│   ├── Home.vue         # Home page
-│   ├── About.vue        # About page
-│   ├── home-page/       # Future home page components
-│   └── mapbox/          # Map-related components
-└── assets/              # Static assets
-    ├── icons/           # Icon files
-    └── images/          # Image assets
-        └── texture.png  # Background texture
+├── App.vue              # 根组件，包含导航和布局
+├── main.ts              # 应用程序入口点
+├── style.css            # 全局样式
+├── vite-env.d.ts        # TypeScript 环境声明
+├── router/              # Vue Router 配置
+│   └── index.ts         # 路由和导航守卫
+├── stores/              # Pinia 状态存储
+│   └── index.ts         # 应用和用户状态管理
+├── components/          # 可复用组件 (目前为空)
+├── views/               # 页面组件
+│   ├── Home.vue         # 首页
+│   ├── About.vue        # 关于页面
+│   ├── home-page/       # 未来首页组件
+│   └── mapbox/          # 地图相关组件
+└── assets/              # 静态资源
+    ├── icons/           # 图标文件
+    └── images/          # 图片资源
+        └── texture.png  # 背景纹理
 ```
 
-## Development Workflow
+## 开发工作流
 
-## Development Commands
+## 开发命令
 
-### Core Development
+### 核心开发
 
 ```bash
-pnpm run dev          # Start development server with hot reload
-pnpm run build        # TypeScript compilation + Vite production build
-pnpm run preview      # Preview production build locally
+pnpm run dev          # 启动开发服务器，支持热重载
+pnpm run build        # TypeScript 编译 + Vite 生产构建
+pnpm run preview      # 本地预览生产构建
 ```
 
-### Code Quality
+### 代码质量
 
 ```bash
-pnpm run format       # Format all files with Prettier
-pnpm run format:check # Check code formatting without changes
+pnpm run format       # 使用 Prettier 格式化所有文件
+pnpm run format:check # 检查代码格式，不做修改
 ```
 
-### Package Management
+### 包管理
 
-- Use **pnpm** for all package operations (not npm or yarn)
-- Dependencies are managed via `pnpm-lock.yaml`
+- 所有包操作使用 **pnpm** (不是 npm 或 yarn)
+- 依赖通过 `pnpm-lock.yaml` 管理
 
-## Architecture & Structure
+## 架构与结构
 
-### Vue Router Configuration (`src/router/index.ts`)
+### Vue Router 配置 (`src/router/index.ts`)
 
-- **History mode**: Uses `createWebHistory()` for clean URLs
-- **Lazy loading**: All route components use dynamic imports
-- **Global guards**: Navigation guard sets page titles from route meta
-- **Route patterns**:
+- **History 模式**: 使用 `createWebHistory()` 获得简洁的 URL
+- **懒加载**: 所有路由组件使用动态导入
+- **全局守卫**: 导航守卫从路由元数据设置页面标题
+- **路由模式**:
   ```typescript
   {
     path: '/',
@@ -83,64 +83,64 @@ pnpm run format:check # Check code formatting without changes
   }
   ```
 
-### Pinia State Management (`src/stores/index.ts`)
+### Pinia 状态管理 (`src/stores/index.ts`)
 
-- **App Store**: Global app state (loading, theme, sidebar)
-- **User Store**: Authentication and user profile data
-- **TypeScript**: Full type safety with state, getters, and actions
-- **Usage pattern**:
+- **App Store**: 全局应用状态 (加载、主题、侧边栏)
+- **User Store**: 认证和用户资料数据
+- **TypeScript**: 状态、getters 和 actions 完全类型安全
+- **使用模式**:
   ```typescript
   import { useAppStore, useUserStore } from '@/stores'
   const appStore = useAppStore()
   const userStore = useUserStore()
   ```
 
-### Component Structure
+### 组件结构
 
-- **Composition API**: All components use `<script setup lang="ts">` syntax
-- **Views**: Page components in `src/views/` (Home.vue, About.vue)
-- **Layout**: Main layout in `App.vue` with header navigation, main content area, and footer
-- **Styling**: SCSS with scoped styles, modern CSS features (backdrop-filter, gradients)
+- **组合式 API**: 所有组件使用 `<script setup lang="ts">` 语法
+- **Views**: `src/views/` 中的页面组件 (Home.vue, About.vue)
+- **Layout**: `App.vue` 中的主布局，包含头部导航、主内容区域和页脚
+- **样式**: 带作用域的 SCSS，现代 CSS 特性 (backdrop-filter、渐变)
 
-### Build Configuration
+### 构建配置
 
-- **TypeScript**: Strict mode enabled with comprehensive type checking
-- **Vite**: Optimized for production with code splitting
-- **Assets**: Images in `src/assets/` with proper URL handling
-- **Output**: Production builds go to `/dist` directory
+- **TypeScript**: 启用严格模式，全面类型检查
+- **Vite**: 生产优化，代码分割
+- **资源**: `src/assets/` 中的图片，正确的 URL 处理
+- **输出**: 生产构建输出到 `/dist` 目录
 
-## Development Patterns
+## 开发模式
 
-### Adding New Routes
+### 添加新路由
 
-1. Create component in `src/views/`
-2. Add route to `src/router/index.ts` following existing pattern
-3. Include meta.title for automatic page title setting
+1. 在 `src/views/` 中创建组件
+2. 按照现有模式将路由添加到 `src/router/index.ts`
+3. 包含 meta.title 以自动设置页面标题
 
-### Adding New Stores
+### 添加新状态存储
 
-1. Create store in `src/stores/index.ts` or separate files
-2. Use Pinia composition API with TypeScript types
-3. Export from main store index for clean imports
+1. 在 `src/stores/index.ts` 或单独文件中创建 store
+2. 使用带 TypeScript 类型的 Pinia 组合式 API
+3. 从主 store index 导出以获得清晰的导入
 
-### Styling Conventions
+### 样式约定
 
-- Use SCSS with scoped styles in components
-- Leverage existing gradient background and texture patterns
-- Maintain responsive design patterns
-- Use CSS custom properties for theming consistency
+- 在组件中使用带作用域的 SCSS
+- 利用现有的渐变背景和纹理模式
+- 保持响应式设计模式
+- 使用 CSS 自定义属性保证主题一致性
 
-### GitHub Pages Deployment
+### GitHub Pages 部署
 
-- Automatic deployment via GitHub Actions workflow
-- Builds and deploys to `gh-pages` branch
-- Ensure build passes before commits to main branch
+- 通过 GitHub Actions 工作流自动部署
+- 构建并部署到 `gh-pages` 分支
+- 确保在提交到 main 分支前构建通过
 
-## Key Files to Understand
+## 关键文件说明
 
-- `src/main.ts`: App initialization with router and Pinia
-- `src/router/index.ts`: Route definitions and navigation logic
-- `src/stores/index.ts`: Global state management
-- `src/App.vue`: Main layout component with navigation
-- `vite.config.ts`: Build tooling configuration
-- `package.json`: Dependencies and development scripts
+- `src/main.ts`: 应用初始化，包含 router 和 Pinia
+- `src/router/index.ts`: 路由定义和导航逻辑
+- `src/stores/index.ts`: 全局状态管理
+- `src/App.vue`: 带导航的主布局组件
+- `vite.config.ts`: 构建工具配置
+- `package.json`: 依赖和开发脚本
