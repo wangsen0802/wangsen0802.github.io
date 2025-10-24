@@ -94,8 +94,9 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .home {
-  background-color: var(--bg-primary);
+  background-color: transparent;
   min-height: 100vh;
+  position: relative;
 }
 
 .hero {
@@ -138,6 +139,9 @@ onMounted(() => {
   max-width: 1200px;
   margin: 0 auto;
   padding: 60px 24px;
+  background-color: var(--bg-primary);
+  position: relative;
+  z-index: 1;
 }
 
 .features,
