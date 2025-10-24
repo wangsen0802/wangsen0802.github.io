@@ -1,4 +1,4 @@
-import packageJson from '../../package.json'
+import packageJson from '@/../package.json'
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 
@@ -6,7 +6,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('../views/home-page/Home.vue'),
+    component: () => import('@/views/home-page/Home.vue'),
     meta: {
       title: '首页',
     },
@@ -14,7 +14,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/mapbox',
     name: 'mapbox',
-    component: () => import('../views/mapbox/index.vue'),
+    component: () => import('@/views/mapbox/index.vue'),
     meta: {
       title: 'Mapbox',
     },
@@ -22,7 +22,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/about',
     name: 'About',
-    component: () => import('../views/About.vue'),
+    component: () => import('@/views/About.vue'),
     meta: {
       title: '关于',
     },
