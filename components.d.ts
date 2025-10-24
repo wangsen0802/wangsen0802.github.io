@@ -37,5 +37,6 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ThemeToggle: typeof import('./src/components/ThemeToggle.vue')['default']
+    ThreeBackground: typeof import('./src/components/ThreeBackground.vue')['default']
   }
 }

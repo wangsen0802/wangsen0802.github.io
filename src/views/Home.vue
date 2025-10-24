@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <ThreeBackground />
     <div class="hero">
       <div class="hero-content">
         <h1 class="title">你好，我是王森</h1>
@@ -52,6 +53,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { message } from 'ant-design-vue'
 import { getAllPosts, type PostMeta } from '@/utils/posts'
+import ThreeBackground from '@/components/ThreeBackground.vue'
 
 const router = useRouter()
 const recentPosts = ref<PostMeta[]>([])
@@ -97,10 +99,16 @@ onMounted(() => {
 }
 
 .hero {
-  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  background: linear-gradient(135deg,
+    rgba(74, 158, 255, 0.9),
+    rgba(147, 51, 234, 0.9)
+  );
+  backdrop-filter: blur(10px);
   color: white;
   padding: 80px 24px;
   text-align: center;
+  position: relative;
+  z-index: 1;
 
   .hero-content {
     max-width: 800px;
