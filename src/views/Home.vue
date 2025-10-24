@@ -147,7 +147,7 @@ onMounted(() => {
     rgba(147, 51, 234, 0.3)
   );
   backdrop-filter: blur(15px);
-  color: white;
+  color: var(--text-primary);
   padding: 80px 24px;
   text-align: center;
   position: relative;
@@ -197,12 +197,12 @@ h2 {
   font-weight: 600;
   margin-bottom: 48px;
   color: var(--text-primary);
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   position: relative;
   z-index: 4;
 
   [data-theme="dark"] & {
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
   }
 }
 

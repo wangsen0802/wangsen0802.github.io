@@ -43,7 +43,10 @@ import Navigation from '@/components/Navigation.vue'
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
 
   // 暗色主题下的透明效果
@@ -66,6 +69,7 @@ import Navigation from '@/components/Navigation.vue'
 .main {
   flex: 1;
   background-color: transparent;
+  padding-top: 64px; /* 头部栏高度 */
 }
 
 .footer {
