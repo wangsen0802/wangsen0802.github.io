@@ -50,4 +50,16 @@ export default defineConfig({
   optimizeDeps: {
     include: ['vue'],
   },
+  build: {
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor': ['vue', 'vue-router', 'pinia'],
+          'ui': ['ant-design-vue'],
+          'utils': ['highlight.js', 'markdown-it']
+        }
+      }
+    }
+  }
 })

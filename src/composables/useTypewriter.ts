@@ -15,8 +15,7 @@ export function useTypewriter(options: TypewriterOptions) {
     speed = 100,
     initialDelay = 0,
     loopDelay = 2000,
-    loop = false,
-    cursor = true
+    loop = false
   } = options
 
   const displayText = ref('')
@@ -29,6 +28,8 @@ export function useTypewriter(options: TypewriterOptions) {
 
   const typeChar = () => {
     const currentText = textArray[currentTextIndex.value]
+
+    if (!currentText) return
 
     if (!isDeleting.value) {
       // 打字阶段

@@ -119,7 +119,6 @@ import {
   CalendarOutlined
 } from '@ant-design/icons-vue'
 import { message } from 'ant-design-vue'
-import ThemeToggle from '@/components/ThemeToggle.vue'
 import { getAllPosts, getCategories, type PostMeta, type Category } from '@/utils/posts'
 
 const router = useRouter()
