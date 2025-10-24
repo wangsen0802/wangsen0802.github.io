@@ -6,79 +6,37 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('@/views/home/Home.vue'),
+    component: () => import('@/views/HomeSimple.vue'),
     meta: {
       title: '首页',
     },
   },
-  // 笔记系统路由
+  // 文章系统路由
   {
-    path: '/notes',
-    name: 'Notes',
-    component: () => import('@/views/notes/NotesList.vue'),
+    path: '/posts',
+    name: 'Posts',
+    component: () => import('@/views/PostsList.vue'),
     meta: {
-      title: '技术笔记',
+      title: '文章列表',
     },
   },
   {
-    path: '/notes/:category',
-    name: 'NotesCategory',
-    component: () => import('@/views/notes/CategoryNotes.vue'),
+    path: '/posts/:category',
+    name: 'CategoryPosts',
+    component: () => import('@/views/CategoryPosts.vue'),
     meta: {
-      title: '分类笔记',
+      title: '分类文章',
     },
   },
   {
-    path: '/notes/:category/:id',
-    name: 'NoteDetail',
-    component: () => import('@/views/notes/NoteDetail.vue'),
+    path: '/posts/:category/:id',
+    name: 'PostDetail',
+    component: () => import('@/views/PostDetail.vue'),
     meta: {
-      title: '笔记详情',
+      title: '文章详情',
     },
   },
-  // Demo系统路由
-  {
-    path: '/demos',
-    name: 'Demos',
-    component: () => import('@/views/demos/DemosList.vue'),
-    meta: {
-      title: '在线示例',
-    },
-  },
-  {
-    path: '/demos/:category',
-    name: 'DemosCategory',
-    component: () => import('@/views/demos/CategoryDemos.vue'),
-    meta: {
-      title: '分类示例',
-    },
-  },
-  {
-    path: '/demos/:category/:id',
-    name: 'DemoDetail',
-    component: () => import('@/views/demos/DemoDetail.vue'),
-    meta: {
-      title: '示例详情',
-    },
-  },
-  // 项目展示路由
-  {
-    path: '/projects',
-    name: 'Projects',
-    component: () => import('@/views/projects/ProjectsList.vue'),
-    meta: {
-      title: '项目展示',
-    },
-  },
-  {
-    path: '/projects/:id',
-    name: 'ProjectDetail',
-    component: () => import('@/views/projects/ProjectDetail.vue'),
-    meta: {
-      title: '项目详情',
-    },
-  },
-  // 保留现有路由
+  // 保留mapbox示例
   {
     path: '/mapbox',
     name: 'mapbox',
@@ -90,7 +48,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/about',
     name: 'About',
-    component: () => import('@/views/about/About.vue'),
+    component: () => import('@/views/About.vue'),
     meta: {
       title: '关于',
     },

@@ -18,8 +18,27 @@ export const useAppStore = defineStore('app', {
       this.loading = status
     },
 
+    setTheme(theme: 'light' | 'dark') {
+      this.theme = theme
+      // 保存到localStorage
+      localStorage.setItem('theme', theme)
+      // 应用到document
+      document.documentElement.setAttribute('data-theme', theme)
+    },
+
     toggleTheme() {
-      this.theme = this.theme === 'light' ? 'dark' : 'light'
+      const newTheme = this.theme === 'light' ? 'dark' : 'light'
+      this.setTheme(newTheme)
+    },
+
+    initTheme() {
+      // 从localStorage读取主题设置
+      const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
+      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+      const theme = savedTheme || systemTheme
+
+      this.theme = theme
+      document.documentElement.setAttribute('data-theme', theme)
     },
 
     toggleSidebar() {
