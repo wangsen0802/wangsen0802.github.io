@@ -6,9 +6,15 @@
 
       <div class="hero-content">
 
-        <h1 class="title">你好，我是王森</h1>
+        <h1 class="title">
+           {{ titleText.displayText
+          }}<span v-if="titleText.isTyping" class="cursor">|</span>
+        </h1>
 
-        <p class="subtitle">专注于前端开发和GIS技术的个人博客</p>
+        <p class="subtitle">
+           {{ subtitleText.displayText
+          }}<span v-if="subtitleText.isTyping" class="cursor">|</span>
+        </p>
 
         <div class="actions">
            <a-button type="primary" size="large" @click="goToPosts"
@@ -96,10 +102,28 @@ import { useRouter } from 'vue-router'
 import { message } from 'ant-design-vue'
 import { getAllPosts, type PostMeta } from '@/utils/posts'
 import ThreeBackground from '@/components/ThreeBackground.vue'
+import { useTypewriter } from '@/composables/useTypewriter'
 
 const router = useRouter()
 const recentPosts = ref<PostMeta[]>([])
 const loading = ref(true)
+
+// 打字机效果
+const titleText = useTypewriter({
+  text: ['你好，我是王森', '欢迎来到我的博客'],
+  speed: 120,
+  initialDelay: 500,
+  loopDelay: 5000,
+  loop: true,
+})
+
+const subtitleText = useTypewriter({
+  text: ['专注于前端开发和GIS技术', '分享技术与生活'],
+  speed: 150,
+  initialDelay: 500,
+  loopDelay: 5000,
+  loop: true,
+})
 
 const loadData = async () => {
   try {
@@ -131,6 +155,9 @@ const formatDate = (date: string) => {
 
 onMounted(() => {
   loadData()
+  // 启动打字机效果
+  titleText.start()
+  subtitleText.start()
 })
 </script>
 
@@ -174,6 +201,15 @@ onMounted(() => {
     display: flex;
     gap: 16px;
     justify-content: center;
+  }
+
+  .cursor {
+    display: inline-block;
+    width: 3px;
+    height: 1.2em;
+    margin-left: 2px;
+    animation: blink 1s infinite;
+    font-weight: 400;
   }
 }
 
@@ -342,4 +378,10 @@ h2 {
     gap: 20px;
   }
 }
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
 </style>
+
