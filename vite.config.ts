@@ -50,6 +50,7 @@ export default defineConfig({
   optimizeDeps: {
     include: ['vue'],
   },
+  assetsInclude: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.svg', '**/*.webp'],
   build: {
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
@@ -58,6 +59,21 @@ export default defineConfig({
           'vendor': ['vue', 'vue-router', 'pinia'],
           'ui': ['ant-design-vue'],
           'utils': ['highlight.js', 'markdown-it']
+        },
+        // 处理静态资源
+        assetFileNames: (assetInfo) => {
+          // const info = assetInfo.name?.split('.') || []
+          // const extType = info[info.length - 1] || ''
+
+          if (/\.(png|jpe?g|gif|svg|webp|avif)$/i.test(assetInfo.name || '')) {
+            return `assets/images/[name]-[hash][extname]`
+          }
+
+          if (/\.(woff2?|eot|ttf|otf)$/i.test(assetInfo.name || '')) {
+            return `assets/fonts/[name]-[hash][extname]`
+          }
+
+          return `assets/[name]-[hash][extname]`
         }
       }
     }

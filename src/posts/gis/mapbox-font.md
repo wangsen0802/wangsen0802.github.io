@@ -112,6 +112,6 @@ glyphs: '…/fonts/{fontstack}/{range}.pbf'
 
 Mapbox对 CJK（Chinese，Japanese，Korean）中日韩 和部分东亚的字体做了限制。他们认为这些地方的字体文件太大，加载耗时，默认使用’本地‘字体。就是电脑本身或者手机本身的字体，就不需要再去请求了。为了避免这种情况，我们需要在初始化Map对象时，设置 localIdeographFontFamily 属性为空字符串 “”。不使用本地字体，就用自定义字体。
 
-![image.png](attachment:e159256d-04b9-47e4-b38b-5fa921e48768:image.png)
+![Mapbox字体设置示例](/src/assets/images/posts/gis/mapbox-font-example.png)
 
 ###

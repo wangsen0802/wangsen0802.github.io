@@ -1,5 +1,6 @@
 import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
+import { processImagePath, createPlaceholderSVG } from './image'
 // import type Token from 'markdown-it/lib/token'
 
 // 创建markdown-it实例
@@ -48,6 +49,38 @@ md.renderer.rules.link_open = (tokens: any[], idx: number) => {
   return token.attrGet('class')
     ? `<a${token.attrs!.map(([name, value]: [string, string]) => ` ${name}="${value}"`).join('')}>`
     : `<a${token.attrs!.map(([name, value]: [string, string]) => ` ${name}="${value}"`).join('')}>`
+}
+
+// 自定义规则：处理图片路径和显示
+md.renderer.rules.image = (tokens: any[], idx: number, _options: any, _env: any, _renderer: any) => {
+  const token = tokens[idx]
+  const srcIndex = token.attrIndex('src')
+  // const altIndex = token.attrIndex('alt')
+  // const titleIndex = token.attrIndex('title')
+
+  if (srcIndex >= 0) {
+    const originalSrc = token.attrs![srcIndex][1]
+    const processedSrc = processImagePath(originalSrc)
+    // 保留 alt 和 title 信息用于无障碍访问
+    // const alt = altIndex >= 0 ? token.attrs![altIndex][1] : ''
+    // const title = titleIndex >= 0 ? token.attrs![titleIndex][1] : ''
+
+    // 更新 src 属性
+    token.attrs![srcIndex][1] = processedSrc
+
+    // 添加加载错误处理
+    token.attrPush(['onerror', `this.onerror=null; this.src='${createPlaceholderSVG(400, 300, '图片加载失败')}';`])
+    token.attrPush(['loading', 'lazy']) // 添加懒加载
+    token.attrPush(['style', 'max-width: 100%; height: auto; border-radius: 4px; box-shadow: var(--shadow-light, 0 2px 8px rgba(0,0,0,0.1));'])
+  }
+
+  // 渲染图片标签
+  let attrs = ''
+  if (token.attrs) {
+    attrs = token.attrs.map(([name, value]: [string, string]) => ` ${name}="${value}"`).join('')
+  }
+
+  return `<img${attrs}>`
 }
 
 // 导出markdown解析函数
