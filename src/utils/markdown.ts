@@ -63,7 +63,7 @@ export const extractMarkdownMeta = (content: string) => {
 
   if (match) {
     try {
-      // 简单的YAML解析（这里只处理基本的key: value）
+      // 简单的YAML解析（这里只处理基本的key: value和数组）
       const frontmatterText = match[1]
       const meta: Record<string, any> = {}
 
@@ -71,7 +71,26 @@ export const extractMarkdownMeta = (content: string) => {
         const [key, ...valueParts] = line.split(':')
         if (key && valueParts.length) {
           const value = valueParts.join(':').trim()
-          meta[key.trim()] = value.replace(/^["']|["']$/g, '') // 移除引号
+          const trimmedKey = key.trim()
+
+          // 处理数组格式的标签（如：tags: ["CSS", "前端", "Web开发"]）
+          if (trimmedKey === 'tags' && value.startsWith('[') && value.endsWith(']')) {
+            try {
+              // 解析JSON数组格式的标签
+              const tagsContent = value.slice(1, -1) // 移除 [ 和 ]
+              const tags = tagsContent
+                .split(',')
+                .map(tag => tag.trim().replace(/^["']|["']$/g, '')) // 移除每个标签的引号
+                .filter(tag => tag.length > 0) // 过滤空标签
+              meta[trimmedKey] = tags
+            } catch (e) {
+              console.warn('解析标签数组失败:', e)
+              meta[trimmedKey] = []
+            }
+          } else {
+            // 处理普通字符串值，移除外层引号
+            meta[trimmedKey] = value.replace(/^["']|["']$/g, '')
+          }
         }
       })
 

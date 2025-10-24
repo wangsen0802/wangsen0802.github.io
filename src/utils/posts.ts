@@ -42,7 +42,7 @@ export async function getAllPosts(): Promise<PostMeta[]> {
         description: meta.description || '',
         date: meta.date || new Date().toISOString().split('T')[0],
         author: meta.author || '王森',
-        tags: meta.tags ? String(meta.tags).split(',').map((tag: string) => tag.trim()) : [],
+        tags: Array.isArray(meta.tags) ? meta.tags : (meta.tags ? String(meta.tags).split(',').map((tag: string) => tag.trim()) : []),
         category,
         content: markdownContent // 使用去除元数据后的纯内容
       })
