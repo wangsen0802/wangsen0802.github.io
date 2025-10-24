@@ -6,9 +6,6 @@
           <h1>
             <BookOutlined /> 文章列表
           </h1>
-          <div class="header-actions">
-            <ThemeToggle />
-          </div>
         </div>
       </a-layout-header>
 

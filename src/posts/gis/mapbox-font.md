@@ -1,6 +1,6 @@
 ---
-title: 'mapbox 中的 font使用'
-description: '学习如何使用OpenLayers创建交互式地图应用'
+title: 'mapbox中的font使用'
+description: '自定义地图字体，个性化显示'
 date: '2024-10-24'
 author: '王森'
 tags: ['GIS', 'Mapbox', '地图']
