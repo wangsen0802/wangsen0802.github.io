@@ -1,3 +1,4 @@
+import packageJson from '../../package.json'
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 
@@ -5,9 +6,17 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('../views/Home.vue'),
+    component: () => import('../views/home-page/Home.vue'),
     meta: {
       title: '首页',
+    },
+  },
+  {
+    path: '/mapbox',
+    name: 'mapbox',
+    component: () => import('../views/mapbox/index.vue'),
+    meta: {
+      title: 'Mapbox',
     },
   },
   {
@@ -29,8 +38,8 @@ const router = createRouter({
 router.beforeEach((to, _from, next) => {
   // 设置页面标题
   document.title = to.meta?.title
-    ? `${to.meta.title} - 王森的个人网站`
-    : '王森的个人网站'
+    ? `${to.meta.title} - ${packageJson.nameCN}`
+    : `${packageJson.nameCN}`
   next()
 })
 

@@ -14,7 +14,7 @@
 // Home page logic
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .home {
   padding: 2rem;
   text-align: center;

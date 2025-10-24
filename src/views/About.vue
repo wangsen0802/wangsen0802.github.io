@@ -14,7 +14,7 @@
 // About page logic
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .about {
   padding: 2rem;
   text-align: center;
