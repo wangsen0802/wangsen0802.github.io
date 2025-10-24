@@ -29,6 +29,27 @@ md.renderer.rules.heading_open = (tokens: any[], idx: number) => {
   return `<${token.tag} id="${id}">`
 }
 
+// 自定义规则：处理链接在新标签页打开
+md.renderer.rules.link_open = (tokens: any[], idx: number) => {
+  const token = tokens[idx]
+  const hrefIndex = token.attrIndex('href')
+
+  if (hrefIndex >= 0) {
+    const href = token.attrs![hrefIndex][1]
+
+    // 检查是否为外部链接（不以 # 开头的锚点链接）
+    if (href && !href.startsWith('#')) {
+      // 添加 target="_blank" 和 rel="noopener noreferrer"
+      token.attrPush(['target', '_blank'])
+      token.attrPush(['rel', 'noopener noreferrer'])
+    }
+  }
+
+  return token.attrGet('class')
+    ? `<a${token.attrs!.map(([name, value]: [string, string]) => ` ${name}="${value}"`).join('')}>`
+    : `<a${token.attrs!.map(([name, value]: [string, string]) => ` ${name}="${value}"`).join('')}>`
+}
+
 // 导出markdown解析函数
 export const parseMarkdown = (content: string): string => {
   return md.render(content)
