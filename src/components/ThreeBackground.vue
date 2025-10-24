@@ -20,9 +20,9 @@ let mousePosition = { x: 0, y: 0 }
 // 根据设备性能调整粒子数量
 const getParticleCount = () => {
   const width = window.innerWidth
-  if (width < 768) return 800  // 移动端
-  if (width < 1024) return 1200 // 平板
-  return 2000 // 桌面端
+  if (width < 768) return 600  // 移动端
+  if (width < 1024) return 900 // 平板
+  return 1500 // 桌面端
 }
 
 // 根据主题获取粒子颜色 - 增强亮度和对比度

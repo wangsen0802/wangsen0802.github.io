@@ -180,12 +180,96 @@ html, body {
 .hljs {
   background-color: var(--bg-tertiary) !important;
   color: var(--text-primary) !important;
-  border-radius: 6px;
+  border-radius: 8px;
   padding: 1rem;
+  border: 1px solid var(--border-primary);
 }
 
 pre.hljs {
   margin: 1rem 0;
+  overflow-x: auto;
+}
+
+/* 代码高亮颜色优化 - 适配亮色和暗色主题 */
+.hljs-comment,
+.hljs-quote {
+  color: var(--text-tertiary) !important;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+  color: #d73a49 !important;
+  font-weight: 600;
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag .hljs-attr {
+  color: #005cc5 !important;
+}
+
+.hljs-string,
+.hljs-doctag {
+  color: #22863a !important;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id {
+  color: #6f42c1 !important;
+  font-weight: 600;
+}
+
+.hljs-type,
+.hljs-class .hljs-title {
+  color: #e36209 !important;
+  font-weight: 600;
+}
+
+.hljs-tag,
+.hljs-name,
+.hljs-attribute {
+  color: #22863a !important;
+  font-weight: normal;
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: #005cc5 !important;
+}
+
+.hljs-symbol,
+.hljs-bullet {
+  color: #005cc5 !important;
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+  color: #e36209 !important;
+}
+
+.hljs-meta {
+  color: var(--text-tertiary) !important;
+}
+
+.hljs-deletion {
+  background: #ffeef0 !important;
+}
+
+.hljs-addition {
+  background: #f0fff4 !important;
+}
+
+.hljs-emphasis {
+  font-style: italic !important;
+}
+
+.hljs-strong {
+  font-weight: bold !important;
 }
 
 /* Markdown 内容主题 */

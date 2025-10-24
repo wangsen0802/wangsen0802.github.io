@@ -4,6 +4,8 @@ import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/reset.css'
 import './style.css'
 import './styles/theme.scss'
+// 导入代码高亮样式
+import 'highlight.js/styles/github.css'
 import App from './App.vue'
 import router from './router'
 import { useAppStore } from './stores'

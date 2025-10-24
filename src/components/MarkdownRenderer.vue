@@ -1,20 +1,81 @@
 <template>
-  <div class="markdown-content" v-html="renderedContent"></div>
+  <div class="markdown-content" v-html="renderedContent" ref="contentRef"></div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, nextTick, ref, onMounted, watch } from 'vue'
 import { parseMarkdown } from '@/utils/markdown'
+import { message } from 'ant-design-vue'
 
 interface Props {
   content: string
 }
 
 const props = defineProps<Props>()
+const contentRef = ref<HTMLElement>()
 
 const renderedContent = computed(() => {
   return parseMarkdown(props.content)
 })
+
+// 复制代码功能
+const copyCode = async (codeBlock: HTMLElement) => {
+  const code = codeBlock.querySelector('code')
+  if (code) {
+    try {
+      await navigator.clipboard.writeText(code.textContent || '')
+      message.success('代码已复制到剪贴板')
+    } catch (err) {
+      // 降级方案
+      const textArea = document.createElement('textarea')
+      textArea.value = code.textContent || ''
+      document.body.appendChild(textArea)
+      textArea.select()
+      document.execCommand('copy')
+      document.body.removeChild(textArea)
+      message.success('代码已复制到剪贴板')
+    }
+  }
+}
+
+// 添加复制按钮
+const addCopyButtons = () => {
+  if (!contentRef.value) return
+
+  const codeBlocks = contentRef.value.querySelectorAll('pre.hljs')
+  codeBlocks.forEach((block) => {
+    // 检查是否已经有复制按钮
+    if (block.querySelector('.copy-button')) return
+
+    const wrapper = document.createElement('div')
+    wrapper.className = 'code-block-wrapper'
+    wrapper.style.position = 'relative'
+
+    // 创建复制按钮
+    const copyButton = document.createElement('button')
+    copyButton.className = 'copy-button'
+    copyButton.innerHTML = '复制'
+    copyButton.onclick = () => copyCode(block as HTMLElement)
+
+    // 包装原始代码块
+    block.parentNode?.insertBefore(wrapper, block)
+    wrapper.appendChild(block)
+    wrapper.appendChild(copyButton)
+  })
+}
+
+onMounted(() => {
+  nextTick(() => {
+    addCopyButtons()
+  })
+})
+
+// 监听内容变化，重新添加复制按钮
+watch(() => renderedContent.value, () => {
+  nextTick(() => {
+    addCopyButtons()
+  })
+}, { immediate: true })
 </script>
 
 <style scoped lang="scss">
@@ -193,6 +254,57 @@ const renderedContent = computed(() => {
   :deep(.hljs) {
     background-color: var(--bg-tertiary) !important;
     color: var(--text-primary) !important;
+  }
+
+  // 代码块包装器和复制按钮
+  :deep(.code-block-wrapper) {
+    position: relative;
+    margin: 1.5em 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border-primary);
+    background-color: var(--bg-tertiary);
+
+    .copy-button {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: var(--accent-primary);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 12px;
+      cursor: pointer;
+      opacity: 0;
+      transition: all 0.2s ease;
+      z-index: 10;
+      font-family: inherit;
+
+      &:hover {
+        background: var(--accent-secondary);
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+
+    &:hover {
+      border-color: var(--accent-primary);
+
+      .copy-button {
+        opacity: 1;
+      }
+    }
+
+    pre {
+      margin: 0;
+      border-radius: 0;
+      border: none;
+      background: transparent;
+    }
   }
 }
 </style>
