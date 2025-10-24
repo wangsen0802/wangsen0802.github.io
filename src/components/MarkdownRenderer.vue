@@ -38,15 +38,30 @@ const copyCode = async (codeBlock: HTMLElement) => {
   }
 }
 
+// 清理现有的复制按钮
+const cleanupCopyButtons = () => {
+  if (!contentRef.value) return
+
+  const wrappers = contentRef.value.querySelectorAll('.code-block-wrapper')
+  wrappers.forEach((wrapper) => {
+    const block = wrapper.querySelector('pre.hljs')
+    const parent = wrapper.parentNode
+    if (block && parent) {
+      parent.insertBefore(block, wrapper)
+      parent.removeChild(wrapper)
+    }
+  })
+}
+
 // 添加复制按钮
 const addCopyButtons = () => {
   if (!contentRef.value) return
 
+  // 先清理现有的复制按钮
+  cleanupCopyButtons()
+
   const codeBlocks = contentRef.value.querySelectorAll('pre.hljs')
   codeBlocks.forEach((block) => {
-    // 检查是否已经有复制按钮
-    if (block.querySelector('.copy-button')) return
-
     const wrapper = document.createElement('div')
     wrapper.className = 'code-block-wrapper'
     wrapper.style.position = 'relative'
@@ -75,7 +90,7 @@ watch(() => renderedContent.value, () => {
   nextTick(() => {
     addCopyButtons()
   })
-}, { immediate: true })
+})
 </script>
 
 <style scoped lang="scss">
