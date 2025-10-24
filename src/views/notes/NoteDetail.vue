@@ -1,5 +1,5 @@
 <template>
-  <div class="note-detail">
+  <div class="note-detail" v-if="note">
     <div class="note-header">
       <div class="breadcrumb">
         <router-link to="/notes">📝 技术笔记</router-link>
@@ -95,11 +95,14 @@ interface Note {
 
 const route = useRoute()
 const categories = ref<Category[]>(notesData.categories)
-const notes = ref<Note[]>(notesData.notes)
+const notes = ref<Note[]>(notesData.notes.map(note => ({
+  ...note,
+  difficulty: note.difficulty as 'beginner' | 'intermediate' | 'advanced'
+})))
 
-const note = computed(() => {
+const note = computed<Note | undefined>(() => {
   return notes.value.find(n =>
-    n.id === route.params.id && n.category === route.params.category
+    n.id === String(route.params.id) && n.category === String(route.params.category)
   )
 })
 
@@ -117,7 +120,7 @@ const difficultyText = computed(() => {
     intermediate: '进阶',
     advanced: '高级'
   }
-  return difficultyMap[note.value?.difficulty] || '未知'
+  return difficultyMap[note.value?.difficulty || 'beginner'] || '未知'
 })
 
 const formatDate = (dateString: string) => {

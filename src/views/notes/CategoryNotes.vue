@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import NoteCard from '@/components/blog/NoteCard.vue'
 import notesData from '@/data/notes.json'
@@ -59,7 +59,10 @@ interface Note {
 
 const route = useRoute()
 const categories = ref<Category[]>(notesData.categories)
-const notes = ref<Note[]>(notesData.notes)
+const notes = ref<Note[]>(notesData.notes.map(note => ({
+  ...note,
+  difficulty: note.difficulty as 'beginner' | 'intermediate' | 'advanced'
+})))
 
 const category = computed(() => {
   return categories.value.find(cat => cat.id === route.params.category)

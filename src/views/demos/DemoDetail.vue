@@ -1,5 +1,5 @@
 <template>
-  <div class="demo-detail">
+  <div class="demo-detail" v-if="demo">
     <div class="demo-header">
       <div class="breadcrumb">
         <router-link to="/demos">🎮 在线示例</router-link>
@@ -152,11 +152,14 @@ interface Demo {
 
 const route = useRoute()
 const categories = ref<Category[]>(demosData.categories)
-const demos = ref<Demo[]>(demosData.demos)
+const demos = ref<Demo[]>(demosData.demos.map(demo => ({
+  ...demo,
+  difficulty: demo.difficulty as 'beginner' | 'intermediate' | 'advanced'
+})))
 
-const demo = computed(() => {
+const demo = computed<Demo | undefined>(() => {
   return demos.value.find(d =>
-    d.id === route.params.id && d.category === route.params.category
+    d.id === String(route.params.id) && d.category === String(route.params.category)
   )
 })
 
@@ -174,7 +177,7 @@ const difficultyText = computed(() => {
     intermediate: '进阶',
     advanced: '高级'
   }
-  return difficultyMap[demo.value?.difficulty] || '未知'
+  return difficultyMap[demo.value?.difficulty || 'beginner'] || '未知'
 })
 
 // 示例代码

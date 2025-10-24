@@ -60,7 +60,10 @@ interface Demo {
 }
 
 const categories = ref<Category[]>(demosData.categories)
-const demos = ref<Demo[]>(demosData.demos)
+const demos = ref<Demo[]>(demosData.demos.map(demo => ({
+  ...demo,
+  difficulty: demo.difficulty as 'beginner' | 'intermediate' | 'advanced'
+})))
 
 // 计算每个分类的示例数量
 const categoryCounts = computed(() => {

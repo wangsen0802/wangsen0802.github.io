@@ -51,7 +51,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import DemoCard from '@/components/blog/DemoCard.vue'
+import DemoCard, { type Demo } from '@/components/blog/DemoCard.vue'
 import demosData from '@/data/demos.json'
 
 interface Category {
@@ -62,22 +62,13 @@ interface Category {
   description: string
 }
 
-interface Demo {
-  id: string
-  title: string
-  category: string
-  description: string
-  tags: string[]
-  difficulty: 'beginner' | 'intermediate' | 'advanced'
-  featured: boolean
-  previewImage?: string
-  codeFiles?: string[]
-  liveUrl?: string
-}
 
 const route = useRoute()
 const categories = ref<Category[]>(demosData.categories)
-const demos = ref<any>(demosData.demos)
+const demos = ref<Demo[]>(demosData.demos.map(demo => ({
+  ...demo,
+  difficulty: demo.difficulty as 'beginner' | 'intermediate' | 'advanced'
+})))
 
 const category = computed(() => {
   return categories.value.find(cat => cat.id === route.params.category)

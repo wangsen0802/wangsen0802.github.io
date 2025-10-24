@@ -66,7 +66,7 @@
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 
-interface Demo {
+export interface Demo {
   id: string
   title: string
   category: string

@@ -1,3 +1,5 @@
+import { extractMarkdownMeta } from './markdown'
+
 // 从posts目录读取所有文章的元数据
 export interface PostMeta {
   id: string
@@ -25,13 +27,13 @@ export async function getAllPosts(): Promise<PostMeta[]> {
 
   for (const path in postModules) {
     try {
-      const content = await postModules[path]()
-      const { meta } = extractMarkdownMeta(content)
+      const content = await postModules[path]?.()
+      const { meta } = extractMarkdownMeta(content || '')
 
       // 从路径提取分类和文件名
       const pathParts = path.split('/')
-      const category = pathParts[pathParts.length - 2]
-      const fileName = pathParts[pathParts.length - 1].replace('.md', '')
+      const category = pathParts[pathParts.length - 2] || ''
+      const fileName = pathParts[pathParts.length - 1]?.replace('.md', '') || ''
 
       posts.push({
         id: fileName,
@@ -39,7 +41,7 @@ export async function getAllPosts(): Promise<PostMeta[]> {
         description: meta.description || '',
         date: meta.date || new Date().toISOString().split('T')[0],
         author: meta.author || '王森',
-        tags: meta.tags ? (meta.tags as string).split(',').map((tag: string) => tag.trim()) : [],
+        tags: meta.tags ? String(meta.tags).split(',').map((tag: string) => tag.trim()) : [],
         category,
         content
       })
@@ -93,32 +95,4 @@ export async function getCategories(): Promise<Category[]> {
   }
 
   return categories.sort((a, b) => a.name.localeCompare(b.name))
-}
-
-// 简单的frontmatter解析函数
-function extractMarkdownMeta(content: string) {
-  const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---/
-  const match = content.match(frontmatterRegex)
-
-  if (match) {
-    try {
-      const frontmatterText = match[1]
-      const meta: Record<string, any> = {}
-
-      frontmatterText.split('\n').forEach(line => {
-        const colonIndex = line.indexOf(':')
-        if (colonIndex > 0) {
-          const key = line.substring(0, colonIndex).trim()
-          const value = line.substring(colonIndex + 1).trim()
-          meta[key] = value.replace(/^["']|["']$/g, '') // 移除引号
-        }
-      })
-
-      return { meta, content: content.replace(frontmatterRegex, '').trim() }
-    } catch (error) {
-      console.error('解析frontmatter失败:', error)
-    }
-  }
-
-  return { meta: {}, content }
 }

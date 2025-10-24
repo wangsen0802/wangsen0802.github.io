@@ -60,7 +60,10 @@ interface Note {
 }
 
 const categories = ref<Category[]>(notesData.categories)
-const notes = ref<Note[]>(notesData.notes)
+const notes = ref<Note[]>(notesData.notes.map(note => ({
+  ...note,
+  difficulty: note.difficulty as 'beginner' | 'intermediate' | 'advanced'
+})))
 
 // 计算每个分类的笔记数量
 const categoryCounts = computed(() => {

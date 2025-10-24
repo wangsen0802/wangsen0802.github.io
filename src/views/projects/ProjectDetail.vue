@@ -1,5 +1,5 @@
 <template>
-  <div class="project-detail">
+  <div class="project-detail" v-if="project">
     <div class="project-header">
       <div class="breadcrumb">
         <router-link to="/projects">🚀 项目展示</router-link>
@@ -161,8 +161,8 @@ interface Project {
 const route = useRoute()
 const projects = ref<Project[]>(projectsData.projects)
 
-const project = computed(() => {
-  return projects.value.find(p => p.id === route.params.id)
+const project = computed<Project | undefined>(() => {
+  return projects.value.find(p => p.id === String(route.params.id))
 })
 
 const statusText = (status: string) => {

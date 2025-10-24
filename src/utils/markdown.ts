@@ -1,12 +1,13 @@
 import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
+// import type Token from 'markdown-it/lib/token'
 
 // 创建markdown-it实例
-const md = new MarkdownIt({
+const md: MarkdownIt = new MarkdownIt({
   html: true,
   linkify: true,
   typographer: true,
-  highlight: function (str: string, lang: string) {
+  highlight: function (str: string, lang: string): string {
     if (lang && hljs.getLanguage(lang)) {
       try {
         return `<pre class="hljs"><code>${
@@ -19,9 +20,8 @@ const md = new MarkdownIt({
 })
 
 // 自定义规则：处理标题添加锚点
-md.renderer.rules.heading_open = (tokens, idx) => {
+md.renderer.rules.heading_open = (tokens: any[], idx: number) => {
   const token = tokens[idx]
-  const level = token.tag.slice(1)
   const nextToken = tokens[idx + 1]
   const text = nextToken ? nextToken.content : ''
   const id = text.toLowerCase().replace(/[^\w]+/g, '-')
@@ -46,7 +46,7 @@ export const extractMarkdownMeta = (content: string) => {
       const frontmatterText = match[1]
       const meta: Record<string, any> = {}
 
-      frontmatterText.split('\n').forEach(line => {
+      frontmatterText?.split('\n').forEach(line => {
         const [key, ...valueParts] = line.split(':')
         if (key && valueParts.length) {
           const value = valueParts.join(':').trim()
