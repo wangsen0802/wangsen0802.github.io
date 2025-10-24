@@ -8,7 +8,16 @@
   "bracketSpacing": true,
   "bracketSameLine": true,
   "arrowParens": "avoid",
-  "htmlWhitespaceSensitivity": "ignore",
+  "plugins": ["prettier-plugin-vue", "@prettier/plugin-pug"],
   "vueIndentScriptAndStyle": false,
-  "plugins": ["prettier-plugin-vue", "@prettier/plugin-pug"]
+  "overrides": [
+    {
+      "files": "*.vue",
+      "options": {
+        "parser": "vue",
+        "vueIndentScriptAndStyle": false,
+        "singleAttributePerLine": false
+      }
+    }
+  ]
 }
