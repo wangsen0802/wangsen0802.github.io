@@ -62,7 +62,7 @@
                     <span>邮箱: wangsen@example.com</span>
                   </div>
                   <div class="contact-item">
-                    <GlobeOutlined />
+                    <GlobalOutlined />
                     <span>位置: 中国</span>
                   </div>
                 </div>
@@ -143,7 +143,7 @@ import {
   UserOutlined,
   ContactsOutlined,
   MailOutlined,
-  GlobeOutlined,
+  GlobalOutlined,
   BarChartOutlined,
   ClockCircleOutlined,
   GithubOutlined
