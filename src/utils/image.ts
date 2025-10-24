@@ -35,16 +35,44 @@ export function processImagePath(src: string): string {
   return src
 }
 
+// 安全的 base64 编码，支持中文字符
+function safeBase64Encode(str: string): string {
+  try {
+    // 先转换为 UTF-8 字节数组，再进行 base64 编码
+    const utf8Bytes = new TextEncoder().encode(str)
+    let binary = ''
+    utf8Bytes.forEach(byte => binary += String.fromCharCode(byte))
+    return btoa(binary)
+  } catch (error) {
+    console.warn('Base64 编码失败，使用备用方案:', error)
+    // 降级方案：移除非 ASCII 字符
+    return btoa(unescape(encodeURIComponent(str)))
+  }
+}
+
 // 创建占位符图片 SVG
 export function createPlaceholderSVG(width: number = 400, height: number = 300, text: string = '图片加载中'): string {
-  return `data:image/svg+xml;base64,${btoa(`
+  const svgTemplate = `
     <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100%" height="100%" fill="#f5f5f5"/>
-      <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-family="sans-serif" font-size="14" fill="#999">
+      <defs>
+        <style>
+          .placeholder-text {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            fill: #999;
+            text-anchor: middle;
+            dominant-baseline: middle;
+          }
+        </style>
+      </defs>
+      <rect width="100%" height="100%" fill="#f5f5f5" stroke="#ddd" stroke-width="1"/>
+      <text x="50%" y="50%" class="placeholder-text">
         ${text}
       </text>
     </svg>
-  `)}`
+  `.trim()
+
+  return `data:image/svg+xml;base64,${safeBase64Encode(svgTemplate)}`
 }
 
 // 检查图片是否存在（仅用于本地图片）
