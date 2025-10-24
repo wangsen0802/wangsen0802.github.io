@@ -120,7 +120,7 @@ const navItems: NavItem[] = [
 ]
 
 const activeDropdown = ref<string | null>(null)
-let dropdownTimeout: NodeJS.Timeout | null = null
+let dropdownTimeout: ReturnType<typeof setTimeout> | null = null
 
 const showDropdown = (path: string) => {
   if (dropdownTimeout) {

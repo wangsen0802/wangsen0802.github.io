@@ -1,33 +1,51 @@
 <template>
+
   <div class="category-demos">
+
     <div class="page-header">
+
       <div class="category-info" v-if="category">
+
         <div class="category-icon" :style="{ color: category.color }">
-          {{ category.icon }}
+           {{ category.icon }}
         </div>
+
         <div>
+
           <h1>{{ category.name }} 相关示例</h1>
+
           <p>{{ category.description }}</p>
+
         </div>
+
       </div>
+
     </div>
 
     <div class="demos-content">
+
       <div class="demos-grid" v-if="categoryDemos.length">
-        <DemoCard
+         <DemoCard
           v-for="demo in categoryDemos"
           :key="demo.id"
           :demo="demo"
-          :category="category"
-        />
+          :category="category" />
       </div>
+
       <div v-else class="empty-state">
+
         <div class="empty-icon">🎮</div>
+
         <h3>暂无相关示例</h3>
+
         <p>该分类下还没有任何示例，敬请期待后续内容更新。</p>
+
       </div>
+
     </div>
+
   </div>
+
 </template>
 
 <script setup lang="ts">
@@ -59,14 +77,16 @@ interface Demo {
 
 const route = useRoute()
 const categories = ref<Category[]>(demosData.categories)
-const demos = ref<Demo[]>(demosData.demos)
+const demos = ref<any>(demosData.demos)
 
 const category = computed(() => {
   return categories.value.find(cat => cat.id === route.params.category)
 })
 
 const categoryDemos = computed(() => {
-  return demos.value.filter(demo => demo.category === route.params.category)
+  return demos.value.filter(
+    (demo: any) => demo.category === route.params.category
+  )
 })
 </script>
 
@@ -172,3 +192,4 @@ const categoryDemos = computed(() => {
   }
 }
 </style>
+
