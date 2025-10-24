@@ -28,7 +28,8 @@ export async function getAllPosts(): Promise<PostMeta[]> {
   for (const path in postModules) {
     try {
       const content = await postModules[path]?.()
-      const { meta } = extractMarkdownMeta(content || '')
+      const contentStr = typeof content === 'string' ? content : ''
+      const { meta } = extractMarkdownMeta(contentStr)
 
       // 从路径提取分类和文件名
       const pathParts = path.split('/')
@@ -43,7 +44,7 @@ export async function getAllPosts(): Promise<PostMeta[]> {
         author: meta.author || '王森',
         tags: meta.tags ? String(meta.tags).split(',').map((tag: string) => tag.trim()) : [],
         category,
-        content
+        content: contentStr
       })
     } catch (error) {
       console.error(`读取文章失败: ${path}`, error)
