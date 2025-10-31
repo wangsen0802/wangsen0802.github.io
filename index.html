@@ -1,13 +1,418 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>wanGISen</title>
+    <meta name="description" content="wanGISen - 个人技术博客，专注于前端开发和GIS技术分享" />
+    <meta name="keywords" content="前端开发,Vue.js,TypeScript,GIS,技术博客" />
+    <meta name="author" content="王森" />
+    <title>wanGISen - 个人技术博客</title>
+
+    <!-- 预加载关键资源 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- 内联关键CSS用于加载页面 -->
+    <style>
+      /* 重置样式 */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        overflow: hidden;
+      }
+
+      /* 检测系统主题偏好 */
+      @media (prefers-color-scheme: dark) {
+        body {
+          background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+      }
+
+      /* 原生加载页面样式 */
+      .native-loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        transition: opacity 0.5s ease-out;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .native-loading {
+          background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+      }
+
+      .native-loading.fade-out {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .native-loading__container {
+        text-align: center;
+        animation: fadeInUp 0.8s ease-out;
+      }
+
+      .native-loading__logo {
+        margin-bottom: 3rem;
+      }
+
+      .native-loading__logo-text {
+        font-size: 3.5rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        letter-spacing: 2px;
+        animation: glow 2s ease-in-out infinite alternate;
+      }
+
+      .native-loading__logo-subtitle {
+        font-size: 1.2rem;
+        color: rgba(255, 255, 255, 0.8);
+        font-weight: 300;
+        letter-spacing: 1px;
+      }
+
+      .native-loading__spinner {
+        margin-bottom: 2.5rem;
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-top: 3px solid white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      .native-loading__text {
+        margin-bottom: 2rem;
+      }
+
+      .native-loading__title {
+        font-size: 1.4rem;
+        color: white;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+      }
+
+      .native-loading__subtitle {
+        font-size: 1rem;
+        color: rgba(255, 255, 255, 0.7);
+        font-weight: 300;
+      }
+
+      .native-loading__progress {
+        width: 300px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 2px;
+        overflow: hidden;
+        margin: 0 auto;
+      }
+
+      .native-loading__progress-bar {
+        height: 100%;
+        background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+        border-radius: 2px;
+        width: 0%;
+        transition: width 0.3s ease;
+        animation: progressGrow 3s ease-out forwards;
+      }
+
+      /* 背景粒子效果 */
+      .native-loading__particles {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+
+      .native-loading__particle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 50%;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      /* 动画定义 */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes glow {
+        from {
+          text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3),
+                       0 0 20px rgba(255, 255, 255, 0.2);
+        }
+        to {
+          text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3),
+                       0 0 30px rgba(255, 255, 255, 0.4),
+                       0 0 40px rgba(79, 172, 254, 0.3);
+        }
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      @keyframes progressGrow {
+        0% { width: 0%; }
+        100% { width: 90%; }
+      }
+
+      @keyframes float {
+        0%, 100% {
+          transform: translateY(0) translateX(0);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100px) translateX(50px);
+          opacity: 0;
+        }
+      }
+
+      /* 响应式设计 */
+      @media (max-width: 768px) {
+        .native-loading__logo-text {
+          font-size: 2.5rem;
+        }
+        .native-loading__logo-subtitle {
+          font-size: 1rem;
+        }
+        .native-loading__title {
+          font-size: 1.2rem;
+        }
+        .native-loading__subtitle {
+          font-size: 0.9rem;
+        }
+        .native-loading__progress {
+          width: 250px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .native-loading__logo-text {
+          font-size: 2rem;
+        }
+        .native-loading__progress {
+          width: 200px;
+        }
+      }
+
+      /* 隐藏主应用直到加载完成 */
+      #app {
+        opacity: 0;
+        transition: opacity 0.5s ease-in;
+      }
+
+      #app.app-loaded {
+        opacity: 1;
+      }
+    </style>
   </head>
   <body>
+    <!-- 原生加载页面 -->
+    <div id="native-loading" class="native-loading">
+      <div class="native-loading__container">
+        <!-- Logo 区域 -->
+        <div class="native-loading__logo">
+          <div class="native-loading__logo-text">wanGISen</div>
+          <div class="native-loading__logo-subtitle">个人技术博客</div>
+        </div>
+
+        <!-- 加载动画 -->
+        <div class="native-loading__spinner"></div>
+
+        <!-- 加载文字 -->
+        <div class="native-loading__text">
+          <div class="native-loading__title">正在加载...</div>
+          <div class="native-loading__subtitle">准备进入技术世界</div>
+        </div>
+
+        <!-- 进度条 -->
+        <div class="native-loading__progress">
+          <div class="native-loading__progress-bar"></div>
+        </div>
+      </div>
+
+      <!-- 背景粒子 -->
+      <div class="native-loading__particles">
+        <div class="native-loading__particle" style="left: 10%; top: 20%; animation-delay: 0s;"></div>
+        <div class="native-loading__particle" style="left: 30%; top: 40%; animation-delay: 1s;"></div>
+        <div class="native-loading__particle" style="left: 50%; top: 10%; animation-delay: 2s;"></div>
+        <div class="native-loading__particle" style="left: 70%; top: 60%; animation-delay: 0.5s;"></div>
+        <div class="native-loading__particle" style="left: 90%; top: 30%; animation-delay: 1.5s;"></div>
+      </div>
+    </div>
+
+    <!-- Vue 应用容器 -->
     <div id="app"></div>
+
+    <!-- 应用脚本 -->
     <script type="module" src="/src/main.ts"></script>
+
+    <!-- 原生加载页面脚本 -->
+    <script>
+      // 智能加载检测
+      (function() {
+        let loadingStartTime = Date.now();
+        let shouldSkipNativeLoading = false;
+        let skipReason = '';
+
+        // 检测是否应该跳过原生加载
+        function checkLoadingConditions() {
+          const now = Date.now();
+          const lastVisit = localStorage.getItem('lastVisit');
+          const visitCount = parseInt(localStorage.getItem('visitCount') || '0');
+
+          // 检测条件
+          const isRecentVisit = lastVisit && (now - parseInt(lastVisit)) < 30 * 60 * 1000; // 30分钟内
+          const isFrequentUser = visitCount > 5; // 访问次数超过5次
+          const hasCache = localStorage.getItem('cacheVerified');
+
+          // 快速刷新检测
+          const isQuickRefresh = performance.getEntriesByType('navigation').length > 0;
+
+          // 决定是否跳过
+          shouldSkipNativeLoading = isRecentVisit || isFrequentUser || (hasCache && isQuickRefresh);
+
+          if (shouldSkipNativeLoading) {
+            if (isFrequentUser) skipReason = '频繁用户';
+            else if (isRecentVisit) skipReason = '最近访问';
+            else skipReason = '缓存可用';
+
+            console.log(`🚀 跳过原生加载页面: ${skipReason}`);
+          }
+        }
+
+        // 立即检测
+        checkLoadingConditions();
+
+        // 如果应该跳过，立即隐藏原生加载页面
+        if (shouldSkipNativeLoading) {
+          const nativeLoading = document.getElementById('native-loading');
+          const app = document.getElementById('app');
+
+          if (nativeLoading) {
+            // 极短的显示时间，避免闪烁
+            nativeLoading.style.opacity = '0';
+            nativeLoading.style.pointerEvents = 'none';
+
+            // 直接显示应用
+            if (app) {
+              app.classList.add('app-loaded');
+              app.style.opacity = '1';
+            }
+
+            // 快速移除加载页面
+            setTimeout(() => {
+              nativeLoading.remove();
+            }, 100);
+          }
+        }
+
+        // 智能加载监听
+        window.addEventListener('load', function() {
+          const elapsedTime = Date.now() - loadingStartTime;
+
+          // 根据加载时间调整显示策略
+          let hideDelay = 500; // 默认500ms
+
+          if (shouldSkipNativeLoading) {
+            hideDelay = 100; // 跳过模式下极短延迟
+          } else if (elapsedTime < 1000) {
+            hideDelay = 1000; // 加载很快时，延长显示确保用户看到
+          } else if (elapsedTime > 3000) {
+            hideDelay = 200; // 加载较慢时，快速隐藏
+          }
+
+          setTimeout(() => {
+            const nativeLoading = document.getElementById('native-loading');
+            const app = document.getElementById('app');
+
+            if (nativeLoading && app) {
+              // 淡出原生加载页面
+              nativeLoading.classList.add('fade-out');
+
+              // 显示Vue应用
+              app.classList.add('app-loaded');
+
+              // 移除原生加载页面
+              setTimeout(() => {
+                nativeLoading.remove();
+              }, 500);
+            }
+          }, hideDelay);
+        });
+
+        // 性能监控
+        window.addEventListener('load', function() {
+          const loadTime = Date.now() - loadingStartTime;
+          console.log(`📊 页面加载完成，耗时: ${loadTime}ms`);
+
+          // 更新访问统计
+          const now = Date.now();
+          localStorage.setItem('lastVisit', now.toString());
+          const visitCount = parseInt(localStorage.getItem('visitCount') || '0');
+          localStorage.setItem('visitCount', (visitCount + 1).toString());
+        });
+
+        // 错误处理：如果JavaScript加载失败，显示错误信息
+        window.addEventListener('error', function(e) {
+          const loading = document.getElementById('native-loading');
+          if (loading) {
+            const title = loading.querySelector('.native-loading__title');
+            const subtitle = loading.querySelector('.native-loading__subtitle');
+            const spinner = loading.querySelector('.native-loading__spinner');
+
+            if (title) title.textContent = '加载失败';
+            if (subtitle) subtitle.textContent = '请刷新页面重试';
+            if (spinner) spinner.style.display = 'none';
+          }
+        });
+
+        // 页面可见性变化处理
+        document.addEventListener('visibilitychange', function() {
+          if (document.hidden) {
+            // 页面隐藏时，可以清理一些资源
+            const nativeLoading = document.getElementById('native-loading');
+            if (nativeLoading && shouldSkipNativeLoading) {
+              nativeLoading.remove();
+            }
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
