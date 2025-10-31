@@ -28,10 +28,15 @@
         overflow: hidden;
       }
 
-      /* 检测系统主题偏好 */
-      @media (prefers-color-scheme: dark) {
-        body {
-          background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      /* 默认使用暗色主题 */
+      body {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%) !important;
+      }
+
+      /* 只有在用户明确设置亮色主题时才使用亮色 */
+      @media (prefers-color-scheme: light) {
+        body:not(.user-prefers-dark) {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
       }
 
@@ -46,13 +51,14 @@
         align-items: center;
         justify-content: center;
         z-index: 9999;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
         transition: opacity 0.5s ease-out;
       }
 
-      @media (prefers-color-scheme: dark) {
-        .native-loading {
-          background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      /* 只有在用户明确设置亮色主题时才使用亮色 */
+      @media (prefers-color-scheme: light) {
+        body:not(.user-prefers-dark) .native-loading {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
       }
 
@@ -318,6 +324,21 @@
 
         // 立即检测
         checkLoadingConditions();
+
+        // 设置主题相关class
+        function initializeTheme() {
+          const savedTheme = localStorage.getItem('theme');
+
+          // 默认使用暗色主题
+          if (savedTheme === 'light') {
+            document.body.classList.add('user-prefers-light');
+          } else {
+            document.body.classList.add('user-prefers-dark');
+          }
+        }
+
+        // 立即初始化主题
+        initializeTheme();
 
         // 如果应该跳过，立即隐藏原生加载页面
         if (shouldSkipNativeLoading) {

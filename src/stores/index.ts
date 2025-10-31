@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 export const useAppStore = defineStore('app', {
   state: () => ({
     loading: true, // 默认为加载状态
-    theme: 'light' as 'light' | 'dark',
+    theme: 'dark' as 'light' | 'dark', // 默认使用暗色主题
     sidebarOpen: false,
     // 新增加载相关状态
     appInitialized: false,
@@ -56,8 +56,16 @@ export const useAppStore = defineStore('app', {
     initTheme() {
       // 从localStorage读取主题设置
       const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-      const theme = savedTheme || systemTheme
+
+      // 默认优先使用暗色主题，只有在用户明确设置亮色时才使用亮色
+      let theme: 'light' | 'dark'
+      if (savedTheme) {
+        // 如果用户有手动设置，使用用户设置
+        theme = savedTheme
+      } else {
+        // 没有用户设置时，默认使用暗色主题
+        theme = 'dark'
+      }
 
       this.theme = theme
       document.documentElement.setAttribute('data-theme', theme)

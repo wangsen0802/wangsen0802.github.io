@@ -34,7 +34,8 @@
       </div>
     </a-layout-footer>
   </a-layout>
-</template>
+
+  </template>
 
 <script setup lang="ts">
 import { onMounted, watch } from 'vue'

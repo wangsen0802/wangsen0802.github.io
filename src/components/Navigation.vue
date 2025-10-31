@@ -63,9 +63,20 @@ const navigateTo = (path: string) => {
   border-bottom: none;
   padding: 0 24px;
   height: 64px;
+  width: 100%;
+  position: relative;
 
   .nav-menu {
     flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .theme-toggle-wrapper {
+    display: flex;
+    align-items: center;
+    margin-left: 24px;
+    height: 100%;
   }
 
   :deep(.ant-menu) {
@@ -93,10 +104,6 @@ const navigateTo = (path: string) => {
       margin-right: 8px;
     }
   }
-
-  .theme-toggle-wrapper {
-    margin-left: 16px;
-  }
 }
 
 // 响应式设计
@@ -104,8 +111,25 @@ const navigateTo = (path: string) => {
   .navigation {
     padding: 0 16px;
 
+    .theme-toggle-wrapper {
+      margin-left: 16px;
+    }
+
     :deep(.ant-menu) {
       font-size: 14px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .navigation {
+    padding: 0 12px;
+
+    .nav-menu {
+      :deep(.ant-menu-item) {
+        padding: 0 8px;
+        font-size: 13px;
+      }
     }
 
     .theme-toggle-wrapper {
