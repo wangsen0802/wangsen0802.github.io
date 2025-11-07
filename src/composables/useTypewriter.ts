@@ -10,13 +10,7 @@ export interface TypewriterOptions {
 }
 
 export function useTypewriter(options: TypewriterOptions) {
-  const {
-    text,
-    speed = 100,
-    initialDelay = 0,
-    loopDelay = 2000,
-    loop = false
-  } = options
+  const { text, speed = 100, initialDelay = 0, loopDelay = 2000, loop = false } = options
 
   const displayText = ref('')
   const currentIndex = ref(0)

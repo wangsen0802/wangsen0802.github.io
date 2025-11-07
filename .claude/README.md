@@ -1,12 +1,15 @@
 # MCP Configuration
 
-This directory contains Model Context Protocol (MCP) server configurations for Claude Code.
+This directory contains Model Context Protocol (MCP) server configurations for
+Claude Code.
 
 ## Currently Configured Servers
 
 ### ✅ Filesystem Server
+
 - **Purpose**: Provides file system access within the project
-- **Scope**: Project directory only (`/Users/wangsen/person_project/wangsen0802.github.io`)
+- **Scope**: Project directory only
+  (`/Users/wangsen/person_project/wangsen0802.github.io`)
 - **Status**: ✅ Connected and working
 - **Usage**: Enhanced file operations, directory browsing
 
@@ -51,7 +54,7 @@ claude mcp --help
 
 ## Popular MCP Servers
 
-1. **Filesystem** - File and directory operations ✅ *Already configured*
+1. **Filesystem** - File and directory operations ✅ _Already configured_
 2. **Git** - Git repository operations
 3. **Brave Search** - Web search capabilities
 4. **GitHub** - GitHub API integration
@@ -65,17 +68,20 @@ claude mcp --help
 For servers that require API keys, you have several options:
 
 ### Option 1: Environment Variables (Recommended)
+
 ```bash
 export BRAVE_API_KEY="your_brave_api_key"
 export GITHUB_PERSONAL_ACCESS_TOKEN="your_github_token"
 ```
 
 ### Option 2: Add with Environment Variables
+
 ```bash
 claude mcp add --transport stdio brave-search --env BRAVE_API_KEY="your_key" -- npx -y @modelcontextprotocol/server-brave-search
 ```
 
 ### Option 3: Add to ~/.claude/settings.json
+
 ```json
 {
   "env": {
@@ -88,6 +94,7 @@ claude mcp add --transport stdio brave-search --env BRAVE_API_KEY="your_key" -- 
 ## Usage
 
 Once MCP servers are configured, you can use them through natural language:
+
 - "Read all files in the src directory"
 - "Search for TypeScript files that contain Vue components"
 - "Show me the recent git commits"

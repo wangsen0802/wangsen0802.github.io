@@ -13,7 +13,7 @@ export const useAppStore = defineStore('app', {
     // 缓存和性能优化相关
     firstVisit: true,
     skipLoading: false,
-    performanceMode: false,
+    performanceMode: false
   }),
 
   getters: {
@@ -29,7 +29,7 @@ export const useAppStore = defineStore('app', {
     // 新增缓存相关getters
     isFirstVisit: state => state.firstVisit,
     shouldSkipLoading: state => state.skipLoading,
-    isPerformanceMode: state => state.performanceMode,
+    isPerformanceMode: state => state.performanceMode
   },
 
   actions: {
@@ -89,17 +89,19 @@ export const useAppStore = defineStore('app', {
       const hasCachedResources = this.checkResourceCache()
 
       // 判断条件
-      const isRecentVisit = lastVisit && (now - parseInt(lastVisit)) < 30 * 60 * 1000 // 30分钟内
+      const isRecentVisit = lastVisit && now - parseInt(lastVisit) < 30 * 60 * 1000 // 30分钟内
       const isFrequentUser = visitCount > 5 // 访问次数超过5次
 
       // 快速刷新检测 - 安全的类型检查
       let isQuickRefresh = false
       try {
-        const navigationEntries = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[]
+        const navigationEntries = performance.getEntriesByType(
+          'navigation'
+        ) as PerformanceNavigationTiming[]
         if (navigationEntries.length > 0) {
           const nav = navigationEntries[0]
           if (nav && nav.type === 'reload' && nav.loadEventEnd && nav.loadEventStart) {
-            isQuickRefresh = (nav.loadEventEnd - nav.loadEventStart) < 1000
+            isQuickRefresh = nav.loadEventEnd - nav.loadEventStart < 1000
           }
         }
       } catch (error) {
@@ -134,7 +136,7 @@ export const useAppStore = defineStore('app', {
         const now = Date.now()
 
         // 缓存有效期2小时
-        return (now - cacheData.timestamp) < 2 * 60 * 60 * 1000
+        return now - cacheData.timestamp < 2 * 60 * 60 * 1000
       } catch {
         return false
       }
@@ -143,9 +145,12 @@ export const useAppStore = defineStore('app', {
     // 标记资源缓存
     markResourceCache() {
       try {
-        localStorage.setItem('cacheVerified', JSON.stringify({
-          timestamp: Date.now()
-        }))
+        localStorage.setItem(
+          'cacheVerified',
+          JSON.stringify({
+            timestamp: Date.now()
+          })
+        )
       } catch (error) {
         console.warn('无法设置缓存标记:', error)
       }
@@ -201,7 +206,6 @@ export const useAppStore = defineStore('app', {
         this.appInitialized = true
         this.markResourceCache()
         this.setLoading(false)
-
       } catch (error) {
         console.error('应用初始化失败:', error)
         // 即使出错也要完成初始化，避免无限加载
@@ -244,7 +248,10 @@ export const useAppStore = defineStore('app', {
     },
 
     // 手动设置初始化进度
-    setInitializationProgress(progress: number, phase?: 'initializing' | 'loading-resources' | 'ready') {
+    setInitializationProgress(
+      progress: number,
+      phase?: 'initializing' | 'loading-resources' | 'ready'
+    ) {
       this.initializationProgress = Math.min(100, Math.max(0, progress))
       if (phase) {
         this.initializationPhase = phase
@@ -265,7 +272,7 @@ export const useAppStore = defineStore('app', {
       if (typeof window !== 'undefined') {
         const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
 
-        mediaQuery.addEventListener('change', (e) => {
+        mediaQuery.addEventListener('change', e => {
           // 只有在没有用户手动设置主题时才跟随系统主题
           const userTheme = localStorage.getItem('theme')
           if (!userTheme) {
@@ -273,21 +280,21 @@ export const useAppStore = defineStore('app', {
           }
         })
       }
-    },
-  },
+    }
+  }
 })
 
 export const useUserStore = defineStore('user', {
   state: () => ({
     name: '',
     email: '',
-    isLoggedIn: false,
+    isLoggedIn: false
   }),
 
   getters: {
     userName: state => state.name,
     userEmail: state => state.email,
-    isAuthenticated: state => state.isLoggedIn,
+    isAuthenticated: state => state.isLoggedIn
   },
 
   actions: {
@@ -301,6 +308,6 @@ export const useUserStore = defineStore('user', {
       this.name = ''
       this.email = ''
       this.isLoggedIn = false
-    },
-  },
+    }
+  }
 })

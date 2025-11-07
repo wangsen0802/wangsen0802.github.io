@@ -1,41 +1,35 @@
 <template>
-  <!-- 全局加载组件 -->
-  <AppLoading v-if="appStore.isLoading" :progress="appStore.getInitializationProgress" />
-
-  <!-- 主应用布局 -->
-  <a-layout
+   <!-- 全局加载组件 --> <AppLoading
+    v-if="appStore.isLoading"
+    :progress="appStore.getInitializationProgress"
+  /> <!-- 主应用布局 --> <a-layout
     v-else
     class="app"
     :class="{ 'app--loaded': appStore.isAppInitialized }"
-  >
-    <a-layout-header class="header">
-      <div class="header-content">
-        <Navigation />
-      </div>
-    </a-layout-header>
-
-    <a-layout-content class="main">
-      <router-view />
-    </a-layout-content>
-
-    <a-layout-footer class="footer">
+    > <a-layout-header class="header"
+      >
+      <div class="header-content"> <Navigation /> </div>
+       </a-layout-header
+    > <a-layout-content class="main"> <router-view /> </a-layout-content> <a-layout-footer class="footer"
+      >
       <div class="footer-content">
-        <p>&copy; 2024 王森的个人网站. All rights reserved.</p>
+
+        <p>&copy; 2025 王森的个人网站. All rights reserved.</p>
 
         <div class="footer-links">
-          <a
+           <a
             href="https://github.com/wangsen0802"
             target="_blank"
             rel="noopener"
+            > <GithubOutlined /> </a
           >
-            <GithubOutlined />
-          </a>
         </div>
-      </div>
-    </a-layout-footer>
-  </a-layout>
 
-  </template>
+      </div>
+       </a-layout-footer
+    > </a-layout
+  >
+</template>
 
 <script setup lang="ts">
 import { onMounted, watch } from 'vue'
@@ -49,7 +43,7 @@ const appStore = useAppStore()
 // 监听加载状态变化，添加相应的class到body
 watch(
   () => appStore.isLoading,
-  (isLoading) => {
+  isLoading => {
     if (isLoading) {
       document.body.classList.add('app-loading')
       document.body.classList.remove('app-loaded')
@@ -64,7 +58,7 @@ watch(
 // 监听主题变化
 watch(
   () => appStore.currentTheme,
-  (theme) => {
+  theme => {
     document.documentElement.setAttribute('data-theme', theme)
   },
   { immediate: true }
@@ -139,7 +133,8 @@ onMounted(() => {
 .main {
   flex: 1;
   background-color: transparent;
-  padding-top: 64px; /* 头部栏高度 */
+  padding-top: 64px;
+  /* 头部栏高度 */
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.6s ease-out 0.2s;
@@ -235,6 +230,7 @@ onMounted(() => {
     transform: translateY(-100%);
     opacity: 0;
   }
+
   to {
     transform: translateY(0);
     opacity: 1;
@@ -246,6 +242,7 @@ onMounted(() => {
     transform: translateY(20px);
     opacity: 0;
   }
+
   to {
     transform: translateY(0);
     opacity: 1;

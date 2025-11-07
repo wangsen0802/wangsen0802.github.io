@@ -1,40 +1,41 @@
 <template>
+
   <div class="navigation">
+
     <div class="nav-menu">
-      <a-menu mode="horizontal" :selected-keys="selectedKeys">
-        <a-menu-item key="home" @click="navigateTo('/')">
-          <HomeOutlined /> 首页
-        </a-menu-item>
-
-        <a-menu-item key="posts" @click="navigateTo('/posts')">
-          <BookOutlined /> 文章
-        </a-menu-item>
-
-        <a-menu-item key="mapbox" @click="navigateTo('/mapbox')">
-          <EnvironmentOutlined /> Mapbox
-        </a-menu-item>
-
-        <a-menu-item key="about" @click="navigateTo('/about')">
-          <UserOutlined /> 关于
-        </a-menu-item>
-      </a-menu>
+       <a-menu
+        mode="horizontal"
+        :selected-keys="selectedKeys"
+        > <a-menu-item
+          key="home"
+          @click="navigateTo('/')"
+          > <HomeOutlined /> 首页 </a-menu-item
+        > <a-menu-item
+          key="posts"
+          @click="navigateTo('/posts')"
+          > <BookOutlined /> 文章 </a-menu-item
+        > <a-menu-item
+          key="mapbox"
+          @click="navigateTo('/mapbox')"
+          > <EnvironmentOutlined /> Mapbox </a-menu-item
+        > <a-menu-item
+          key="about"
+          @click="navigateTo('/about')"
+          > <UserOutlined /> 关于 </a-menu-item
+        > </a-menu
+      >
     </div>
 
-    <div class="theme-toggle-wrapper">
-      <ThemeToggle />
-    </div>
+    <div class="theme-toggle-wrapper"> <ThemeToggle /> </div>
+
   </div>
+
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import {
-  HomeOutlined,
-  BookOutlined,
-  EnvironmentOutlined,
-  UserOutlined
-} from '@ant-design/icons-vue'
+import { HomeOutlined, BookOutlined, EnvironmentOutlined, UserOutlined } from '@ant-design/icons-vue'
 import ThemeToggle from '@/components/ThemeToggle.vue'
 
 const route = useRoute()
@@ -138,3 +139,4 @@ const navigateTo = (path: string) => {
   }
 }
 </style>
+

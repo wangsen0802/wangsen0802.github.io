@@ -64,11 +64,11 @@ async function initializeApp() {
 const startTime = performance.now()
 
 // 错误处理：全局错误捕获
-window.addEventListener('error', (event) => {
+window.addEventListener('error', event => {
   console.error('全局错误:', event.error)
 })
 
-window.addEventListener('unhandledrejection', (event) => {
+window.addEventListener('unhandledrejection', event => {
   console.error('未处理的Promise拒绝:', event.reason)
 })
 
@@ -78,7 +78,7 @@ initializeApp()
     const endTime = performance.now()
     console.log(`应用启动完成，耗时: ${(endTime - startTime).toFixed(2)}ms`)
   })
-  .catch((error) => {
+  .catch(error => {
     console.error('应用启动失败:', error)
   })
 

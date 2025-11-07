@@ -1,123 +1,122 @@
 <template>
-  <div class="posts-list">
-    <a-layout class="layout">
-      <a-layout-header class="header">
-        <div class="header-content">
-          <h1>
-            <BookOutlined /> 文章列表
-          </h1>
-        </div>
-      </a-layout-header>
 
-      <a-layout-content class="content">
+  <div class="posts-list">
+     <a-layout class="layout"
+      > <a-layout-header class="header"
+        >
+        <div class="header-content">
+
+          <h1> <BookOutlined /> 文章列表 </h1>
+
+        </div>
+         </a-layout-header
+      > <a-layout-content class="content"
+        >
         <div class="content-wrapper">
-          <!-- 分类筛选 -->
-          <a-card class="categories-card">
-            <template #title>
-              <AppstoreOutlined /> 分类
-            </template>
+           <!-- 分类筛选 --> <a-card class="categories-card"
+            > <template #title> <AppstoreOutlined /> 分类 </template>
             <div class="categories">
-              <a-button
+               <a-button
                 v-for="category in categories"
                 :key="category.path"
                 :type="selectedCategory === category.path ? 'primary' : 'default'"
                 @click="filterByCategory(category.path)"
                 class="category-btn"
-              >
-                {{ category.name }}
-                <a-badge :count="category.count" class="category-count" />
-              </a-button>
-              <a-button
+                > {{ category.name }} <a-badge
+                  :count="category.count"
+                  class="category-count"
+                /> </a-button
+              > <a-button
                 :type="selectedCategory === null ? 'primary' : 'default'"
                 @click="filterByCategory(null)"
                 class="category-btn"
+                > 全部 <a-badge
+                  :count="posts.length"
+                  class="category-count"
+                /> </a-button
               >
-                全部
-                <a-badge :count="posts.length" class="category-count" />
-              </a-button>
             </div>
-          </a-card>
-
-          <!-- 文章列表 -->
+             </a-card
+          > <!-- 文章列表 -->
           <div class="posts-container">
-            <a-spin :spinning="loading">
+             <a-spin :spinning="loading"
+              >
               <div class="posts-grid">
-                <a-card
+                 <a-card
                   v-for="post in filteredPosts"
                   :key="`${post.category}-${post.id}`"
                   :title="post.title"
                   class="post-card"
                   hoverable
                   @click="navigateToPost(post)"
-                >
-                  <template #cover>
-                    <div class="post-cover">
-                      <FileTextOutlined />
-                    </div>
-                  </template>
+                  > <template #cover
+                    >
+                    <div class="post-cover"> <FileTextOutlined /> </div>
+                     </template
+                  > <template #actions
+                    > <EyeOutlined
+                      key="view"
+                      title="查看"
+                    /> <CalendarOutlined
+                      key="date"
+                      :title="post.date"
+                    /> </template
+                  > <a-card-meta
+                    > <template #description
+                      >
+                      <div class="post-description"> {{ post.description }} </div>
 
-                  <template #actions>
-                    <EyeOutlined key="view" title="查看" />
-                    <CalendarOutlined key="date" :title="post.date" />
-                  </template>
-
-                  <a-card-meta>
-                    <template #description>
-                      <div class="post-description">
-                        {{ post.description }}
-                      </div>
                       <div class="post-meta">
-                        <a-tag color="blue" class="category-tag">
-                          {{ getCategoryName(post.category) }}
-                        </a-tag>
-                        <span class="post-date">{{ formatDate(post.date) }}</span>
+                         <a-tag
+                          color="blue"
+                          class="category-tag"
+                          > {{ getCategoryName(post.category) }} </a-tag
+                        > <span class="post-date">{{ formatDate(post.date) }}</span
+                        >
                       </div>
-                      <div class="post-tags" v-if="post.tags.length">
-                        <a-tag
+
+                      <div
+                        class="post-tags"
+                        v-if="post.tags.length"
+                      >
+                         <a-tag
                           v-for="tag in post.tags.slice(0, 3)"
                           :key="tag"
                           color="green"
                           size="small"
+                          > {{ tag }} </a-tag
+                        > <span
+                          v-if="post.tags.length > 3"
+                          class="more-tags"
+                          > +{{ post.tags.length - 3 }} </span
                         >
-                          {{ tag }}
-                        </a-tag>
-                        <span v-if="post.tags.length > 3" class="more-tags">
-                          +{{ post.tags.length - 3 }}
-                        </span>
                       </div>
-                    </template>
-                  </a-card-meta>
-                </a-card>
+                       </template
+                    > </a-card-meta
+                  > </a-card
+                >
               </div>
-
-              <!-- 空状态 -->
-              <a-empty
+               <!-- 空状态 --> <a-empty
                 v-if="!loading && filteredPosts.length === 0"
                 description="暂无文章"
                 class="empty-state"
-              >
-                <template #image>
-                  <FileTextOutlined style="font-size: 64px; color: #d9d9d9;" />
-                </template>
-              </a-empty>
-            </a-spin>
+                > <template #image> <FileTextOutlined style="font-size: 64px; color: #d9d9d9" /> </template> </a-empty
+              > </a-spin
+            >
           </div>
+
         </div>
-      </a-layout-content>
-    </a-layout>
+         </a-layout-content
+      > </a-layout
+    >
   </div>
+
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import {
-  BookOutlined,
-  AppstoreOutlined,
-  FileTextOutlined,
-  EyeOutlined,
-  CalendarOutlined
-} from '@ant-design/icons-vue'
+import { BookOutlined, AppstoreOutlined, FileTextOutlined, EyeOutlined, CalendarOutlined } from '@ant-design/icons-vue'
 import { message } from 'ant-design-vue'
 import { getAllPosts, getCategories, type PostMeta, type Category } from '@/utils/posts'
 
@@ -141,10 +140,7 @@ const filteredPosts = computed(() => {
 const loadData = async () => {
   try {
     loading.value = true
-    const [postsData, categoriesData] = await Promise.all([
-      getAllPosts(),
-      getCategories()
-    ])
+    const [postsData, categoriesData] = await Promise.all([getAllPosts(), getCategories()])
     posts.value = postsData
     categories.value = categoriesData
   } catch (error) {
@@ -165,9 +161,9 @@ const navigateToPost = (post: PostMeta) => {
 
 const getCategoryName = (category: string) => {
   const categoryNames: Record<string, string> = {
-    'vue': 'Vue.js',
-    'gis': 'GIS',
-    'frontend': '前端开发'
+    vue: 'Vue.js',
+    gis: 'GIS',
+    frontend: '前端开发'
   }
   return categoryNames[category] || category
 }
@@ -360,3 +356,4 @@ onMounted(() => {
   }
 }
 </style>
+

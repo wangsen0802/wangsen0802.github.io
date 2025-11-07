@@ -2,11 +2,11 @@
   "semi": false,
   "singleQuote": true,
   "tabWidth": 2,
-  "trailingComma": "es5",
-  "printWidth": 80,
+  "trailingComma": "none",
+  "printWidth": 100,
   "endOfLine": "lf",
   "bracketSpacing": true,
-  "bracketSameLine": true,
+  "bracketSameLine": false,
   "arrowParens": "avoid",
   "plugins": ["prettier-plugin-vue", "@prettier/plugin-pug"],
   "vueIndentScriptAndStyle": false,
@@ -16,7 +16,15 @@
       "options": {
         "parser": "vue",
         "vueIndentScriptAndStyle": false,
-        "singleAttributePerLine": false
+        "singleAttributePerLine": true,
+        "printWidth": 120
+      }
+    },
+    {
+      "files": "*.md",
+      "options": {
+        "printWidth": 80,
+        "proseWrap": "always"
       }
     }
   ]

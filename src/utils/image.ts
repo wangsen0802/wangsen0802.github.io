@@ -41,7 +41,7 @@ function safeBase64Encode(str: string): string {
     // 先转换为 UTF-8 字节数组，再进行 base64 编码
     const utf8Bytes = new TextEncoder().encode(str)
     let binary = ''
-    utf8Bytes.forEach(byte => binary += String.fromCharCode(byte))
+    utf8Bytes.forEach(byte => (binary += String.fromCharCode(byte)))
     return btoa(binary)
   } catch (error) {
     console.warn('Base64 编码失败，使用备用方案:', error)
@@ -51,7 +51,11 @@ function safeBase64Encode(str: string): string {
 }
 
 // 创建占位符图片 SVG
-export function createPlaceholderSVG(width: number = 400, height: number = 300, text: string = '图片加载中'): string {
+export function createPlaceholderSVG(
+  width: number = 400,
+  height: number = 300,
+  text: string = '图片加载中'
+): string {
   const svgTemplate = `
     <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -87,7 +91,7 @@ export async function checkImageExists(src: string): Promise<boolean> {
 
   try {
     const img = new Image()
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       img.onload = () => resolve(true)
       img.onerror = () => resolve(false)
       img.src = src
@@ -100,7 +104,11 @@ export async function checkImageExists(src: string): Promise<boolean> {
 }
 
 // 优化图片尺寸建议
-export function getOptimalImageSrc(src: string, _containerWidth: number, _containerHeight: number): string {
+export function getOptimalImageSrc(
+  src: string,
+  _containerWidth: number,
+  _containerHeight: number
+): string {
   // 对于外部图片，返回原链接
   if (src.startsWith('http://') || src.startsWith('https://')) {
     return src
@@ -112,9 +120,7 @@ export function getOptimalImageSrc(src: string, _containerWidth: number, _contai
 }
 
 // 支持的图片格式
-export const SUPPORTED_IMAGE_FORMATS = [
-  'jpg', 'jpeg', 'png', 'gif', 'svg', 'webp', 'avif'
-]
+export const SUPPORTED_IMAGE_FORMATS = ['jpg', 'jpeg', 'png', 'gif', 'svg', 'webp', 'avif']
 
 // 检查文件扩展名是否为支持的图片格式
 export function isSupportedImageFormat(filename: string): boolean {

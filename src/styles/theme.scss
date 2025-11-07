@@ -19,7 +19,7 @@
 }
 
 /* 暗色主题变量 */
-[data-theme="dark"] {
+[data-theme='dark'] {
   --bg-primary: #141414;
   --bg-secondary: #1f1f1f;
   --bg-tertiary: #262626;
@@ -39,14 +39,16 @@
 
 /* 主题切换过渡 */
 * {
-  transition: background-color 0.3s ease,
-              color 0.3s ease,
-              border-color 0.3s ease,
-              box-shadow 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 /* 基础主题样式 */
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -98,7 +100,7 @@ html, body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
 }
 
-[data-theme="dark"] .ant-layout-header {
+[data-theme='dark'] .ant-layout-header {
   background: rgba(0, 0, 0, 0.3) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
@@ -114,7 +116,7 @@ html, body {
   border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
-[data-theme="dark"] .ant-layout-footer {
+[data-theme='dark'] .ant-layout-footer {
   background: rgba(0, 0, 0, 0.3) !important;
   border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
@@ -276,7 +278,12 @@ pre.hljs {
 .markdown-content {
   color: var(--text-primary);
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     color: var(--text-primary);
     border-bottom-color: var(--border-primary);
   }
@@ -308,7 +315,8 @@ pre.hljs {
   table {
     border-color: var(--border-primary);
 
-    th, td {
+    th,
+    td {
       border-color: var(--border-primary);
     }
 
@@ -345,7 +353,7 @@ pre.hljs {
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-[data-theme="dark"] .glass-effect {
+[data-theme='dark'] .glass-effect {
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }

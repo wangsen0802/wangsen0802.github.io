@@ -8,18 +8,33 @@
 
         <h1 class="title">
            {{ titleText.displayText
-          }}<span v-if="titleText.isTyping" class="cursor">|</span>
+          }}<span
+            v-if="titleText.isTyping"
+            class="cursor"
+            >|</span
+          >
         </h1>
 
         <p class="subtitle">
            {{ subtitleText.displayText
-          }}<span v-if="subtitleText.isTyping" class="cursor">|</span>
+          }}<span
+            v-if="subtitleText.isTyping"
+            class="cursor"
+            >|</span
+          >
         </p>
 
         <div class="actions">
-           <a-button type="primary" size="large" @click="goToPosts"
+           <a-button
+            type="primary"
+            size="large"
+            @click="goToPosts"
             >浏览文章</a-button
-          > <a-button size="large" @click="goToAbout">了解我</a-button>
+          > <a-button
+            size="large"
+            @click="goToAbout"
+            >了解我</a-button
+          >
         </div>
 
       </div>
@@ -72,7 +87,8 @@
             v-for="post in recentPosts"
             :key="post.id"
             class="post-card"
-            @click="goToPost(post)">
+            @click="goToPost(post)"
+          >
 
             <h3>{{ post.title }}</h3>
 
@@ -110,11 +126,11 @@ const loading = ref(true)
 
 // 打字机效果
 const titleText = useTypewriter({
-  text: ['你好，我是王森', '欢迎来到我的博客'],
+  text: ['你好，我是wanGISen', '欢迎来到我的博客'],
   speed: 120,
   initialDelay: 500,
   loopDelay: 5000,
-  loop: true,
+  loop: true
 })
 
 const subtitleText = useTypewriter({
@@ -122,7 +138,7 @@ const subtitleText = useTypewriter({
   speed: 150,
   initialDelay: 500,
   loopDelay: 5000,
-  loop: true,
+  loop: true
 })
 
 const loadData = async () => {

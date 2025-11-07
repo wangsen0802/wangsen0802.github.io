@@ -1,5 +1,11 @@
 <template>
-  <div class="markdown-content" v-html="renderedContent" ref="contentRef"></div>
+
+  <div
+    class="markdown-content"
+    v-html="renderedContent"
+    ref="contentRef"
+  ></div>
+
 </template>
 
 <script setup lang="ts">
@@ -43,7 +49,7 @@ const cleanupCopyButtons = () => {
   if (!contentRef.value) return
 
   const wrappers = contentRef.value.querySelectorAll('.code-block-wrapper')
-  wrappers.forEach((wrapper) => {
+  wrappers.forEach(wrapper => {
     const block = wrapper.querySelector('pre.hljs')
     const parent = wrapper.parentNode
     if (block && parent) {
@@ -61,7 +67,7 @@ const addCopyButtons = () => {
   cleanupCopyButtons()
 
   const codeBlocks = contentRef.value.querySelectorAll('pre.hljs')
-  codeBlocks.forEach((block) => {
+  codeBlocks.forEach(block => {
     const wrapper = document.createElement('div')
     wrapper.className = 'code-block-wrapper'
     wrapper.style.position = 'relative'
@@ -86,11 +92,14 @@ onMounted(() => {
 })
 
 // 监听内容变化，重新添加复制按钮
-watch(() => renderedContent.value, () => {
-  nextTick(() => {
-    addCopyButtons()
-  })
-})
+watch(
+  () => renderedContent.value,
+  () => {
+    nextTick(() => {
+      addCopyButtons()
+    })
+  }
+)
 </script>
 
 <style scoped lang="scss">
@@ -323,3 +332,4 @@ watch(() => renderedContent.value, () => {
   }
 }
 </style>
+

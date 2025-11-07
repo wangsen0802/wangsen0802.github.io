@@ -1,9 +1,9 @@
 ---
-title: "OpenLayers 入门教程"
-description: "学习如何使用OpenLayers创建交互式地图应用"
-date: "2024-10-24"
-author: "王森"
-tags: ["GIS", "OpenLayers", "地图", "JavaScript"]
+title: 'OpenLayers 入门教程'
+description: '学习如何使用OpenLayers创建交互式地图应用'
+date: '2024-10-24'
+author: '王森'
+tags: ['GIS', 'OpenLayers', '地图', 'JavaScript']
 ---
 
 # OpenLayers 入门教程
@@ -90,10 +90,10 @@ import { View } from 'ol'
 
 const view = new View({
   center: [104, 30], // 中心点坐标
-  zoom: 10,          // 缩放级别
+  zoom: 10, // 缩放级别
   projection: 'EPSG:4326', // 坐标系
-  minZoom: 5,        // 最小缩放级别
-  maxZoom: 18        // 最大缩放级别
+  minZoom: 5, // 最小缩放级别
+  maxZoom: 18 // 最大缩放级别
 })
 ```
 
@@ -112,12 +112,14 @@ const pointFeature = new Feature({
 })
 
 // 设置样式
-pointFeature.setStyle(new Style({
-  image: new Icon({
-    src: 'marker.png',
-    size: [32, 32]
+pointFeature.setStyle(
+  new Style({
+    image: new Icon({
+      src: 'marker.png',
+      size: [32, 32]
+    })
   })
-}))
+)
 
 // 添加到矢量数据源
 vectorSource.addFeature(pointFeature)
@@ -150,13 +152,13 @@ map.addInteraction(modify)
 
 ```javascript
 // 点击事件
-map.on('click', (event) => {
+map.on('click', event => {
   const coordinate = event.coordinate
   console.log('点击位置:', coordinate)
 })
 
 // 要素选择事件
-select.on('select', (event) => {
+select.on('select', event => {
   const selectedFeatures = event.selected
   console.log('选中的要素:', selectedFeatures)
 })

@@ -1,48 +1,58 @@
 <template>
-  <div class="app-loading" :class="{ 'app-loading--dark': isDarkTheme }">
+
+  <div
+    class="app-loading"
+    :class="{ 'app-loading--dark': isDarkTheme }"
+  >
+
     <div class="app-loading__container">
-      <!-- Logo 区域 -->
+       <!-- Logo 区域 -->
       <div class="app-loading__logo">
-        <div class="app-loading__logo-text">
-          wanGISen
-        </div>
-        <div class="app-loading__logo-subtitle">
-          个人技术博客
-        </div>
-      </div>
 
-      <!-- 加载动画 -->
-      <div class="app-loading__spinner">
-        <a-spin size="large" />
-      </div>
+        <div class="app-loading__logo-text"> wanGISen </div>
 
-      <!-- 加载文字 -->
+        <div class="app-loading__logo-subtitle"> 个人技术博客 </div>
+
+      </div>
+       <!-- 加载动画 -->
+      <div class="app-loading__spinner"> <a-spin size="large" /> </div>
+       <!-- 加载文字 -->
       <div class="app-loading__text">
-        <div class="app-loading__title">{{ loadingTitle }}</div>
-        <div class="app-loading__subtitle">{{ loadingSubtitle }}</div>
-      </div>
 
-      <!-- 进度条 -->
+        <div class="app-loading__title">{{ loadingTitle }}</div>
+
+        <div class="app-loading__subtitle">{{ loadingSubtitle }}</div>
+
+      </div>
+       <!-- 进度条 -->
       <div class="app-loading__progress">
+
         <div
           class="app-loading__progress-bar"
           :style="{ width: `${progress}%` }"
         ></div>
-      </div>
-    </div>
 
-    <!-- 背景装饰 -->
+      </div>
+
+    </div>
+     <!-- 背景装饰 -->
     <div class="app-loading__background">
+
       <div class="app-loading__particles">
+
         <div
           v-for="i in 20"
           :key="i"
           class="app-loading__particle"
           :style="getParticleStyle(i)"
         ></div>
+
       </div>
+
     </div>
+
   </div>
+
 </template>
 
 <script setup lang="ts">
@@ -88,11 +98,7 @@ const loadingSubtitle = computed(() => {
     return '首次访问，正在准备...'
   }
 
-  const subtitles = [
-    '正在启动应用...',
-    '正在加载组件和样式...',
-    '即将完成...'
-  ]
+  const subtitles = ['正在启动应用...', '正在加载组件和样式...', '即将完成...']
   return subtitles[Math.max(0, Math.min(loadingPhase.value, subtitles.length - 1))]
 })
 
@@ -146,7 +152,7 @@ const simulateProgress = () => {
 
       const interval = setInterval(() => {
         step++
-        progress.value = startProgress + (progressDiff * step / steps)
+        progress.value = startProgress + (progressDiff * step) / steps
 
         if (step >= steps) {
           clearInterval(interval)
@@ -388,3 +394,4 @@ onMounted(() => {
   }
 }
 </style>
+

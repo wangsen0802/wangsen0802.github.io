@@ -1,85 +1,96 @@
 <template>
-  <div class="post-detail">
-    <a-layout class="layout">
-      <a-layout-header class="header">
-        <div class="header-content">
-          <div class="header-left">
-            <a-button type="text" @click="goBack" class="back-btn">
-              <ArrowLeftOutlined /> 返回
-            </a-button>
-            <div class="breadcrumb">
-              <a-breadcrumb>
-                <a-breadcrumb-item>
-                  <router-link to="/">首页</router-link>
-                </a-breadcrumb-item>
-                <a-breadcrumb-item>
-                  <router-link to="/posts">文章列表</router-link>
-                </a-breadcrumb-item>
-                <a-breadcrumb-item>
-                  {{ getCategoryName(post?.category || '') }}
-                </a-breadcrumb-item>
-                <a-breadcrumb-item>{{ post?.title }}</a-breadcrumb-item>
-              </a-breadcrumb>
-            </div>
-          </div>
-          <div class="header-actions">
-            <ThemeToggle />
-          </div>
-        </div>
-      </a-layout-header>
 
-      <a-layout-content class="content">
-        <div class="content-wrapper" v-if="post">
-          <a-spin :spinning="loading">
+  <div class="post-detail">
+     <a-layout class="layout"
+      > <a-layout-header class="header"
+        >
+        <div class="header-content">
+
+          <div class="header-left">
+             <a-button
+              type="text"
+              @click="goBack"
+              class="back-btn"
+              > <ArrowLeftOutlined /> 返回 </a-button
+            >
+            <div class="breadcrumb">
+               <a-breadcrumb
+                > <a-breadcrumb-item> <router-link to="/">首页</router-link> </a-breadcrumb-item> <a-breadcrumb-item
+                  > <router-link to="/posts">文章列表</router-link> </a-breadcrumb-item
+                > <a-breadcrumb-item> {{ getCategoryName(post?.category || '') }} </a-breadcrumb-item>
+                <a-breadcrumb-item>{{ post?.title }}</a-breadcrumb-item
+                > </a-breadcrumb
+              >
+            </div>
+
+          </div>
+
+          <div class="header-actions"> <ThemeToggle /> </div>
+
+        </div>
+         </a-layout-header
+      > <a-layout-content class="content"
+        >
+        <div
+          class="content-wrapper"
+          v-if="post"
+        >
+           <a-spin :spinning="loading"
+            >
             <div class="post-header">
+
               <h1 class="post-title">{{ post.title }}</h1>
+
               <div class="post-meta">
+
                 <div class="meta-left">
-                  <a-tag color="blue" class="category-tag">
-                    {{ getCategoryName(post.category) }}
-                  </a-tag>
-                  <span class="post-date">
-                    <CalendarOutlined /> {{ formatDate(post.date) }}
-                  </span>
-                  <span class="post-author">
-                    <UserOutlined /> {{ post.author }}
-                  </span>
+                   <a-tag
+                    color="blue"
+                    class="category-tag"
+                    > {{ getCategoryName(post.category) }} </a-tag
+                  > <span class="post-date"> <CalendarOutlined /> {{ formatDate(post.date) }} </span> <span
+                    class="post-author"
+                    > <UserOutlined /> {{ post.author }} </span
+                  >
                 </div>
+
                 <div class="meta-right">
-                  <a-button
+                   <a-button
                     type="primary"
                     :icon="h(EditOutlined)"
                     @click="editPost"
                     v-if="false"
+                    > 编辑 </a-button
                   >
-                    编辑
-                  </a-button>
                 </div>
+
               </div>
-              <div class="post-tags" v-if="post.tags.length">
-                <span class="tags-label">标签：</span>
-                <a-tag
+
+              <div
+                class="post-tags"
+                v-if="post.tags.length"
+              >
+                 <span class="tags-label">标签：</span> <a-tag
                   v-for="tag in post.tags"
                   :key="tag"
                   color="green"
                   class="tag"
+                  > {{ tag }} </a-tag
                 >
-                  {{ tag }}
-                </a-tag>
               </div>
+
             </div>
+             <a-card class="post-content-card"> <MarkdownRenderer :content="post.content || ''" /> </a-card> <!-- 相关文章推荐 -->
 
-            <a-card class="post-content-card">
-              <MarkdownRenderer :content="post.content || ''" />
-            </a-card>
+            <div
+              class="related-posts"
+              v-if="relatedPosts.length"
+            >
 
-            <!-- 相关文章推荐 -->
-            <div class="related-posts" v-if="relatedPosts.length">
-              <h3>
-                <LinkOutlined /> 相关文章
-              </h3>
+              <h3> <LinkOutlined /> 相关文章 </h3>
+
               <div class="related-posts-grid">
-                <a-card
+                 <a-card
                   v-for="relatedPost in relatedPosts"
                   :key="`${relatedPost.category}-${relatedPost.id}`"
                   :title="relatedPost.title"
@@ -87,62 +98,83 @@
                   hoverable
                   @click="navigateToPost(relatedPost)"
                   class="related-post-card"
-                >
-                  <template #cover>
-                    <div class="related-post-cover">
-                      <FileTextOutlined />
-                    </div>
-                  </template>
-                  <a-card-meta>
-                    <template #description>
-                      <div class="related-post-description">
-                        {{ relatedPost.description }}
-                      </div>
-                      <div class="related-post-meta">
-                        <a-tag size="small" color="blue">
-                          {{ getCategoryName(relatedPost.category) }}
-                        </a-tag>
-                        <span class="related-post-date">
-                          {{ formatDate(relatedPost.date) }}
-                        </span>
-                      </div>
-                    </template>
-                  </a-card-meta>
-                </a-card>
-              </div>
-            </div>
-          </a-spin>
-        </div>
+                  > <template #cover
+                    >
+                    <div class="related-post-cover"> <FileTextOutlined /> </div>
+                     </template
+                  > <a-card-meta
+                    > <template #description
+                      >
+                      <div class="related-post-description"> {{ relatedPost.description }} </div>
 
-        <!-- 文章不存在 -->
-        <div class="post-not-found" v-else-if="!loading">
-          <div class="not-found-content">
-            <div class="not-found-icon">
-              <FileTextOutlined />
+                      <div class="related-post-meta">
+                         <a-tag
+                          size="small"
+                          color="blue"
+                          > {{ getCategoryName(relatedPost.category) }} </a-tag
+                        > <span class="related-post-date"> {{ formatDate(relatedPost.date) }} </span>
+                      </div>
+                       </template
+                    > </a-card-meta
+                  > </a-card
+                >
+              </div>
+
             </div>
-            <h1>文章不存在</h1>
-            <p>抱歉，您访问的文章不存在或已被删除</p>
-            <div class="not-found-actions">
-              <a-button type="primary" size="large" @click="goBack">
-                <ArrowLeftOutlined /> 返回上一页
-              </a-button>
-              <a-button size="large" @click="$router.push('/posts')">
-                <BookOutlined /> 查看所有文章
-              </a-button>
-            </div>
-            <div class="not-found-suggestions">
-              <h3>可能的原因：</h3>
-              <ul>
-                <li>文章链接已过期</li>
-                <li>文章已被作者删除</li>
-                <li>输入的网址有误</li>
-              </ul>
-            </div>
-          </div>
+             </a-spin
+          >
         </div>
-      </a-layout-content>
-    </a-layout>
+         <!-- 文章不存在 -->
+        <div
+          class="post-not-found"
+          v-else-if="!loading"
+        >
+
+          <div class="not-found-content">
+
+            <div class="not-found-icon"> <FileTextOutlined /> </div>
+
+            <h1>文章不存在</h1>
+
+            <p>抱歉，您访问的文章不存在或已被删除</p>
+
+            <div class="not-found-actions">
+               <a-button
+                type="primary"
+                size="large"
+                @click="goBack"
+                > <ArrowLeftOutlined /> 返回上一页 </a-button
+              > <a-button
+                size="large"
+                @click="$router.push('/posts')"
+                > <BookOutlined /> 查看所有文章 </a-button
+              >
+            </div>
+
+            <div class="not-found-suggestions">
+
+              <h3>可能的原因：</h3>
+
+              <ul>
+
+                <li>文章链接已过期</li>
+
+                <li>文章已被作者删除</li>
+
+                <li>输入的网址有误</li>
+
+              </ul>
+
+            </div>
+
+          </div>
+
+        </div>
+         </a-layout-content
+      > </a-layout
+    >
   </div>
+
 </template>
 
 <script setup lang="ts">
@@ -175,10 +207,10 @@ const relatedPosts = computed(() => {
   if (!post.value) return []
 
   return allPosts.value
-    .filter(p =>
-      p.id !== post.value!.id &&
-      (p.category === post.value!.category ||
-       p.tags.some(tag => post.value!.tags.includes(tag)))
+    .filter(
+      p =>
+        p.id !== post.value!.id &&
+        (p.category === post.value!.category || p.tags.some(tag => post.value!.tags.includes(tag)))
     )
     .slice(0, 6) // 最多显示6篇相关文章
 })
@@ -190,10 +222,7 @@ const loadPost = async () => {
     const category = route.params.category as string
     const id = route.params.id as string
 
-    const [postData, allPostsData] = await Promise.all([
-      getPost(category, id),
-      getAllPosts()
-    ])
+    const [postData, allPostsData] = await Promise.all([getPost(category, id), getAllPosts()])
 
     post.value = postData
     allPosts.value = allPostsData
@@ -228,9 +257,9 @@ const editPost = () => {
 
 const getCategoryName = (category: string) => {
   const categoryNames: Record<string, string> = {
-    'vue': 'Vue.js',
-    'gis': 'GIS',
-    'frontend': '前端开发'
+    vue: 'Vue.js',
+    gis: 'GIS',
+    frontend: '前端开发'
   }
   return categoryNames[category] || category
 }
@@ -613,3 +642,4 @@ onUnmounted(() => {
   }
 }
 </style>
+

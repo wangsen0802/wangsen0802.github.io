@@ -19,36 +19,37 @@ export default defineConfig({
     vue(),
     AutoImport({
       imports: ['vue', 'vue-router'],
-      dts: true,
+      dts: true
     }),
     Components({
       resolvers: [
         AntDesignVueResolver({
-          importStyle: false, // css in js
-        }),
-      ],
-    }),
+          importStyle: false // css in js
+        })
+      ]
+    })
   ],
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'src'),
-    },
+      '@': resolve(__dirname, 'src')
+    }
   },
   server: {
     fs: {
-      strict: false,
+      strict: false
     },
-    open: true,
+    open: true
   },
   css: {
     preprocessorOptions: {
       scss: {
+        charset: false,
         api: 'modern-compiler'
       }
     }
   },
   optimizeDeps: {
-    include: ['vue'],
+    include: ['vue', 'vue-router', 'pinia', 'ant-design-vue', 'gsap', 'highlight.js', 'markdown-it']
   },
   assetsInclude: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.svg', '**/*.webp'],
   build: {
@@ -56,12 +57,12 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          'vendor': ['vue', 'vue-router', 'pinia'],
-          'ui': ['ant-design-vue'],
-          'utils': ['highlight.js', 'markdown-it']
+          vendor: ['vue', 'vue-router', 'pinia'],
+          ui: ['ant-design-vue'],
+          utils: ['highlight.js', 'markdown-it']
         },
         // 处理静态资源
-        assetFileNames: (assetInfo) => {
+        assetFileNames: assetInfo => {
           // const info = assetInfo.name?.split('.') || []
           // const extType = info[info.length - 1] || ''
 

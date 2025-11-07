@@ -1,9 +1,9 @@
 ---
-title: "现代 CSS 技术与实践"
-description: "探索CSS最新特性和现代前端开发技巧"
-date: "2024-10-24"
-author: "王森"
-tags: ["CSS", "前端", "Web开发", "响应式设计"]
+title: '现代 CSS 技术与实践'
+description: '探索CSS最新特性和现代前端开发技巧'
+date: '2024-10-24'
+author: '王森'
+tags: ['CSS', '前端', 'Web开发', '响应式设计']
 ---
 
 # 现代 CSS 技术与实践
@@ -127,8 +127,12 @@ CSS 变量让样式管理更加灵活：
 }
 
 @keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 ```
 
@@ -142,7 +146,9 @@ CSS 变量让样式管理更加灵活：
 }
 
 @keyframes parallax-slide {
-  to { transform: translateY(-100px); }
+  to {
+    transform: translateY(-100px);
+  }
 }
 ```
 

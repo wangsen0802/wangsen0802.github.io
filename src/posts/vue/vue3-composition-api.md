@@ -1,18 +1,20 @@
 ---
-title: "Vue 3 Composition API 详解"
-description: "深入了解Vue 3 Composition API的使用方法和最佳实践"
-date: "2024-10-24"
-author: "王森"
-tags: ["Vue3", "Composition API", "前端框架"]
+title: 'Vue 3 Composition API 详解'
+description: '深入了解Vue 3 Composition API的使用方法和最佳实践'
+date: '2024-10-24'
+author: '王森'
+tags: ['Vue3', 'Composition API', '前端框架']
 ---
 
 # Vue 3 Composition API 详解
 
-Vue 3 引入的 Composition API 是一个重大的变化，它提供了更灵活的代码组织方式和更好的 TypeScript 支持。
+Vue 3 引入的 Composition
+API 是一个重大的变化，它提供了更灵活的代码组织方式和更好的 TypeScript 支持。
 
 ## 什么是 Composition API？
 
-Composition API 是 Vue 3 中的一套新的 API，它允许我们使用函数的方式来组织组件逻辑。
+Composition API 是 Vue
+3 中的一套新的 API，它允许我们使用函数的方式来组织组件逻辑。
 
 ## 基本语法
 
@@ -99,8 +101,8 @@ watch(count, (newValue, oldValue) => {
 ```javascript
 const fullName = computed({
   get: () => `${firstName.value} ${lastName.value}`,
-  set: (newValue) => {
-    [firstName.value, lastName.value] = newValue.split(' ')
+  set: newValue => {
+    ;[firstName.value, lastName.value] = newValue.split(' ')
   }
 })
 ```
@@ -138,4 +140,5 @@ export default {
 
 ## 总结
 
-Composition API 为 Vue 3 带来了更强大和灵活的开发体验，是现代 Vue 开发的推荐方式。
+Composition API 为 Vue
+3 带来了更强大和灵活的开发体验，是现代 Vue 开发的推荐方式。

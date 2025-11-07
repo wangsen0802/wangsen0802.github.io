@@ -1,112 +1,145 @@
 <template>
-  <div class="category-posts">
-    <a-layout class="layout">
-      <a-layout-header class="header">
-        <div class="header-content">
-          <div class="header-left">
-            <a-button type="text" @click="goBack" class="back-btn">
-              <ArrowLeftOutlined /> 返回
-            </a-button>
-            <div class="category-info">
-              <h1>
-                <AppstoreOutlined /> {{ getCategoryName(category) }}
-              </h1>
-              <p class="category-description">{{ getCategoryDescription(category) }}</p>
-            </div>
-          </div>
-          <div class="header-actions">
-            <ThemeToggle />
-          </div>
-        </div>
-      </a-layout-header>
 
-      <a-layout-content class="content">
+  <div class="category-posts">
+     <a-layout class="layout"
+      > <a-layout-header class="header"
+        >
+        <div class="header-content">
+
+          <div class="header-left">
+             <a-button
+              type="text"
+              @click="goBack"
+              class="back-btn"
+              > <ArrowLeftOutlined /> 返回 </a-button
+            >
+            <div class="category-info">
+
+              <h1> <AppstoreOutlined /> {{ getCategoryName(category) }} </h1>
+
+              <p class="category-description">{{ getCategoryDescription(category) }}</p>
+
+            </div>
+
+          </div>
+
+          <div class="header-actions"> <ThemeToggle /> </div>
+
+        </div>
+         </a-layout-header
+      > <a-layout-content class="content"
+        >
         <div class="content-wrapper">
-          <a-spin :spinning="loading">
+           <a-spin :spinning="loading"
+            >
             <div class="posts-grid">
-              <a-card
+               <a-card
                 v-for="post in posts"
                 :key="`${post.category}-${post.id}`"
                 :title="post.title"
                 class="post-card"
                 hoverable
                 @click="navigateToPost(post)"
-              >
-                <template #cover>
-                  <div class="post-cover">
-                    <FileTextOutlined />
-                  </div>
-                </template>
+                > <template #cover
+                  >
+                  <div class="post-cover"> <FileTextOutlined /> </div>
+                   </template
+                > <template #actions
+                  > <EyeOutlined
+                    key="view"
+                    title="查看"
+                  /> <CalendarOutlined
+                    key="date"
+                    :title="post.date"
+                  /> </template
+                > <a-card-meta
+                  > <template #description
+                    >
+                    <div class="post-description"> {{ post.description }} </div>
 
-                <template #actions>
-                  <EyeOutlined key="view" title="查看" />
-                  <CalendarOutlined key="date" :title="post.date" />
-                </template>
-
-                <a-card-meta>
-                  <template #description>
-                    <div class="post-description">
-                      {{ post.description }}
-                    </div>
                     <div class="post-meta">
-                      <span class="post-date">{{ formatDate(post.date) }}</span>
-                      <span class="post-author">{{ post.author }}</span>
+                       <span class="post-date">{{ formatDate(post.date) }}</span
+                      > <span class="post-author">{{ post.author }}</span
+                      >
                     </div>
-                    <div class="post-tags" v-if="post.tags.length">
-                      <a-tag
+
+                    <div
+                      class="post-tags"
+                      v-if="post.tags.length"
+                    >
+                       <a-tag
                         v-for="tag in post.tags.slice(0, 3)"
                         :key="tag"
                         color="green"
                         size="small"
+                        > {{ tag }} </a-tag
+                      > <span
+                        v-if="post.tags.length > 3"
+                        class="more-tags"
+                        > +{{ post.tags.length - 3 }} </span
                       >
-                        {{ tag }}
-                      </a-tag>
-                      <span v-if="post.tags.length > 3" class="more-tags">
-                        +{{ post.tags.length - 3 }}
-                      </span>
                     </div>
-                  </template>
-                </a-card-meta>
-              </a-card>
+                     </template
+                  > </a-card-meta
+                > </a-card
+              >
             </div>
+             <!-- 空状态 -->
+            <div
+              class="empty-state"
+              v-if="!loading && posts.length === 0"
+            >
 
-            <!-- 空状态 -->
-            <div class="empty-state" v-if="!loading && posts.length === 0">
               <div class="empty-content">
-                <div class="empty-icon">
-                  <FileTextOutlined />
-                </div>
+
+                <div class="empty-icon"> <FileTextOutlined /> </div>
+
                 <h2>该分类下暂无文章</h2>
+
                 <p>{{ getCategoryDescription(category) || '这个分类还没有文章，请稍后再来看看' }}</p>
-                <a-button type="primary" size="large" @click="$router.push('/posts')">
-                  <BookOutlined /> 查看所有文章
-                </a-button>
+                 <a-button
+                  type="primary"
+                  size="large"
+                  @click="$router.push('/posts')"
+                  > <BookOutlined /> 查看所有文章 </a-button
+                >
                 <div class="empty-suggestions">
+
                   <h3>推荐分类：</h3>
+
                   <div class="suggestion-cards">
-                    <a-card
+                     <a-card
                       v-for="cat in getOtherCategories()"
                       :key="cat.path"
                       size="small"
                       hoverable
                       @click="$router.push(`/posts/${cat.path}`)"
                       class="suggestion-card"
-                    >
+                      >
                       <div class="suggestion-info">
+
                         <h4>{{ cat.name }}</h4>
+
                         <p>{{ cat.description }}</p>
-                        <span class="post-count">{{ cat.count }} 篇文章</span>
+                         <span class="post-count">{{ cat.count }} 篇文章</span>
                       </div>
-                    </a-card>
+                       </a-card
+                    >
                   </div>
+
                 </div>
+
               </div>
+
             </div>
-          </a-spin>
+             </a-spin
+          >
         </div>
-      </a-layout-content>
-    </a-layout>
+         </a-layout-content
+      > </a-layout
+    >
   </div>
+
 </template>
 
 <script setup lang="ts">
@@ -179,18 +212,18 @@ const navigateToPost = (post: PostMeta) => {
 
 const getCategoryName = (category: string) => {
   const categoryNames: Record<string, string> = {
-    'vue': 'Vue.js',
-    'gis': 'GIS',
-    'frontend': '前端开发'
+    vue: 'Vue.js',
+    gis: 'GIS',
+    frontend: '前端开发'
   }
   return categoryNames[category] || category
 }
 
 const getCategoryDescription = (category: string) => {
   const categoryDescriptions: Record<string, string> = {
-    'vue': 'Vue.js 相关技术和最佳实践',
-    'gis': 'GIS 地理信息系统开发',
-    'frontend': '前端开发技术和工具'
+    vue: 'Vue.js 相关技术和最佳实践',
+    gis: 'GIS 地理信息系统开发',
+    frontend: '前端开发技术和工具'
   }
   return categoryDescriptions[category] || ''
 }
@@ -204,11 +237,14 @@ const getOtherCategories = () => {
 }
 
 // 监听路由变化
-watch(() => route.params.category, () => {
-  if (route.name === 'CategoryPosts') {
-    loadPosts()
+watch(
+  () => route.params.category,
+  () => {
+    if (route.name === 'CategoryPosts') {
+      loadPosts()
+    }
   }
-})
+)
 
 // 生命周期
 onMounted(() => {
@@ -475,3 +511,4 @@ onMounted(() => {
   }
 }
 </style>
+

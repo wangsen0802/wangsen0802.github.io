@@ -4,7 +4,9 @@
 
 ## 项目概述
 
-这是一个使用 Vue 3、TypeScript 和 Vite 构建的个人技术博客网站，主要展示前端开发和GIS技术相关的文章内容。项目已配置自动部署到 GitHub Pages，遵循现代 Vue.js 开发模式。
+这是一个使用 Vue
+3、TypeScript 和 Vite 构建的个人技术博客网站，主要展示前端开发和GIS技术相关的文章内容。项目已配置自动部署到 GitHub
+Pages，遵循现代 Vue.js 开发模式。
 
 ## 架构概述
 

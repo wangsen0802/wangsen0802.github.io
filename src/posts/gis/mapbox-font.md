@@ -8,7 +8,8 @@ tags: ['GIS', 'Mapbox', '地图']
 
 字体文件(ttf/otf)一般比较大，一般在10M左右，在网页中加载比较耗时。
 
-mapbox加载的字体是经过处理的，加工成pbf格式。pbf格式文件是基于Google的Protocol Buffer协议进行组织的，是一种二进制文件。Mapbox的矢量瓦片、字体都是采用这种数据结构进行存储、压缩的。
+mapbox加载的字体是经过处理的，加工成pbf格式。pbf格式文件是基于Google的Protocol
+Buffer协议进行组织的，是一种二进制文件。Mapbox的矢量瓦片、字体都是采用这种数据结构进行存储、压缩的。
 
 因此在mapbox 中想要使用自定义的字体样式，需要进行格式转换，将ttf/otf字体转换为pbf格式。
 

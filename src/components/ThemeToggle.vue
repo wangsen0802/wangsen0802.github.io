@@ -1,14 +1,16 @@
 <template>
-  <a-tooltip :title="isDark ? '切换到亮色主题' : '切换到暗色主题'" placement="bottom">
-    <a-button
+   <a-tooltip
+    :title="isDark ? '切换到亮色主题' : '切换到暗色主题'"
+    placement="bottom"
+    > <a-button
       :type="isDark ? 'primary' : 'default'"
       shape="circle"
       :icon="h(isDark ? GlobalOutlined : BulbOutlined)"
       @click="toggleTheme"
       class="theme-toggle-nav"
       size="middle"
-    />
-  </a-tooltip>
+    /> </a-tooltip
+  >
 </template>
 
 <script setup lang="ts">
@@ -97,3 +99,4 @@ const toggleTheme = () => {
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 </style>
+

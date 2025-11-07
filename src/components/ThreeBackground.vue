@@ -1,5 +1,10 @@
 <template>
-  <div ref="container" class="three-background"></div>
+
+  <div
+    ref="container"
+    class="three-background"
+  ></div>
+
 </template>
 
 <script setup lang="ts">
@@ -20,7 +25,7 @@ let mousePosition = { x: 0, y: 0 }
 // 根据设备性能调整粒子数量
 const getParticleCount = () => {
   const width = window.innerWidth
-  if (width < 768) return 600  // 移动端
+  if (width < 768) return 600 // 移动端
   if (width < 1024) return 900 // 平板
   return 1500 // 桌面端
 }
@@ -29,8 +34,8 @@ const getParticleCount = () => {
 const getParticleColors = () => {
   const isDark = appStore.theme === 'dark'
   return {
-    color: isDark ? 0x00d4dd : 0x0099dd,  // 更亮的颜色
-    emissive: isDark ? 0x00a8aa : 0x0066aa  // 增强发光效果
+    color: isDark ? 0x00d4dd : 0x0099dd, // 更亮的颜色
+    emissive: isDark ? 0x00a8aa : 0x0066aa // 增强发光效果
   }
 }
 
@@ -47,12 +52,7 @@ const initScene = () => {
     scene = new THREE.Scene()
 
     // 创建相机
-    camera = new THREE.PerspectiveCamera(
-      75,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      1000
-    )
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
     camera.position.z = 50
 
     // 创建渲染器
@@ -243,3 +243,4 @@ onUnmounted(() => {
   height: 100%;
 }
 </style>
+
