@@ -9,14 +9,6 @@ const navItems = [
 // 当前路由
 const route = useRoute()
 
-// 主题
-const colorMode = useColorMode()
-const isDark = computed(() => colorMode.value === 'dark')
-
-const toggleTheme = () => {
-  colorMode.preference = isDark.value ? 'light' : 'dark'
-}
-
 // 当前选中的导航
 const selectedNav = computed(() => {
   const path = route.path
@@ -28,6 +20,11 @@ const selectedNav = computed(() => {
 </script>
 
 <template>
+  <!-- Three.js 背景 -->
+  <ClientOnly>
+    <ThreeBackground />
+  </ClientOnly>
+
   <a-layout class="layout">
     <!-- 导航栏 -->
     <a-layout-header class="header">
@@ -47,12 +44,7 @@ const selectedNav = computed(() => {
         </a-menu>
 
         <div class="header-actions">
-          <a-button type="text" @click="toggleTheme">
-            <template #icon>
-              <span v-if="isDark">🌙</span>
-              <span v-else>☀️</span>
-            </template>
-          </a-button>
+          <ThemeToggle />
         </div>
       </div>
     </a-layout-header>
@@ -82,6 +74,7 @@ const selectedNav = computed(() => {
 <style scoped lang="scss">
 .layout {
   min-height: 100vh;
+  background: transparent !important;
 }
 
 .header {
@@ -138,6 +131,7 @@ const selectedNav = computed(() => {
 .content {
   padding: 2rem;
   min-height: calc(100vh - 64px - 80px);
+  background: transparent !important;
 
   .content-wrapper {
     max-width: 1200px;
@@ -148,6 +142,7 @@ const selectedNav = computed(() => {
 .footer {
   text-align: center;
   padding: 1.5rem 2rem;
+  background: transparent !important;
 
   .footer-content {
     max-width: 1200px;

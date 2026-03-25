@@ -17,33 +17,25 @@ const techStack = [
   { name: 'Pinia', category: '状态管理', icon: '🍍' },
 ]
 
-// 动画效果
-const { $gsap } = useNuxtApp()
+// 打字机效果
+const roles = [
+  '前端开发工程师',
+  'GIS 技术爱好者',
+  'Vue.js 开发者',
+  '全栈学习者',
+]
 
+const { displayText, isTyping, start } = useTypewriter({
+  text: roles,
+  speed: 80,
+  initialDelay: 500,
+  loopDelay: 2000,
+  loop: true,
+})
+
+// 页面加载后开始打字
 onMounted(() => {
-  if ($gsap) {
-    $gsap.from('.hero-title', {
-      opacity: 0,
-      y: 30,
-      duration: 0.8,
-      ease: 'power2.out',
-    })
-    $gsap.from('.hero-subtitle', {
-      opacity: 0,
-      y: 30,
-      duration: 0.8,
-      delay: 0.2,
-      ease: 'power2.out',
-    })
-    $gsap.from('.tech-card', {
-      opacity: 0,
-      y: 20,
-      duration: 0.5,
-      stagger: 0.1,
-      delay: 0.4,
-      ease: 'power2.out',
-    })
-  }
+  start()
 })
 </script>
 
@@ -56,7 +48,8 @@ onMounted(() => {
           你好，我是 <span class="highlight">王森</span>
         </h1>
         <p class="hero-subtitle">
-          前端开发工程师 / GIS 技术爱好者
+          <span class="typewriter">{{ displayText }}</span>
+          <span class="cursor" :class="{ blink: isTyping }">|</span>
         </p>
         <p class="hero-description">
           专注于 Vue.js 生态和地理信息系统开发，分享技术心得与最佳实践
@@ -115,6 +108,26 @@ onMounted(() => {
     font-size: 1.5rem;
     color: var(--text-secondary);
     margin-bottom: 1rem;
+    min-height: 2.25rem;
+
+    .typewriter {
+      display: inline;
+    }
+
+    .cursor {
+      display: inline;
+      font-weight: 100;
+      color: var(--accent-primary);
+
+      &.blink {
+        animation: blink 1s infinite;
+      }
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
   }
 
   .hero-description {
