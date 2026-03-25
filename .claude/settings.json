@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "defaultMode": "bypassPermissions",
+    "allow": [
+      "mcp__filesystem__list_directory",
+      "mcp__filesystem__create_directory",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm lint:*)",
+      "Bash(source ~/.nvm/nvm.sh)",
+      "Bash(nvm install:*)",
+      "Bash(nvm use:*)",
+      "Skill(update-config)"
+    ]
+  }
+}
