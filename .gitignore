@@ -12,6 +12,13 @@ dist
 dist-ssr
 *.local
 
+# Nuxt dev/build outputs
+.output
+.nuxt
+.nitro
+.cache
+.data
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
