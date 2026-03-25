@@ -4,215 +4,185 @@
 
 ## 项目概述
 
-这是一个使用 Vue 3、TypeScript 和 Vite 构建的个人技术博客网站，主要展示前端开发和GIS技术相关的文章内容。项目已配置自动部署到 GitHub Pages，遵循现代 Vue.js 开发模式。
+这是一个使用 Vue 3、TypeScript 和 Vite 构建的个人技术博客网站，主要展示前端开发和 GIS 技术相关的文章内容。项目已配置自动部署到 GitHub Pages，遵循现代 Vue.js 开发模式。
 
-## 架构概述
+> **架构规划**：项目计划迁移至 Nuxt 3 全栈架构，详见 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
 
-### 技术栈
+## 当前技术栈
 
-- **Vue 3** (组合式 API)
-- **TypeScript** (严格模式)
-- **Vite 5.x** 构建工具
-- **Vue Router 4** 路由管理
-- **Pinia 3** 状态管理
-- **SCSS** 样式预处理器
-- **Ant Design Vue** UI组件库
-- **markdown-it** Markdown解析
-- **highlight.js** 代码高亮
-- **GSAP** 动画库
-- **Prettier** 代码格式化
+| 类型 | 技术 | 版本 |
+|------|------|------|
+| 框架 | Vue 3 (组合式 API) | ^3.5 |
+| 语言 | TypeScript (严格模式) | ~5.8 |
+| 构建 | Vite | ^5.4 |
+| 路由 | Vue Router 4 | ^4.6 |
+| 状态 | Pinia 3 | ^3.0 |
+| 样式 | SCSS | - |
+| UI | Ant Design Vue | ^4.2 |
+| 解析 | markdown-it | ^14.1 |
+| 高亮 | highlight.js | ^11.11 |
+| 动画 | GSAP | ^3.13 |
+| 3D | Three.js | ^0.180 |
+| 格式化 | Prettier | ^3.6 |
 
-### 核心功能
+## 核心功能
 
 1. **首页展示** - 个人介绍和技术栈展示
 2. **文章系统** - 支持分类浏览和详情查看
-3. **Markdown渲染** - 自动解析和高亮代码
+3. **Markdown 渲染** - 自动解析和高亮代码
 4. **主题切换** - 支持暗色/亮色模式
 5. **响应式设计** - 适配移动端和桌面端
 
-### 项目结构
+## 项目结构
 
 ```
 src/
-├── App.vue              # 根组件，包含导航和布局
-├── main.ts              # 应用程序入口点
-├── style.css            # 全局样式
-├── vite-env.d.ts        # TypeScript 环境声明
-├── router/              # Vue Router 配置
-│   └── index.ts         # 路由定义和导航守卫
-├── stores/              # Pinia 状态存储
-│   └── index.ts         # 应用和用户状态管理
-├── components/          # 可复用组件
-│   ├── Navigation.vue   # 导航组件
-│   ├── ThemeToggle.vue  # 主题切换组件
-│   └── MarkdownRenderer.vue # Markdown渲染器
-├── views/               # 页面组件
-│   ├── Home.vue         # 首页
-│   ├── About.vue        # 关于页面
-│   ├── PostsList.vue    # 文章列表页
-│   ├── CategoryPosts.vue # 分类文章页
-│   ├── PostDetail.vue   # 文章详情页
-│   └── demos/
-│       └── mapbox/
-│           └── index.vue # Mapbox示例
-├── utils/               # 工具函数
-│   ├── posts.ts         # 文章处理工具
-│   └── markdown.ts      # Markdown解析工具
-├── styles/              # 样式文件
-│   └── theme.scss       # 主题样式
-├── posts/               # Markdown文章
-│   ├── frontend/        # 前端相关文章
-│   ├── gis/            # GIS相关文章
-│   └── vue/            # Vue.js相关文章
-└── assets/              # 静态资源
-    └── images/          # 图片资源
+├── App.vue                 # 根组件，包含导航和布局
+├── main.ts                 # 应用程序入口点
+├── style.css               # 全局样式
+├── vite-env.d.ts           # TypeScript 环境声明
+├── router/
+│   └── index.ts            # 路由定义和导航守卫
+├── stores/
+│   └── index.ts            # Pinia 状态管理
+├── components/
+│   ├── Navigation.vue      # 导航组件
+│   ├── ThemeToggle.vue     # 主题切换组件
+│   ├── MarkdownRenderer.vue # Markdown 渲染器
+│   └── ThreeBackground.vue # Three.js 背景组件
+├── composables/
+│   └── useTypewriter.ts    # 打字机效果 Hook
+├── views/
+│   ├── Home.vue            # 首页
+│   ├── About.vue           # 关于页面
+│   ├── PostsList.vue       # 文章列表页
+│   ├── CategoryPosts.vue   # 分类文章页
+│   ├── PostDetail.vue      # 文章详情页
+│   └── demos/mapbox/       # Mapbox 演示
+├── utils/
+│   ├── posts.ts            # 文章处理工具
+│   ├── markdown.ts         # Markdown 解析工具
+│   └── image.ts            # 图片处理工具
+├── styles/
+│   └── theme.scss          # 主题样式
+├── posts/                  # Markdown 文章
+│   ├── frontend/           # 前端相关
+│   ├── gis/                # GIS 相关
+│   └── vue/                # Vue.js 相关
+└── assets/                 # 静态资源
 ```
 
-## 开发工作流
-
-### 开发命令
+## 开发命令
 
 ```bash
-# 启动开发服务器
-pnpm run dev
-
-# 构建生产版本
-pnpm run build
-
-# 预览生产构建
-pnpm run preview
-
-# 代码格式化
-pnpm run format
-
-# 检查代码格式
-pnpm run format:check
+pnpm run dev          # 启动开发服务器
+pnpm run build        # 构建生产版本
+pnpm run preview      # 预览生产构建
+pnpm run format       # 代码格式化
+pnpm run format:check # 检查代码格式
 ```
 
-### 包管理
+## 路由配置
 
-- 使用 **pnpm** 进行包管理
-- 依赖通过 `pnpm-lock.yaml` 锁定版本
+| 路径 | 组件 | 说明 |
+|------|------|------|
+| `/` | Home.vue | 首页 |
+| `/posts` | PostsList.vue | 文章列表 |
+| `/posts/:category` | CategoryPosts.vue | 分类文章 |
+| `/posts/:category/:id` | PostDetail.vue | 文章详情 |
+| `/mapbox` | demos/mapbox/index.vue | Mapbox 演示 |
+| `/about` | About.vue | 关于页面 |
 
-## 架构与结构详解
+## 文章系统
 
-### Vue Router 配置
+### 文章格式
 
-路由配置位于 `src/router/index.ts`，包含以下路由：
+```markdown
+---
+title: 文章标题
+description: 文章描述
+date: 2026-03-26
+author: 王森
+tags: ["Vue", "TypeScript"]
+---
 
-- **首页** `/` - 展示个人介绍和技术栈
-- **文章列表** `/posts` - 显示所有文章列表
-- **分类文章** `/posts/:category` - 显示特定分类的文章
-- **文章详情** `/posts/:category/:id` - 显示文章具体内容
-- **Mapbox示例** `/mapbox` - GIS地图演示
-- **关于页面** `/about` - 个人介绍页面
+# 文章标题
 
-### Pinia 状态管理
+正文内容...
+```
 
-状态管理位于 `src/stores/index.ts`：
-
-- **App Store**: 全局应用状态（加载状态、主题设置等）
-- **User Store**: 用户认证和资料信息
-- **TypeScript**: 完整的类型安全支持
-
-### 组件设计模式
-
-- **组合式 API**: 所有组件使用 `<script setup lang="ts">` 语法
-- **响应式设计**: 移动端优先，响应式布局
-- **主题系统**: 支持暗色/亮色主题切换
-- **TypeScript**: 严格的类型检查和智能提示
-
-### 文章系统
-
-文章系统基于 Markdown 文件：
-
-- **文件位置**: `src/posts/` 目录下按分类组织
-- **Frontmatter**: 支持YAML格式的文章元数据
-- **自动解析**: 工具函数自动解析文章内容和元信息
-- **代码高亮**: 使用highlight.js进行语法高亮
-- **分类管理**: 支持多级分类和标签系统
-
-### 构建配置
-
-- **TypeScript**: 严格模式，全面类型检查
-- **Vite**: 快速开发服务器和生产优化
-- **代码分割**: 自动代码分割和懒加载
-- **资源处理**: 正确处理图片、字体等静态资源
-- **输出优化**: 生产环境构建优化
-
-## 开发规范
-
-### 添加新文章
+### 添加文章
 
 1. 在 `src/posts/` 对应分类目录下创建 `.md` 文件
 2. 添加 YAML frontmatter 元数据
 3. 使用 Markdown 语法编写内容
 4. 文章会自动出现在网站中
 
-### 添加新页面
+## 部署
 
-1. 在 `src/views/` 中创建组件
-2. 在 `src/router/index.ts` 中添加路由
-3. 设置页面标题元数据
+- **平台**: GitHub Pages
+- **方式**: GitHub Actions 自动部署
+- **触发**: 推送到 main 分支
+- **配置**: `.github/workflows/deploy.yml`
 
-### 组件开发
+## 关键文件
 
-- 使用组合式 API 和 TypeScript
-- 遵循单一职责原则
-- 添加适当的类型定义
-- 保持响应式设计
+| 文件 | 说明 |
+|------|------|
+| `src/main.ts` | 应用入口 |
+| `src/router/index.ts` | 路由配置 |
+| `src/stores/index.ts` | 状态管理 |
+| `src/utils/posts.ts` | 文章处理 |
+| `src/utils/markdown.ts` | Markdown 解析 |
+| `vite.config.ts` | Vite 配置 |
 
-### 样式规范
+## 优化路线图
 
-- 使用 SCSS 和组件作用域样式
-- 利用 CSS 自定义属性进行主题管理
-- 保持移动端优先的响应式设计
-- 遵循设计系统的一致性
+详见 [docs/MIGRATION.md](docs/MIGRATION.md)
 
-## 部署配置
+### 高优先级
 
-### GitHub Pages
+- [ ] 404 页面
+- [ ] 文章数据缓存
+- [ ] ESLint 配置
+- [ ] 类型优化
+- [ ] 动态 Meta 标签
+- [ ] 骨架屏加载
 
-- 通过 GitHub Actions 自动部署
-- 构建并部署到 `gh-pages` 分支
-- 确保构建测试通过后再提交
+### 中优先级
 
-### 环境变量
+- [ ] 阅读进度条
+- [ ] 代码复制按钮
+- [ ] Sitemap 生成
+- [ ] 图片压缩
 
-- 生产环境配置在 Vite 中管理
-- 敏感信息通过环境变量传递
+### 低优先级
 
-## 关键文件说明
+- [ ] 文章搜索
+- [ ] 标签聚合页
+- [ ] RSS 订阅
+- [ ] PWA 支持
 
-- `src/main.ts`: 应用初始化入口
-- `src/router/index.ts`: 路由配置和导航逻辑
-- `src/stores/index.ts`: 全局状态管理
-- `src/App.vue`: 主布局组件
-- `src/utils/posts.ts`: 文章数据处理逻辑
-- `src/utils/markdown.ts`: Markdown解析和渲染
-- `vite.config.ts`: Vite构建工具配置
-- `package.json`: 项目依赖和脚本配置
+## Nuxt 3 迁移计划
 
-## 常见问题
+项目计划迁移至 Nuxt 3 全栈架构，完整迁移清单见 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) 第 10 节。
 
-### 开发环境问题
+### 迁移阶段
 
-- 确保使用 `pnpm` 而非 `npm` 或 `yarn`
-- 如果遇到类型错误，检查 TypeScript 配置
-- 确保所有依赖已正确安装
+| 阶段 | 内容 | 状态 |
+|------|------|------|
+| Phase 0 | 创建 Nuxt 3 项目、配置基础依赖 | 📋 待开始 |
+| Phase 1 | 迁移页面、组件、样式 | 📋 待开始 |
+| Phase 2 | 文章系统 (@nuxt/content) | 📋 待开始 |
+| Phase 3 | 后端功能 (访客统计) | 📋 待开始 |
+| Phase 4 | 高级功能 (搜索、代码沙盒) | 📋 待开始 |
+| Phase 5 | 部署上线 (Vercel) | 📋 待开始 |
 
-### 构建问题
+## 相关文档
 
-- 检查所有 TypeScript 类型错误
-- 确保 Vite 配置正确
-- 验证所有文件路径和引用
-
-### 部署问题
-
-- 检查 GitHub Actions 工作流
-- 确保构建输出正确
-- 验证 GitHub Pages 配置
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) - Nuxt 3 目标架构
+- [docs/MIGRATION.md](docs/MIGRATION.md) - 优化迁移清单
 
 ---
 
-**注意**: 此项目专注于技术博客内容展示，保持代码简洁和功能明确。在开发新功能时，请确保与现有架构保持一致。
+**注意**: 此项目专注于技术博客内容展示，保持代码简洁和功能明确。在开发新功能时，请确保与现有架构保持一致，并考虑向 Nuxt 3 迁移的兼容性。

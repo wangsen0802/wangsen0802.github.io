@@ -25,7 +25,7 @@ const copyCode = async (codeBlock: HTMLElement) => {
     try {
       await navigator.clipboard.writeText(code.textContent || '')
       message.success('代码已复制到剪贴板')
-    } catch (err) {
+    } catch (_err) {
       // 降级方案
       const textArea = document.createElement('textarea')
       textArea.value = code.textContent || ''

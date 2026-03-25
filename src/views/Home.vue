@@ -130,7 +130,7 @@ const loadData = async () => {
     loading.value = true
     const posts = await getAllPosts()
     recentPosts.value = posts.slice(0, 6)
-  } catch (error) {
+  } catch (_error) {
     message.error('加载失败')
   } finally {
     loading.value = false

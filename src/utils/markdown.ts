@@ -14,7 +14,9 @@ const md: MarkdownIt = new MarkdownIt({
         return `<pre class="hljs"><code>${
           hljs.highlight(str, { language: lang }).value
         }</code></pre>`
-      } catch (__) {}
+      } catch (_) {
+        // 忽略高亮错误，使用默认转义
+      }
     }
     return `<pre class="hljs"><code>${md.utils.escapeHtml(str)}</code></pre>`
   },
