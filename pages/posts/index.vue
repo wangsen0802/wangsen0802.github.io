@@ -11,6 +11,7 @@ useHead({
 const { data: posts } = await useAsyncData('all-posts', () =>
   queryCollection('content')
     .order('date', 'DESC')
+    .all()
 )
 
 // 获取所有分类
@@ -68,8 +69,8 @@ const selectCategory = (category: string | null) => {
 
     <!-- 文章列表 -->
     <div class="posts-grid">
-      <article v-for="post in filteredPosts" :key="post._path" class="post-card">
-        <NuxtLink :to="post._path">
+      <article v-for="post in filteredPosts" :key="post.path" class="post-card">
+        <NuxtLink :to="`/posts${post.path}`">
           <div class="post-cover" v-if="post.cover">
             <img :src="post.cover" :alt="post.title" />
           </div>

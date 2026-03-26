@@ -480,18 +480,18 @@ chore: 构建/工具
 - [ ] 迁移工具函数到 `composables/`
 - [ ] 迁移样式文件到 `assets/styles/`
 
-### Phase 2: 文章系统
+### Phase 2: 文章系统 ✅
 
-- [ ] 配置 @nuxt/content
-- [ ] 迁移 Markdown 文章到 `content/`
-- [ ] 实现文章列表页
-- [ ] 实现文章详情页
+- [x] 配置 @nuxt/content
+- [x] 迁移 Markdown 文章到 `content/`
+- [x] 实现文章列表页
+- [x] 实现文章详情页
 
-### Phase 3: 后端功能
+### Phase 3: 后端功能 ✅
 
-- [ ] 实现访客统计 API
-- [ ] 配置 SQLite 数据库
-- [ ] 实现统计展示组件
+- [x] 实现访客统计 API
+- [x] 配置 SQLite 数据库
+- [x] 实现统计展示组件
 
 ### Phase 4: 高级功能
 

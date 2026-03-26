@@ -17,6 +17,9 @@ const selectedNav = computed(() => {
   if (path === '/about') return '/about'
   return path
 })
+
+// 启用页面访问统计
+usePageStats()
 </script>
 
 <template>

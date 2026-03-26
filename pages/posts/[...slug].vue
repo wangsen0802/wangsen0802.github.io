@@ -2,13 +2,13 @@
 const route = useRoute()
 const path = route.params.slug as string[]
 
-// 构建文章路径
-const postPath = `/posts/${path.join('/')}`
+// 构建文章路径 (content 目录下的实际路径)
+const postPath = `/${path.join('/')}`
 
 // 获取文章内容
 const { data: post, error } = await useAsyncData(`post-${postPath}`, () =>
   queryCollection('content')
-    .where('_path', '=', postPath)
+    .where('path', '=', postPath)
     .first()
 )
 
