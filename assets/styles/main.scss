@@ -1,317 +1,600 @@
-/* 主样式文件 */
+/*
+ * wanGISen 设计系统
+ * 简约内敛 · 动画丰富 · 日式禅意
+ */
 
-/* 主题CSS变量定义 */
+/* ============================================
+   字体定义
+   ============================================ */
+
+/* 标题字体 - 优雅衬线 */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap');
+
+/* ============================================
+   CSS 变量 - 亮色主题
+   ============================================ */
 :root {
-  /* 亮色主题变量 */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --bg-tertiary: #e9ecef;
-  --text-primary: #212529;
-  --text-secondary: #6c757d;
-  --text-tertiary: #868e96;
-  --border-primary: #dee2e6;
-  --border-secondary: #e9ecef;
-  --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.06);
-  --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.08);
-  --shadow-heavy: 0 8px 32px rgba(0, 0, 0, 0.12);
-  --accent-primary: #1890ff;
-  --accent-secondary: #52c41a;
-  --accent-warning: #faad14;
-  --accent-error: #f5222d;
+  /* 核心色彩 - 低饱和度灰调 */
+  --bg-primary: #fafaf9;
+  --bg-secondary: #f5f5f4;
+  --bg-tertiary: #e7e5e4;
+  --bg-elevated: #ffffff;
+
+  /* 文字色彩 */
+  --text-primary: #1c1917;
+  --text-secondary: #57534e;
+  --text-tertiary: #a8a29e;
+  --text-muted: #d6d3d1;
+
+  /* 边框与分隔 */
+  --border-primary: #e7e5e4;
+  --border-secondary: #f5f5f4;
+  --border-accent: #d6d3d1;
+
+  /* 点缀色 - 靛青 */
+  --accent-primary: #4a7c59;
+  --accent-secondary: #6b8f71;
+  --accent-tertiary: #a3b18a;
+  --accent-subtle: rgba(74, 124, 89, 0.08);
+
+  /* 阴影 - 柔和 */
+  --shadow-xs: 0 1px 2px rgba(28, 25, 23, 0.04);
+  --shadow-sm: 0 2px 4px rgba(28, 25, 23, 0.04);
+  --shadow-md: 0 4px 12px rgba(28, 25, 23, 0.06);
+  --shadow-lg: 0 8px 24px rgba(28, 25, 23, 0.08);
+  --shadow-xl: 0 16px 48px rgba(28, 25, 23, 0.1);
+
+  /* SVG 背景变量 */
+  --svg-bg: transparent;
+  --svg-line-1: var(--accent-primary);
+  --svg-line-2: var(--accent-tertiary);
+  --svg-accent: var(--accent-primary);
+
+  /* 动画时间曲线 */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+
+  /* 过渡时间 */
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --duration-slower: 800ms;
+
+  /* 字体栈 */
+  --font-display: 'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+  --font-body: 'DM Sans', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+
+  /* 间距 */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --space-4xl: 6rem;
+
+  /* 圆角 */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* 容器宽度 */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1200px;
 }
 
-/* 暗色主题变量 */
+/* ============================================
+   CSS 变量 - 暗色主题
+   ============================================ */
 .dark {
-  --bg-primary: #141414;
-  --bg-secondary: #1f1f1f;
-  --bg-tertiary: #262626;
-  --text-primary: #ffffff;
-  --text-secondary: #a6a6a6;
-  --text-tertiary: #737373;
-  --border-primary: #434343;
-  --border-secondary: #303030;
-  --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.3);
-  --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.4);
-  --shadow-heavy: 0 8px 32px rgba(0, 0, 0, 0.5);
-  --accent-primary: #177ddc;
-  --accent-secondary: #49aa19;
-  --accent-warning: #d89614;
-  --accent-error: #d32029;
+  --bg-primary: #0c0a09;
+  --bg-secondary: #1c1917;
+  --bg-tertiary: #292524;
+  --bg-elevated: #1c1917;
+
+  --text-primary: #fafaf9;
+  --text-secondary: #a8a29e;
+  --text-tertiary: #78716c;
+  --text-muted: #44403c;
+
+  --border-primary: #292524;
+  --border-secondary: #1c1917;
+  --border-accent: #44403c;
+
+  --accent-primary: #a3b18a;
+  --accent-secondary: #6b8f71;
+  --accent-tertiary: #4a7c59;
+  --accent-subtle: rgba(163, 177, 138, 0.08);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.6);
 }
 
-/* 基础重置 */
-* {
+/* ============================================
+   基础重置
+   ============================================ */
+*,
+*::before,
+*::after {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
 
-/* 主题切换过渡 */
-* {
-  transition: background-color 0.3s ease,
-              color 0.3s ease,
-              border-color 0.3s ease,
-              box-shadow 0.3s ease;
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* 基础主题样式 */
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--bg-primary);
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.7;
   color: var(--text-primary);
+  background-color: var(--bg-primary);
+  min-height: 100vh;
   overflow-x: hidden;
-  font-family: 'Noto Sans SC', sans-serif;
+}
+
+/* 主题切换过渡 - 减少不必要的过渡 */
+body.transitioning {
+  *,
+  *::before,
+  *::after {
+    transition: background-color 0.4s var(--ease-out-quart),
+                color 0.4s var(--ease-out-quart),
+                border-color 0.4s var(--ease-out-quart) !important;
+  }
 }
 
 #__nuxt {
-  background-color: var(--bg-primary);
   min-height: 100vh;
-  width: 100%;
   position: relative;
 }
 
-/* 主题类 */
-.theme-container {
-  background-color: var(--bg-primary);
+/* ============================================
+   排版
+   ============================================ */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.3;
   color: var(--text-primary);
+  letter-spacing: -0.02em;
 }
 
-.theme-card {
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border-primary);
-  box-shadow: var(--shadow-light);
-}
+h1 { font-size: clamp(2.5rem, 6vw, 4rem); }
+h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
+h3 { font-size: clamp(1.25rem, 3vw, 1.75rem); }
+h4 { font-size: clamp(1.125rem, 2vw, 1.25rem); }
 
-.theme-border {
-  border-color: var(--border-primary);
-}
-
-.theme-text-secondary {
+p {
   color: var(--text-secondary);
+  line-height: 1.8;
 }
 
-.theme-text-tertiary {
-  color: var(--text-tertiary);
+a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  transition: color var(--duration-fast) ease;
+
+  &:hover {
+    color: var(--accent-secondary);
+  }
 }
 
-/* Ant Design 主题定制 */
+/* ============================================
+   动画工具类
+   ============================================ */
+
+/* 淡入上移动画 */
+.animate-fade-up {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.8s var(--ease-out-expo) forwards;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 淡入动画 */
+.animate-fade-in {
+  opacity: 0;
+  animation: fadeIn 0.6s var(--ease-out-quart) forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* 延迟类 */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-600 { animation-delay: 600ms; }
+.delay-700 { animation-delay: 700ms; }
+.delay-800 { animation-delay: 800ms; }
+
+/* 描边动画 */
+.animate-draw {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawLine 2s var(--ease-out-expo) forwards;
+}
+
+@keyframes drawLine {
+  to { stroke-dashoffset: 0; }
+}
+
+/* 呼吸动画 */
+.animate-breathe {
+  animation: breathe 4s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* 浮动动画 */
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* ============================================
+   Ant Design 主题定制
+   ============================================ */
 .ant-layout {
-  background-color: transparent !important;
+  background: transparent !important;
 }
 
 .ant-layout-header {
-  background: rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  background: rgba(250, 250, 249, 0.8) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-primary) !important;
+  height: 72px !important;
+  padding: 0 !important;
 }
 
 .dark .ant-layout-header {
-  background: rgba(0, 0, 0, 0.3) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  background: rgba(12, 10, 9, 0.85) !important;
 }
 
 .ant-layout-content {
-  background-color: transparent !important;
+  background: transparent !important;
 }
 
 .ant-layout-footer {
-  background: rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background: transparent !important;
+  border-top: 1px solid var(--border-primary);
 }
 
-.dark .ant-layout-footer {
-  background: rgba(0, 0, 0, 0.3) !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-}
-
-/* 卡片组件主题 */
+/* 卡片 */
 .ant-card {
-  background-color: var(--bg-secondary) !important;
-  border-color: var(--border-primary) !important;
-  box-shadow: var(--shadow-light) !important;
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--border-primary) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-sm) !important;
+  transition: all var(--duration-normal) var(--ease-out-quart) !important;
+
+  &:hover {
+    box-shadow: var(--shadow-md) !important;
+    border-color: var(--border-accent) !important;
+  }
 }
 
 .ant-card-head {
-  border-bottom-color: var(--border-primary) !important;
-  background-color: var(--bg-secondary) !important;
-}
-
-.ant-card-head-title {
-  color: var(--text-primary) !important;
+  border-bottom: 1px solid var(--border-primary) !important;
+  padding: var(--space-lg) var(--space-xl) !important;
 }
 
 .ant-card-body {
-  color: var(--text-primary) !important;
+  padding: var(--space-xl) !important;
 }
 
-/* 按钮组件主题 */
+/* 按钮 */
 .ant-btn {
-  transition: all 0.3s ease;
+  font-family: var(--font-body) !important;
+  font-weight: 500 !important;
+  border-radius: var(--radius-md) !important;
+  transition: all var(--duration-fast) ease !important;
+  height: auto !important;
+  padding: var(--space-sm) var(--space-lg) !important;
+
+  &.ant-btn-lg {
+    padding: var(--space-md) var(--space-xl) !important;
+    font-size: 1rem !important;
+  }
+}
+
+.ant-btn-primary {
+  background: var(--accent-primary) !important;
+  border-color: var(--accent-primary) !important;
+  color: white !important;
+
+  &:hover {
+    background: var(--accent-secondary) !important;
+    border-color: var(--accent-secondary) !important;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md) !important;
+  }
 }
 
 .ant-btn-default {
-  background-color: var(--bg-secondary) !important;
+  background: transparent !important;
   border-color: var(--border-primary) !important;
   color: var(--text-primary) !important;
+
+  &:hover {
+    border-color: var(--accent-primary) !important;
+    color: var(--accent-primary) !important;
+  }
 }
 
-.ant-btn-default:hover {
-  background-color: var(--bg-tertiary) !important;
-  border-color: var(--accent-primary) !important;
-  color: var(--accent-primary) !important;
-}
-
-/* 导航组件主题 */
+/* 菜单 */
 .ant-menu {
-  background-color: var(--bg-secondary) !important;
-  border-right-color: var(--border-primary) !important;
+  background: transparent !important;
+  border: none !important;
+  font-family: var(--font-body) !important;
+}
+
+.ant-menu-horizontal {
+  line-height: 70px !important;
+
+  .ant-menu-item {
+    border-bottom: 2px solid transparent !important;
+    transition: all var(--duration-fast) ease !important;
+
+    &::after {
+      display: none !important;
+    }
+
+    &:hover,
+    &.ant-menu-item-selected {
+      color: var(--accent-primary) !important;
+      border-bottom-color: var(--accent-primary) !important;
+    }
+  }
 }
 
 .ant-menu-item {
-  color: var(--text-primary) !important;
+  color: var(--text-secondary) !important;
+  font-weight: 500 !important;
+
+  a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
 }
 
-.ant-menu-item:hover {
-  background-color: var(--bg-tertiary) !important;
-  color: var(--accent-primary) !important;
-}
-
-.ant-menu-item-selected {
-  background-color: var(--accent-primary) !important;
-  color: white !important;
-}
-
-/* 代码块主题 */
-pre {
-  background-color: var(--bg-tertiary) !important;
-  color: var(--text-primary) !important;
-  border-radius: 8px;
-  padding: 1rem;
-  border: 1px solid var(--border-primary);
-  margin: 1rem 0;
-  overflow-x: auto;
-}
-
-code {
-  font-family: 'Fira Code', 'Consolas', monospace;
-}
-
-/* Markdown 内容主题 */
-.markdown-content {
-  color: var(--text-primary);
+/* ============================================
+   Markdown 内容样式
+   ============================================ */
+.markdown-content,
+.prose {
+  font-family: var(--font-body);
   line-height: 1.8;
+  color: var(--text-primary);
 
   h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    margin-top: var(--space-2xl);
+    margin-bottom: var(--space-lg);
     color: var(--text-primary);
-    border-bottom-color: var(--border-primary);
-    margin-top: 1.5rem;
-    margin-bottom: 1rem;
+  }
+
+  h2 {
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--border-primary);
   }
 
   p {
-    color: var(--text-primary);
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-lg);
+    color: var(--text-secondary);
   }
 
   a {
     color: var(--accent-primary);
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--duration-fast) ease;
 
     &:hover {
-      color: var(--accent-secondary);
+      border-bottom-color: var(--accent-primary);
     }
   }
 
   blockquote {
-    border-left-color: var(--accent-primary);
-    background-color: var(--bg-secondary);
-    color: var(--text-secondary);
-    padding: 1rem;
-    margin: 1rem 0;
-    border-radius: 4px;
+    border-left: 3px solid var(--accent-primary);
+    padding-left: var(--space-lg);
+    margin: var(--space-xl) 0;
+    color: var(--text-tertiary);
+    font-style: italic;
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--bg-tertiary);
+    padding: 0.2em 0.4em;
+    border-radius: var(--radius-sm);
+  }
+
+  pre {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    overflow-x: auto;
+    margin: var(--space-xl) 0;
+
+    code {
+      background: transparent;
+      padding: 0;
+    }
   }
 
   ul, ol {
-    padding-left: 2rem;
-    margin-bottom: 1rem;
-  }
+    padding-left: var(--space-xl);
+    margin-bottom: var(--space-lg);
 
-  li {
-    margin-bottom: 0.5rem;
-  }
-
-  table {
-    border-color: var(--border-primary);
-    width: 100%;
-    border-collapse: collapse;
-    margin: 1rem 0;
-
-    th, td {
-      border-color: var(--border-primary);
-      padding: 0.75rem;
-      text-align: left;
-    }
-
-    th {
-      background-color: var(--bg-secondary);
-      color: var(--text-primary);
-    }
-
-    tr:nth-child(even) {
-      background-color: var(--bg-secondary);
+    li {
+      margin-bottom: var(--space-sm);
+      color: var(--text-secondary);
     }
   }
 
   img {
     max-width: 100%;
-    border-radius: 8px;
-    margin: 1rem 0;
+    border-radius: var(--radius-lg);
+    margin: var(--space-xl) 0;
+  }
+
+  hr {
+    border: none;
+    height: 1px;
+    background: var(--border-primary);
+    margin: var(--space-2xl) 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--space-xl) 0;
+
+    th, td {
+      padding: var(--space-md);
+      text-align: left;
+      border-bottom: 1px solid var(--border-primary);
+    }
+
+    th {
+      font-weight: 600;
+      color: var(--text-primary);
+      background: var(--bg-secondary);
+    }
   }
 }
 
-/* 自定义滚动条 */
+/* ============================================
+   滚动条
+   ============================================ */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: var(--bg-secondary);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--border-primary);
-  border-radius: 4px;
+  background: var(--border-accent);
+  border-radius: var(--radius-full);
 
   &:hover {
-    background-color: var(--text-tertiary);
+    background: var(--text-tertiary);
   }
 }
 
-/* 特殊效果 */
-.glass-effect {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+/* ============================================
+   选中文本
+   ============================================ */
+::selection {
+  background: var(--accent-subtle);
+  color: var(--text-primary);
 }
 
-.dark .glass-effect {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+/* ============================================
+   焦点样式
+   ============================================ */
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
 }
 
-/* 响应式设计 */
+/* ============================================
+   响应式
+   ============================================ */
 @media (max-width: 768px) {
-  .markdown-content {
-    padding: 0 1rem;
+  html {
+    font-size: 15px;
+  }
+
+  .markdown-content,
+  .prose {
+    padding: 0 var(--space-md);
 
     pre {
       font-size: 0.875rem;
+      padding: var(--space-md);
     }
+  }
+}
+
+/* ============================================
+   代码复制按钮样式
+   ============================================ */
+.code-copy-button-container {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  z-index: 10;
+}
+
+.code-copy-button {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-xs) var(--space-sm);
+  color: var(--text-tertiary);
+  cursor: pointer;
+  transition: all var(--duration-fast) ease;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: 0.75rem;
+  opacity: 0.6;
+
+  &:hover {
+    opacity: 1;
+    color: var(--accent-primary);
+    border-color: var(--accent-primary);
+    transform: translateY(-1px);
+  }
+
+  &.copied {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: white;
+    opacity: 1;
+  }
+
+  svg {
+    width: 14px;
+    height: 14px;
   }
 }

@@ -36,8 +36,14 @@ export default defineNuxtConfig({
   // Google Fonts
   googleFonts: {
     families: {
-      'Noto Sans SC': [400, 500, 700],
+      'Cormorant Garamond': [400, 500, 600, 700],
+      'DM Sans': [300, 400, 500, 600],
+      'JetBrains Mono': [400, 500],
+      'Noto Serif SC': [400, 500, 600],
     },
+    display: 'swap',
+    prefetch: true,
+    preconnect: true,
   },
 
   // 应用配置

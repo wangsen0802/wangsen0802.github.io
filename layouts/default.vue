@@ -18,167 +18,416 @@ const selectedNav = computed(() => {
   return path
 })
 
-// 启用页面访问统计
+// 滚动状态
+const isScrolled = ref(false)
+const scrollY = ref(0)
+
+// 移动端菜单
+const isMobileMenuOpen = ref(false)
+
+const handleScroll = () => {
+  scrollY.value = window.scrollY
+  isScrolled.value = window.scrollY > 20
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll, { passive: true })
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
+
+// 页面统计
 usePageStats()
+
+// 搜索索引初始化
+const { initSearchIndex, addDocuments } = useSearch()
+
+onMounted(async () => {
+  try {
+    const { data, success } = await $fetch('/api/search.index')
+    if (success && data) {
+      initSearchIndex()
+      addDocuments(data)
+    }
+  } catch (error) {
+    console.error('初始化搜索索引失败:', error)
+  }
+})
+
+// 关闭移动菜单
+const closeMobileMenu = () => {
+  isMobileMenuOpen.value = false
+}
 </script>
 
 <template>
-  <!-- Three.js 背景 -->
-  <ClientOnly>
-    <ThreeBackground />
-  </ClientOnly>
+  <!-- SVG 背景 -->
+  <SvgBackground />
 
-  <a-layout class="layout">
+  <div class="layout" :class="{ scrolled: isScrolled }">
     <!-- 导航栏 -->
-    <a-layout-header class="header">
-      <div class="header-content">
-        <div class="logo">
-          <NuxtLink to="/">wanGISen</NuxtLink>
-        </div>
+    <header class="header">
+      <div class="header-inner">
+        <!-- Logo -->
+        <NuxtLink to="/" class="logo" @click="closeMobileMenu">
+          <SvgLogo :animated="false" :size="32" />
+          <span class="logo-text">wanGISen</span>
+        </NuxtLink>
 
-        <a-menu
-          mode="horizontal"
-          :selected-keys="[selectedNav]"
-          class="nav-menu"
-        >
-          <a-menu-item v-for="item in navItems" :key="item.path">
-            <NuxtLink :to="item.path">{{ item.name }}</NuxtLink>
-          </a-menu-item>
-        </a-menu>
+        <!-- 桌面导航 -->
+        <nav class="nav-desktop">
+          <NuxtLink
+            v-for="item in navItems"
+            :key="item.path"
+            :to="item.path"
+            class="nav-link"
+            :class="{ active: selectedNav === item.path }"
+          >
+            {{ item.name }}
+          </NuxtLink>
+        </nav>
 
+        <!-- 右侧操作 -->
         <div class="header-actions">
+          <SearchModal />
           <ThemeToggle />
+
+          <!-- 移动端菜单按钮 -->
+          <button
+            class="mobile-menu-btn"
+            :class="{ active: isMobileMenuOpen }"
+            @click="isMobileMenuOpen = !isMobileMenuOpen"
+            aria-label="菜单"
+          >
+            <span class="menu-line" />
+            <span class="menu-line" />
+            <span class="menu-line" />
+          </button>
         </div>
       </div>
-    </a-layout-header>
+
+      <!-- 移动端菜单 -->
+      <Transition name="mobile-menu">
+        <nav v-if="isMobileMenuOpen" class="nav-mobile">
+          <NuxtLink
+            v-for="item in navItems"
+            :key="item.path"
+            :to="item.path"
+            class="nav-link-mobile"
+            :class="{ active: selectedNav === item.path }"
+            @click="closeMobileMenu"
+          >
+            {{ item.name }}
+          </NuxtLink>
+        </nav>
+      </Transition>
+    </header>
 
     <!-- 主内容区 -->
-    <a-layout-content class="content">
-      <div class="content-wrapper">
-        <slot />
-      </div>
-    </a-layout-content>
+    <main class="main">
+      <slot />
+    </main>
 
     <!-- 页脚 -->
-    <a-layout-footer class="footer">
-      <div class="footer-content">
-        <p>© 2026 wanGISen. All rights reserved.</p>
-        <p>
-          Built with
-          <a href="https://nuxt.com" target="_blank" rel="noopener">Nuxt 3</a>
-          &
-          <a href="https://vuejs.org" target="_blank" rel="noopener">Vue 3</a>
-        </p>
+    <footer class="footer">
+      <div class="footer-inner">
+        <!-- 装饰线 -->
+        <div class="footer-divider">
+          <svg viewBox="0 0 400 20" class="divider-svg">
+            <line x1="150" y1="10" x2="250" y2="10" stroke="var(--border-primary)" stroke-width="0.5" />
+          </svg>
+        </div>
+
+        <div class="footer-content">
+          <p class="copyright">© 2026 wanGISen</p>
+          <p class="tech-info">
+            Built with
+            <a href="https://nuxt.com" target="_blank" rel="noopener">Nuxt 3</a>
+            &
+            <a href="https://vuejs.org" target="_blank" rel="noopener">Vue 3</a>
+          </p>
+        </div>
       </div>
-    </a-layout-footer>
-  </a-layout>
+    </footer>
+  </div>
 </template>
 
 <style scoped lang="scss">
 .layout {
   min-height: 100vh;
-  background: transparent !important;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 
+/* ============================================
+   导航栏
+   ============================================ */
 .header {
   position: sticky;
   top: 0;
   z-index: 100;
-  padding: 0 2rem;
-  height: 64px;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-primary);
+  transition: all var(--duration-normal) var(--ease-out-quart);
 
-  .header-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 100%;
+  .layout.scrolled & {
+    background: rgba(250, 250, 249, 0.9);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: var(--shadow-sm);
   }
 
-  .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-
-    a {
-      color: var(--text-primary);
-      text-decoration: none;
-
-      &:hover {
-        color: var(--accent-primary);
-      }
-    }
-  }
-
-  .nav-menu {
-    flex: 1;
-    justify-content: center;
-    background: transparent;
-    border: none;
-
-    :deep(.ant-menu-item) {
-      a {
-        color: var(--text-primary);
-        text-decoration: none;
-      }
-    }
-  }
-
-  .header-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+  .dark .layout.scrolled & {
+    background: rgba(12, 10, 9, 0.9);
   }
 }
 
-.content {
-  padding: 2rem;
-  min-height: calc(100vh - 64px - 80px);
-  background: transparent !important;
+.header-inner {
+  max-width: var(--container-xl);
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  .content-wrapper {
-    max-width: 1200px;
-    margin: 0 auto;
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  text-decoration: none;
+  transition: opacity var(--duration-fast) ease;
+
+  &:hover {
+    opacity: 0.8;
   }
 }
 
+.logo-text {
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.nav-desktop {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.nav-link {
+  position: relative;
+  padding: var(--space-sm) var(--space-md);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: all var(--duration-fast) ease;
+
+  &:hover {
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+  }
+
+  &.active {
+    color: var(--accent-primary);
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 2px;
+      background: var(--accent-primary);
+      border-radius: var(--radius-full);
+    }
+  }
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+/* 移动端菜单按钮 */
+.mobile-menu-btn {
+  display: none;
+  width: 40px;
+  height: 40px;
+  padding: var(--space-sm);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  position: relative;
+
+  .menu-line {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--text-primary);
+    border-radius: var(--radius-full);
+    transition: all var(--duration-fast) ease;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+
+    &:nth-child(1) { top: 12px; }
+    &:nth-child(2) { top: 50%; transform: translate(-50%, -50%); }
+    &:nth-child(3) { bottom: 12px; }
+  }
+
+  &.active {
+    .menu-line {
+      &:nth-child(1) {
+        top: 50%;
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+      &:nth-child(2) {
+        opacity: 0;
+      }
+      &:nth-child(3) {
+        bottom: 50%;
+        transform: translate(-50%, 50%) rotate(-45deg);
+      }
+    }
+  }
+}
+
+/* 移动端菜单 */
+.nav-mobile {
+  display: none;
+  flex-direction: column;
+  padding: var(--space-md) var(--space-xl) var(--space-xl);
+  border-top: 1px solid var(--border-primary);
+  background: var(--bg-primary);
+}
+
+.nav-link-mobile {
+  padding: var(--space-md) 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border-secondary);
+  transition: color var(--duration-fast) ease;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover,
+  &.active {
+    color: var(--accent-primary);
+  }
+}
+
+/* 移动端菜单动画 */
+.mobile-menu-enter-active,
+.mobile-menu-leave-active {
+  transition: all var(--duration-normal) var(--ease-out-quart);
+}
+
+.mobile-menu-enter-from,
+.mobile-menu-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+/* ============================================
+   主内容区
+   ============================================ */
+.main {
+  flex: 1;
+  width: 100%;
+}
+
+/* ============================================
+   页脚
+   ============================================ */
 .footer {
+  margin-top: auto;
+  padding: var(--space-2xl) var(--space-xl);
+  background: transparent;
+}
+
+.footer-inner {
+  max-width: var(--container-xl);
+  margin: 0 auto;
+}
+
+.footer-divider {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--space-xl);
+
+  .divider-svg {
+    width: 200px;
+    height: 20px;
+  }
+}
+
+.footer-content {
   text-align: center;
-  padding: 1.5rem 2rem;
-  background: transparent !important;
+}
 
-  .footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
+.copyright {
+  font-size: 0.875rem;
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-xs);
+}
 
-    p {
-      margin: 0.25rem 0;
-      color: var(--text-secondary);
-      font-size: 0.875rem;
-    }
+.tech-info {
+  font-size: 0.75rem;
+  color: var(--text-muted);
 
-    a {
+  a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color var(--duration-fast) ease;
+
+    &:hover {
       color: var(--accent-primary);
-      text-decoration: none;
-
-      &:hover {
-        color: var(--accent-secondary);
-      }
     }
   }
 }
 
+/* ============================================
+   响应式
+   ============================================ */
 @media (max-width: 768px) {
-  .header {
-    padding: 0 1rem;
-
-    .nav-menu {
-      display: none;
-    }
+  .header-inner {
+    padding: 0 var(--space-lg);
+    height: 64px;
   }
 
-  .content {
-    padding: 1rem;
+  .nav-desktop {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .nav-mobile {
+    display: flex;
+  }
+
+  .logo-text {
+    font-size: 1.25rem;
+  }
+
+  .footer {
+    padding: var(--space-xl) var(--space-lg);
   }
 }
 </style>

@@ -2,7 +2,7 @@
 const route = useRoute()
 const path = route.params.slug as string[]
 
-// 构建文章路径 (content 目录下的实际路径)
+// 构建文章路径
 const postPath = `/${path.join('/')}`
 
 // 获取文章内容
@@ -20,7 +20,7 @@ if (error.value || !post.value) {
   })
 }
 
-// SEO - 使用文章数据设置动态 meta 标签
+// SEO
 useArticleSeo({
   title: post.value?.title || '',
   description: post.value?.description || '',
@@ -31,149 +31,371 @@ useArticleSeo({
   cover: post.value?.cover,
   category: post.value?.category,
 })
+
+// 格式化日期
+const formatDate = (dateStr: string) => {
+  if (!dateStr) return ''
+  const date = new Date(dateStr)
+  return date.toLocaleDateString('zh-CN', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+}
+
+// 阅读进度
+const readingProgress = ref(0)
+const articleRef = ref<HTMLElement | null>(null)
+
+onMounted(() => {
+  const handleScroll = () => {
+    if (!articleRef.value) return
+    const rect = articleRef.value.getBoundingClientRect()
+    const windowHeight = window.innerHeight
+    const contentHeight = articleRef.value.scrollHeight
+    const scrolled = -rect.top
+    const total = contentHeight - windowHeight
+    readingProgress.value = Math.min(100, Math.max(0, (scrolled / total) * 100))
+  }
+
+  window.addEventListener('scroll', handleScroll, { passive: true })
+  onUnmounted(() => window.removeEventListener('scroll', handleScroll))
+})
+
+// 页面加载动画
+const isLoaded = ref(false)
+
+onMounted(() => {
+  setTimeout(() => {
+    isLoaded.value = true
+  }, 100)
+})
 </script>
 
 <template>
-  <article class="post-detail">
+  <article ref="articleRef" class="post-detail" :class="{ loaded: isLoaded }">
+    <!-- 阅读进度条 -->
+    <div class="reading-progress" :style="{ width: `${readingProgress}%` }" />
+
+    <!-- 返回导航 -->
+    <nav class="back-nav">
+      <NuxtLink to="/posts" class="nav-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        <span>返回文章列表</span>
+      </NuxtLink>
+    </nav>
+
     <!-- 文章头部 -->
     <header class="post-header">
-      <div class="post-meta">
-        <span class="post-category">{{ post?.category }}</span>
-        <span class="post-date">{{ post?.date }}</span>
-      </div>
-      <h1 class="post-title">{{ post?.title }}</h1>
-      <p class="post-description">{{ post?.description }}</p>
-      <div class="post-tags" v-if="post?.tags?.length">
-        <span v-for="tag in post.tags" :key="tag" class="tag">
-          {{ tag }}
-        </span>
+      <div class="header-inner">
+        <div class="post-meta">
+          <span class="post-category">{{ post?.category }}</span>
+          <span class="meta-dot">·</span>
+          <time class="post-date">{{ formatDate(post?.date || '') }}</time>
+        </div>
+
+        <h1 class="post-title">{{ post?.title }}</h1>
+
+        <p class="post-description">{{ post?.description }}</p>
+
+        <div class="post-tags" v-if="post?.tags?.length">
+          <span v-for="tag in post.tags" :key="tag" class="tag">
+            {{ tag }}
+          </span>
+        </div>
       </div>
     </header>
 
+    <!-- 分隔线 -->
+    <div class="section-divider">
+      <svg viewBox="0 0 400 20" class="divider-svg">
+        <line x1="150" y1="10" x2="250" y2="10" stroke="var(--border-primary)" stroke-width="0.5" />
+      </svg>
+    </div>
+
     <!-- 文章内容 -->
-    <div class="post-content markdown-content">
+    <div class="post-content prose markdown-content">
       <ContentRenderer :value="post" v-if="post" />
     </div>
 
     <!-- 文章底部 -->
     <footer class="post-footer">
-      <div class="author-info">
-        <span class="author">作者：{{ post?.author || '王森' }}</span>
-        <span class="updated" v-if="post?.updated">
-          更新于：{{ post.updated }}
-        </span>
+      <!-- 作者信息 -->
+      <div class="footer-content">
+        <div class="author-info">
+          <div class="author-avatar">
+            <SvgLogo :animated="false" :size="28" />
+          </div>
+          <div class="author-text">
+            <span class="author-name">{{ post?.author || '王森' }}</span>
+            <span class="author-role">作者</span>
+          </div>
+        </div>
+
+        <div class="post-meta-footer" v-if="post?.updated">
+          <span>更新于 {{ formatDate(post.updated) }}</span>
+        </div>
       </div>
-      <NuxtLink to="/posts" class="back-link">← 返回文章列表</NuxtLink>
+
+      <!-- 底部分隔线 -->
+      <SvgDivider variant="zen" />
+
+      <!-- 返回导航 -->
+      <div class="footer-nav">
+        <NuxtLink to="/posts" class="nav-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+          <span>查看更多文章</span>
+        </NuxtLink>
+      </div>
     </footer>
   </article>
 </template>
 
 <style scoped lang="scss">
 .post-detail {
-  max-width: 800px;
+  max-width: var(--container-md);
   margin: 0 auto;
+  padding: var(--space-2xl) var(--space-xl);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s var(--ease-out-expo);
 
-  .post-header {
-    margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--border-primary);
+  &.loaded {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-    .post-meta {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 1rem;
-      font-size: 0.875rem;
+/* ============================================
+   阅读进度条
+   ============================================ */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--accent-primary);
+  z-index: 1000;
+  transition: width 0.1s ease;
+}
 
-      .post-category {
-        color: var(--accent-primary);
-        font-weight: 500;
-      }
+/* ============================================
+   返回导航
+   ============================================ */
+.back-nav {
+  margin-bottom: var(--space-xl);
+}
 
-      .post-date {
-        color: var(--text-tertiary);
-      }
-    }
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: transparent;
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  transition: all var(--duration-fast) ease;
 
-    .post-title {
-      font-size: 2.25rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      line-height: 1.3;
-      margin-bottom: 1rem;
-    }
+  &:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
 
-    .post-description {
-      font-size: 1.125rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-      margin-bottom: 1rem;
-    }
-
-    .post-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-
-      .tag {
-        font-size: 0.875rem;
-        padding: 0.25rem 0.75rem;
-        background-color: var(--bg-tertiary);
-        color: var(--text-secondary);
-        border-radius: 16px;
-      }
+    svg {
+      transform: translateX(-4px);
     }
   }
 
-  .post-content {
-    padding: 1rem 0;
-    min-height: 300px;
+  svg {
+    transition: transform var(--duration-fast) ease;
   }
+}
 
-  .post-footer {
-    margin-top: 3rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--border-primary);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* ============================================
+   文章头部
+   ============================================ */
+.post-header {
+  margin-bottom: var(--space-xl);
+}
 
-    .author-info {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-    }
+.header-inner {
+  max-width: 640px;
+}
 
-    .back-link {
-      color: var(--accent-primary);
-      text-decoration: none;
-      font-size: 0.9rem;
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 0.875rem;
+  margin-bottom: var(--space-lg);
+}
 
-      &:hover {
-        color: var(--accent-secondary);
-      }
+.post-category {
+  color: var(--accent-primary);
+  font-weight: 500;
+}
+
+.meta-dot {
+  color: var(--text-muted);
+}
+
+.post-date {
+  color: var(--text-tertiary);
+}
+
+.post-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.3;
+  margin-bottom: var(--space-lg);
+}
+
+.post-description {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: var(--space-lg);
+}
+
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+
+  .tag {
+    font-size: 0.8125rem;
+    padding: var(--space-xs) var(--space-md);
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-primary);
+  }
+}
+
+/* ============================================
+   分隔线
+   ============================================ */
+.section-divider {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--space-2xl);
+
+  .divider-svg {
+    width: 200px;
+    height: 20px;
+  }
+}
+
+/* ============================================
+   文章内容
+   ============================================ */
+.post-content {
+  padding: 0 0 var(--space-3xl);
+  min-height: 400px;
+}
+
+/* ============================================
+   文章底部
+   ============================================ */
+.post-footer {
+  margin-top: var(--space-2xl);
+  border-top: 1px solid var(--border-primary);
+  padding-top: var(--space-2xl);
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-2xl);
+}
+
+.author-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.author-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.author-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.author-name {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.author-role {
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
+}
+
+.post-meta-footer {
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
+}
+
+.footer-nav {
+  display: flex;
+  justify-content: center;
+
+  .nav-link {
+    padding: var(--space-md) var(--space-xl);
+    background: var(--bg-secondary);
+    font-weight: 500;
+    color: var(--text-primary);
+
+    &:hover {
+      background: var(--bg-tertiary);
     }
   }
 }
 
+/* ============================================
+   响应式
+   ============================================ */
 @media (max-width: 768px) {
   .post-detail {
-    .post-header {
-      .post-title {
-        font-size: 1.75rem;
-      }
+    padding: var(--space-lg);
+  }
 
-      .post-description {
-        font-size: 1rem;
-      }
-    }
+  .post-title {
+    font-size: 1.5rem;
+  }
 
-    .post-footer {
-      flex-direction: column;
-      gap: 1rem;
-      text-align: center;
-    }
+  .post-description {
+    font-size: 1rem;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+
+  .footer-nav .nav-link {
+    width: 100%;
+    justify-content: center;
   }
 }
 </style>

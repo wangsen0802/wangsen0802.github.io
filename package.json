@@ -4,6 +4,9 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "dev": "nuxt dev",
     "build": "nuxt build",
@@ -19,14 +22,16 @@
     "@ant-design/icons-vue": "^7.0.1",
     "ant-design-vue": "^4.2.6",
     "better-sqlite3": "^12.8.0",
+    "flexsearch": "^0.8.212",
     "gsap": "^3.13.0",
     "highlight.js": "^11.11.1",
     "markdown-it": "^14.1.0",
+    "remark-gfm": "^4.0.1",
     "three": "^0.180.0"
   },
   "devDependencies": {
     "@eslint/js": "10",
-    "@nuxt/content": "^3.4.0",
+    "@nuxt/content": "^3.12.0",
     "@nuxtjs/color-mode": "^4.0.0",
     "@nuxtjs/google-fonts": "^3.2.0",
     "@prettier/plugin-pug": "^3.4.2",
@@ -35,7 +40,7 @@
     "@types/three": "^0.180.0",
     "eslint": "^10.1.0",
     "eslint-plugin-vue": "^10.8.0",
-    "nuxt": "^3.16.1",
+    "nuxt": "^3.21.2",
     "prettier": "^3.6.2",
     "prettier-plugin-vue": "^1.1.6",
     "sass": "^1.92.1",
