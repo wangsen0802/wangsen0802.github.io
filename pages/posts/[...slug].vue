@@ -20,14 +20,16 @@ if (error.value || !post.value) {
   })
 }
 
-// SEO
-useHead({
-  title: `${post.value?.title} - wanGISen`,
-  meta: [
-    { name: 'description', content: post.value?.description },
-    { property: 'og:title', content: post.value?.title },
-    { property: 'og:description', content: post.value?.description },
-  ],
+// SEO - 使用文章数据设置动态 meta 标签
+useArticleSeo({
+  title: post.value?.title || '',
+  description: post.value?.description || '',
+  date: post.value?.date,
+  updated: post.value?.updated,
+  author: post.value?.author || '王森',
+  tags: post.value?.tags || [],
+  cover: post.value?.cover,
+  category: post.value?.category,
 })
 </script>
 

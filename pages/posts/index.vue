@@ -1,18 +1,19 @@
 <script setup lang="ts">
-// SEO
-useHead({
-  title: '文章列表 - wanGISen',
-  meta: [
-    { name: 'description', content: '浏览所有技术文章' },
-  ],
-})
-
 // 获取所有文章
 const { data: posts } = await useAsyncData('all-posts', () =>
   queryCollection('content')
     .order('date', 'DESC')
     .all()
 )
+
+// SEO - 在获取数据后设置，以便在描述中包含文章数量
+const postCount = computed(() => posts.value?.length || 0)
+useSeo({
+  title: '文章列表',
+  description: `浏览全部 ${postCount.value} 篇技术文章，涵盖 Vue.js、Nuxt 3、TypeScript、Mapbox GL、GIS 等前端开发技术领域`,
+  keywords: ['技术文章', '前端开发', 'Vue.js', 'Nuxt 3', 'TypeScript', 'GIS', 'Mapbox'],
+  type: 'website',
+})
 
 // 获取所有分类
 const categories = computed(() => {

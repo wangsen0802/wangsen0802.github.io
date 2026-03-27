@@ -1,9 +1,20 @@
 <script setup lang="ts">
-useHead({
-  title: '关于我 - wanGISen',
-  meta: [
-    { name: 'description', content: '了解更多关于王森的信息' },
+// SEO
+useSeo({
+  title: '关于我',
+  description: '了解王森，一名专注于 Vue.js 和 GIS 技术的前端开发工程师。熟悉 Vue 3、Nuxt 3、TypeScript、Mapbox GL 等现代 Web 技术',
+  keywords: [
+    '王森',
+    '前端开发',
+    'Vue.js',
+    'Nuxt 3',
+    'TypeScript',
+    'GIS',
+    'Mapbox GL',
+    '开发者',
+    '个人简介',
   ],
+  type: 'website',
 })
 </script>
 

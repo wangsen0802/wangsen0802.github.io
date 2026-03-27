@@ -1,10 +1,21 @@
 <script setup lang="ts">
 // SEO
-useHead({
+useSeo({
   title: 'wanGISen - 技术博客',
-  meta: [
-    { name: 'description', content: '个人技术博客，专注于前端开发和 GIS 技术' },
+  description: '个人技术博客，专注于 Vue.js、Nuxt 3、TypeScript 和 Mapbox GL 等 GIS 技术开发，分享前端开发和地理信息系统的技术心得与最佳实践',
+  keywords: [
+    'Vue.js',
+    'Nuxt 3',
+    'TypeScript',
+    'GIS',
+    'Mapbox GL',
+    '前端开发',
+    '全栈开发',
+    'Three.js',
+    'Pinia',
+    '技术博客',
   ],
+  type: 'website',
 })
 
 // 技术栈数据
