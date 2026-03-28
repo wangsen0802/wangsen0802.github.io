@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ArrowRight } from 'lucide-vue-next'
+
 // SEO
 useSeo({
   title: 'wanGISen - 技术博客',
@@ -52,9 +54,7 @@ onMounted(() => {
           <div class="hero-actions animate-item">
             <NuxtLink to="/posts" class="action-btn primary">
               <span>浏览文章</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
+              <ArrowRight :size="16" />
             </NuxtLink>
           </div>
         </div>

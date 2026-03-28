@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ArrowLeft } from 'lucide-vue-next'
+
 const route = useRoute()
 const path = route.params.slug as string[]
 
@@ -80,9 +82,7 @@ onMounted(() => {
     <!-- 返回导航 -->
     <nav class="back-nav">
       <NuxtLink to="/posts" class="nav-link">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M19 12H5M12 19l-7-7 7-7" />
-        </svg>
+        <ArrowLeft :size="16" />
         <span>返回文章列表</span>
       </NuxtLink>
     </nav>
@@ -145,9 +145,7 @@ onMounted(() => {
       <!-- 返回导航 -->
       <div class="footer-nav">
         <NuxtLink to="/posts" class="nav-link">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M19 12H5M12 19l-7-7 7-7" />
-          </svg>
+          <ArrowLeft :size="16" />
           <span>查看更多文章</span>
         </NuxtLink>
       </div>

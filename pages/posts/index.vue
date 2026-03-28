@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ArrowRight, FileQuestion } from 'lucide-vue-next'
+
 // 使用文章缓存 composable
 const { posts, categories } = usePostsCache()
 
@@ -116,9 +118,7 @@ const formatDate = (dateStr: string) => {
 
             <!-- 箭头指示 -->
             <div class="post-arrow">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
+              <ArrowRight :size="20" />
             </div>
           </NuxtLink>
         </article>
@@ -126,9 +126,7 @@ const formatDate = (dateStr: string) => {
 
       <!-- 空状态 -->
       <div v-if="!filteredPosts?.length" class="empty-state">
-        <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-          <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>
+        <FileQuestion :size="48" class="empty-icon" />
         <p class="empty-text">暂无文章</p>
       </div>
     </div>

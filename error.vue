@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Home, BookOpen, User, ArrowLeft } from 'lucide-vue-next'
+
 // SEO
 useHead({
   title: '404 - 页面未找到',
@@ -54,13 +56,13 @@ const handleError = () => {
         <div class="error-actions">
           <a-button type="primary" size="large" @click="handleError">
             <template #icon>
-              <span>🏠</span>
+              <Home :size="16" />
             </template>
             返回首页
           </a-button>
           <a-button size="large" @click="$router.back()">
             <template #icon>
-              <span>←</span>
+              <ArrowLeft :size="16" />
             </template>
             返回上一页
           </a-button>
@@ -71,15 +73,15 @@ const handleError = () => {
           <p class="quick-links-title">快速导航</p>
           <div class="quick-links-list">
             <NuxtLink to="/" class="quick-link">
-              <span class="link-icon">🏠</span>
+              <Home :size="20" class="link-icon" />
               <span class="link-text">首页</span>
             </NuxtLink>
             <NuxtLink to="/posts" class="quick-link">
-              <span class="link-icon">📝</span>
+              <BookOpen :size="20" class="link-icon" />
               <span class="link-text">文章列表</span>
             </NuxtLink>
             <NuxtLink to="/about" class="quick-link">
-              <span class="link-icon">👤</span>
+              <User :size="20" class="link-icon" />
               <span class="link-text">关于我</span>
             </NuxtLink>
           </div>
