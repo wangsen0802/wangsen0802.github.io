@@ -1,22 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
-import { useRouter } from 'vue-router'
 import { SearchOutlined, CloseOutlined, FileTextOutlined } from '@ant-design/icons-vue'
-import type { SearchDocument, SearchResult } from '~/composables/useSearch'
-
-// Props
-interface Props {
-  open?: boolean
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  open: false,
-})
-
-// Emits
-const emit = defineEmits<{
-  'update:open': [value: boolean]
-}>()
+import type { SearchResult } from '~/composables/useSearch'
 
 // Router
 const router = useRouter()
@@ -31,11 +16,8 @@ const searchResults = ref<SearchResult[]>([])
 const isSearching = ref(false)
 const activeIndex = ref(-1)
 
-// Computed
-const isOpen = computed({
-  get: () => props.open,
-  set: (value) => emit('update:open', value),
-})
+// 搜索弹窗状态（内部管理，不依赖外部 prop）
+const isOpen = ref(false)
 
 const hasResults = computed(() => searchResults.value.length > 0)
 
@@ -199,9 +181,9 @@ onMounted(() => {
       v-model:open="isOpen"
       :footer="null"
       :closable="false"
-      centered
+      :centered="false"
       width="90%"
-      :style="{ maxWidth: '640px' }"
+      :style="{ maxWidth: '640px', top: '15vh' }"
       wrap-class-name="search-modal-wrapper"
       @cancel="closeModal"
     >
@@ -360,6 +342,7 @@ onMounted(() => {
   }
 
   .search-results {
+    min-height: 200px;
     max-height: 400px;
     overflow-y: auto;
     margin-bottom: 1rem;
@@ -535,6 +518,7 @@ onMounted(() => {
 @media (max-width: 768px) {
   .search-modal {
     .search-results {
+      min-height: 160px;
       max-height: 300px;
 
       .results-list {
