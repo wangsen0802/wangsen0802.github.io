@@ -42,10 +42,10 @@
 - [x] 实现 shimmer 动画效果
 - [x] 支持暗色/亮色主题
 
-### 7. Sitemap 生成
-- [ ] 安装 `@nuxtjs/sitemap` 模块
-- [ ] 配置动态路由生成
-- [ ] 在 `nuxt.config.ts` 中集成
+### 7. Sitemap 生成 ✅
+- [x] 安装 `@nuxtjs/sitemap` 模块
+- [x] 配置动态路由生成
+- [x] 在 `nuxt.config.ts` 中集成
 
 ### 8. 图片压缩
 - [ ] 使用 Nuxt Image 模块
@@ -134,6 +134,7 @@
 | 2026-03-28 | 404 错误页面 | error.vue + 主题支持 |
 | 2026-03-28 | 清理旧代码 | 删除 src/ 目录，迁移图片到 public/images/ |
 | 2026-03-26 | ESLint 配置 | eslint@10 + typescript-eslint + eslint-plugin-vue |
+| 2026-03-28 | Sitemap 生成 | @nuxtjs/sitemap + 动态文章路由 + 排除 demo 页面 |
 
 ---
 

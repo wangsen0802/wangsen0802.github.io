@@ -11,7 +11,17 @@ export default defineNuxtConfig({
   },
 
   // 模块
-  modules: ['@nuxt/content', '@nuxtjs/google-fonts', '@nuxtjs/color-mode'],
+  modules: ['@nuxt/content', '@nuxtjs/google-fonts', '@nuxtjs/color-mode', '@nuxtjs/sitemap'],
+
+  // Sitemap 配置
+  sitemap: {
+    sources: ['/api/sitemap-posts'],
+    exclude: ['/demo/*', '/skeleton-demo'],
+    defaults: {
+      changefreq: 'weekly',
+      priority: 0.7,
+    },
+  },
 
   // TypeScript 配置
   typescript: {
