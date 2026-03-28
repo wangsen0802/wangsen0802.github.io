@@ -30,7 +30,7 @@ export default defineNuxtConfig({
   },
 
   // 样式配置
-  css: ['~/assets/styles/main.scss'],
+  css: ['~/assets/styles/main.scss', '~/assets/styles/ant.scss'],
 
   // Vite 配置
   vite: {
@@ -75,6 +75,7 @@ export default defineNuxtConfig({
         { name: 'twitter:site', content: '@wangsen0802' },
       ],
       link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       ],
     },

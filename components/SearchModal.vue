@@ -546,16 +546,3 @@ onMounted(() => {
   }
 }
 </style>
-
-<style>
-/* 全局样式 - Modal 容器 */
-.search-modal-wrapper .ant-modal-content {
-  background: var(--bg-primary);
-  border: 1px solid var(--border-primary);
-  box-shadow: var(--shadow-heavy);
-}
-
-.search-modal-wrapper .ant-modal-body {
-  padding: 1.5rem;
-}
-</style>

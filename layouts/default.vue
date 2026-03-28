@@ -3,7 +3,6 @@
 const navItems = [
   { name: '首页', path: '/' },
   { name: '文章', path: '/posts' },
-  { name: '关于', path: '/about' },
 ]
 
 // 当前路由
@@ -14,7 +13,6 @@ const selectedNav = computed(() => {
   const path = route.path
   if (path === '/') return '/'
   if (path.startsWith('/posts')) return '/posts'
-  if (path === '/about') return '/about'
   return path
 })
 
@@ -142,12 +140,6 @@ const closeMobileMenu = () => {
 
         <div class="footer-content">
           <p class="copyright">© 2026 wanGISen</p>
-          <p class="tech-info">
-            Built with
-            <a href="https://nuxt.com" target="_blank" rel="noopener">Nuxt 3</a>
-            &
-            <a href="https://vuejs.org" target="_blank" rel="noopener">Vue 3</a>
-          </p>
         </div>
       </div>
     </footer>
@@ -383,22 +375,6 @@ const closeMobileMenu = () => {
 .copyright {
   font-size: 0.875rem;
   color: var(--text-tertiary);
-  margin-bottom: var(--space-xs);
-}
-
-.tech-info {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-
-  a {
-    color: var(--text-tertiary);
-    text-decoration: none;
-    transition: color var(--duration-fast) ease;
-
-    &:hover {
-      color: var(--accent-primary);
-    }
-  }
 }
 
 /* ============================================

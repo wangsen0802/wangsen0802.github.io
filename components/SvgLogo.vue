@@ -1,117 +1,194 @@
 <script setup lang="ts">
-defineProps<{
+const props = withDefaults(defineProps<{
   size?: number
   animated?: boolean
-}>()
+}>(), {
+  size: 40,
+  animated: false,
+})
+
+const detailed = computed(() => props.size >= 60)
 </script>
 
 <template>
   <svg
-    :width="size || 40"
-    :height="size || 40"
-    viewBox="0 0 100 100"
+    :width="size"
+    :height="size"
+    viewBox="0 0 200 200"
     xmlns="http://www.w3.org/2000/svg"
     class="logo-svg"
     :class="{ animated }"
   >
     <defs>
-      <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="var(--accent-primary)" />
-        <stop offset="100%" stop-color="var(--accent-secondary)" />
-      </linearGradient>
+      <!-- Globe gradient -->
+      <radialGradient id="logoGlobeGrad" cx="38%" cy="30%" r="65%">
+        <stop offset="0%" stop-color="#7DD3FC" />
+        <stop offset="55%" stop-color="#3B82F6" />
+        <stop offset="100%" stop-color="#1E3A8A" />
+      </radialGradient>
+      <!-- Globe highlight -->
+      <radialGradient id="logoGlobeShine" cx="32%" cy="28%" r="35%">
+        <stop offset="0%" stop-color="#fff" stop-opacity="0.3" />
+        <stop offset="100%" stop-color="#fff" stop-opacity="0" />
+      </radialGradient>
+      <!-- Globe clip -->
+      <clipPath id="logoGlobeClip">
+        <circle cx="100" cy="100" r="44" />
+      </clipPath>
+      <!-- Text orbit path (only needed in detailed mode) -->
+      <path
+        v-if="detailed"
+        id="logoTextOrbit"
+        d="M 100,100 m -78,0 a 78,78 0 1,1 156,0 a 78,78 0 1,1 -156,0"
+        fill="none"
+      />
     </defs>
 
-    <!-- 外圈 -->
+    <!-- Orbit ring (behind globe, detailed mode only) -->
     <circle
-      cx="50"
-      cy="50"
-      r="45"
+      v-if="detailed"
+      cx="100" cy="100" r="78"
       fill="none"
-      stroke="var(--text-primary)"
+      class="orbit-ring"
       stroke-width="1"
-      class="outer-circle"
+      stroke-dasharray="4 8"
     />
 
-    <!-- W 字母路径 -->
-    <path
-      d="M20 70 L30 30 L50 55 L70 30 L80 70"
-      fill="none"
-      stroke="url(#logoGradient)"
-      stroke-width="3"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      class="letter-path"
-    />
+    <!-- Globe group -->
+    <g class="globe-group">
+      <!-- Globe body with grid (clipped) -->
+      <g clip-path="url(#logoGlobeClip)">
+        <circle cx="100" cy="100" r="44" fill="url(#logoGlobeGrad)" class="globe-base" />
+        <!-- Meridians -->
+        <ellipse cx="100" cy="100" rx="17" ry="44" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width=".9" class="grid-line meridian" />
+        <ellipse cx="100" cy="100" rx="33" ry="44" fill="none" stroke="#fff" stroke-opacity=".15" stroke-width=".7" class="grid-line meridian" />
+        <line x1="100" y1="56" x2="100" y2="144" stroke="#fff" stroke-opacity=".2" stroke-width=".8" class="grid-line" />
+        <!-- Parallels -->
+        <line x1="56" y1="78" x2="144" y2="78" stroke="#fff" stroke-opacity=".15" stroke-width=".7" class="grid-line parallel" />
+        <line x1="56" y1="100" x2="144" y2="100" stroke="#fff" stroke-opacity=".25" stroke-width=".9" class="grid-line parallel" />
+        <line x1="56" y1="122" x2="144" y2="122" stroke="#fff" stroke-opacity=".15" stroke-width=".7" class="grid-line parallel" />
+      </g>
+      <!-- Shine overlay -->
+      <circle cx="100" cy="100" r="44" fill="url(#logoGlobeShine)" />
+      <!-- Outline -->
+      <circle cx="100" cy="100" r="44" fill="none" class="globe-outline" stroke-width="1.5" />
+    </g>
 
-    <!-- G 字母路径 -->
-    <path
-      d="M55 45 L75 45 L75 60 Q75 70 65 70 L55 70 Q45 70 45 60 L45 45 Q45 35 55 35"
-      fill="none"
-      stroke="url(#logoGradient)"
-      stroke-width="2.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      class="letter-path-g"
-      opacity="0.7"
-    />
+    <!-- Location pin -->
+    <g class="pin-group" transform="translate(118,72)">
+      <path
+        d="M0-10C5.5-10 10-5.5 10 0 10 6.3 0 14 0 14S-10 6.3-10 0C-10-5.5-5.5-10 0-10z"
+        fill="#F97316"
+        stroke="#fff"
+        stroke-width="1.5"
+      />
+      <circle r="3.5" fill="#fff" />
+    </g>
 
-    <!-- 装饰点 -->
-    <circle cx="50" cy="15" r="2" fill="var(--accent-primary)" class="accent-dot dot-1" />
-    <circle cx="85" cy="50" r="1.5" fill="var(--accent-secondary)" class="accent-dot dot-2" />
-    <circle cx="50" cy="85" r="1.5" fill="var(--accent-primary)" class="accent-dot dot-3" />
+    <!-- Text orbit (detailed mode only) -->
+    <template v-if="detailed">
+      <text
+        class="orbit-text"
+        font-size="20"
+        font-weight="700"
+        letter-spacing="3"
+        font-family="'DM Sans',system-ui,sans-serif"
+      >
+        <textPath href="#logoTextOrbit" startOffset="12%">
+          wan<tspan class="text-accent" font-weight="800">GIS</tspan>en
+        </textPath>
+      </text>
+    </template>
   </svg>
 </template>
 
 <style scoped lang="scss">
 .logo-svg {
   display: block;
+}
 
-  &.animated {
-    :deep(.outer-circle) {
-      stroke-dasharray: 283;
-      stroke-dashoffset: 283;
-      animation: drawCircle 1.5s ease-out forwards;
-    }
+/* Theme-aware element styles */
+.globe-outline {
+  stroke: #60A5FA;
+}
 
-    :deep(.letter-path) {
-      stroke-dasharray: 150;
-      stroke-dashoffset: 150;
-      animation: drawLetter 1.2s ease-out 0.3s forwards;
-    }
+.orbit-ring {
+  stroke: var(--border-primary);
+  opacity: 0.4;
+}
 
-    :deep(.letter-path-g) {
-      stroke-dasharray: 100;
-      stroke-dashoffset: 100;
-      animation: drawLetter 1s ease-out 0.6s forwards;
-    }
+.orbit-text {
+  fill: var(--text-primary);
+}
 
-    :deep(.accent-dot) {
-      opacity: 0;
-      animation: dotAppear 0.4s ease-out forwards;
+.text-accent {
+  fill: var(--accent-primary);
+}
 
-      &.dot-1 { animation-delay: 0.8s; }
-      &.dot-2 { animation-delay: 1s; }
-      &.dot-3 { animation-delay: 1.2s; }
-    }
+/* Hover effect */
+.logo-svg:hover {
+  :deep(.globe-outline) {
+    stroke: var(--accent-primary);
+    transition: stroke 0.3s ease;
+  }
+}
+
+/* ============================================
+   Animation
+   ============================================ */
+.logo-svg.animated {
+  /* Globe fade in */
+  :deep(.globe-base) {
+    opacity: 0;
+    animation: fadeIn 0.8s ease-out 0.2s forwards;
   }
 
-  &:hover {
-    :deep(.outer-circle) {
-      stroke: var(--accent-primary);
-      transition: stroke 0.3s ease;
-    }
+  /* Grid lines draw */
+  :deep(.grid-line) {
+    opacity: 0;
+    animation: fadeIn 0.6s ease-out forwards;
+
+    &.meridian { animation-delay: 0.5s; }
+    &.parallel { animation-delay: 0.7s; }
   }
+
+  /* Globe outline draw */
+  :deep(.globe-outline) {
+    stroke-dasharray: 276;
+    stroke-dashoffset: 276;
+    animation: drawCircle 1.2s ease-out 0.3s forwards;
+  }
+
+  /* Pin pop in */
+  :deep(.pin-group) {
+    opacity: 0;
+    transform-origin: 118px 72px;
+    animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.8s forwards;
+  }
+
+  /* Orbit ring draw */
+  :deep(.orbit-ring) {
+    stroke-dasharray: 490;
+    stroke-dashoffset: 490;
+    animation: drawCircle 1.5s ease-out 1s forwards;
+  }
+
+  /* Orbit text fade in */
+  :deep(.orbit-text) {
+    opacity: 0;
+    animation: fadeIn 0.8s ease-out 1.5s forwards;
+  }
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
 }
 
 @keyframes drawCircle {
   to { stroke-dashoffset: 0; }
 }
 
-@keyframes drawLetter {
-  to { stroke-dashoffset: 0; }
-}
-
-@keyframes dotAppear {
+@keyframes popIn {
   from {
     opacity: 0;
     transform: scale(0);
