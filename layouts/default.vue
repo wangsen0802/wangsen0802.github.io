@@ -3,6 +3,7 @@
 const navItems = [
   { name: '首页', path: '/' },
   { name: '文章', path: '/posts' },
+  { name: '统计', path: '/stats' },
 ]
 
 // 当前路由
@@ -139,7 +140,9 @@ const closeMobileMenu = () => {
         </div>
 
         <div class="footer-content">
-          <p class="copyright">© 2026 wanGISen</p>
+          <p class="copyright">
+            © 2026 wanGISen · <StatsSiteFooterStats />
+          </p>
         </div>
       </div>
     </footer>

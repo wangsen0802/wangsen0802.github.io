@@ -43,14 +43,35 @@ export interface Category {
  */
 export interface StatsOverview {
   totalViews: number
+  totalUV: number
+  totalPages: number
+  todayViews: number
+  todayUV: number
+  topPages: TopPage[]
+  timestamp: string
+}
+
+export interface TopPage {
+  pagePath: string
+  viewCount: number
   uniqueVisitors: number
-  pageViews: PageViewStats[]
 }
 
 export interface PageViewStats {
   pagePath: string
   viewCount: number
   uniqueVisitors: number
+}
+
+export interface TrendItem {
+  date: string
+  pv: number
+  uv: number
+}
+
+export interface TrendResponse {
+  period: 'day' | 'week' | 'month'
+  data: TrendItem[]
 }
 
 /**

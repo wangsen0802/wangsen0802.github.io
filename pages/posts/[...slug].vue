@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ArrowLeft } from 'lucide-vue-next'
+import { ArrowLeft, Eye } from 'lucide-vue-next'
 
 const route = useRoute()
 const path = route.params.slug as string[]
@@ -33,6 +33,16 @@ useArticleSeo({
   cover: post.value?.cover,
   category: post.value?.category,
 })
+
+// 文章浏览量
+const { data: pageStats } = await useFetch<{ viewCount: number; uniqueVisitors: number }>(
+  '/api/stats/page',
+  {
+    params: { path: postPath },
+    server: false,
+    key: `page-stats-${postPath}`,
+  },
+)
 
 // 格式化日期
 const formatDate = (dateStr: string) => {
@@ -104,6 +114,11 @@ onMounted(() => {
           <span v-for="tag in post.tags" :key="tag" class="tag">
             {{ tag }}
           </span>
+        </div>
+
+        <div class="post-views" v-if="pageStats?.viewCount">
+          <Eye :size="14" />
+          <span>{{ pageStats.viewCount }} 次浏览</span>
         </div>
       </div>
     </header>
@@ -276,6 +291,15 @@ onMounted(() => {
     border-radius: var(--radius-full);
     border: 1px solid var(--border-primary);
   }
+}
+
+.post-views {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: var(--space-md);
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
 }
 
 /* ============================================
