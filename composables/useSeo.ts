@@ -46,8 +46,15 @@ export function useSeo(options: SeoOptions = {}) {
   // 构建完整图片 URL
   const fullImageUrl = image.startsWith('http') ? image : `${baseUrl}${image}`
 
+  // Meta 标签类型
+  interface MetaTag {
+    name?: string
+    property?: string
+    content: string
+  }
+
   // Meta 标签配置
-  const metaTags: any[] = [
+  const metaTags: MetaTag[] = [
     // 基础 SEO
     { name: 'description', content: description },
     { name: 'keywords', content: keywordsString },

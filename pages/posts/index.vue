@@ -1,34 +1,6 @@
 <script setup lang="ts">
-// 获取所有文章
-const { data: posts } = await useAsyncData('all-posts', () =>
-  queryCollection('content')
-    .order('date', 'DESC')
-    .all()
-)
-
-// SEO
-const postCount = computed(() => posts.value?.length || 0)
-useSeo({
-  title: '文章',
-  description: `浏览全部 ${postCount.value} 篇技术文章，涵盖 Vue.js、Nuxt 3、TypeScript、Mapbox GL、GIS 等前端开发技术领域`,
-  keywords: ['技术文章', '前端开发', 'Vue.js', 'Nuxt 3', 'TypeScript', 'GIS', 'Mapbox'],
-  type: 'website',
-})
-
-// 获取所有分类
-const categories = computed(() => {
-  if (!posts.value) return []
-  const categoryMap = new Map<string, number>()
-  posts.value.forEach((post: any) => {
-    const category = post.category || 'other'
-    categoryMap.set(category, (categoryMap.get(category) || 0) + 1)
-  })
-  return Array.from(categoryMap.entries()).map(([name, count]) => ({
-    name,
-    slug: name,
-    count,
-  }))
-})
+// 使用文章缓存 composable
+const { posts, categories } = usePostsCache()
 
 // 当前选中的分类
 const selectedCategory = ref<string | null>(null)
@@ -37,7 +9,16 @@ const selectedCategory = ref<string | null>(null)
 const filteredPosts = computed(() => {
   if (!posts.value) return []
   if (!selectedCategory.value) return posts.value
-  return posts.value.filter((post: any) => post.category === selectedCategory.value)
+  return posts.value.filter((post) => post.category === selectedCategory.value)
+})
+
+// SEO
+const postCount = computed(() => posts.value?.length || 0)
+useSeo({
+  title: '文章',
+  description: `浏览全部 ${postCount.value} 篇技术文章，涵盖 Vue.js、Nuxt 3、TypeScript、Mapbox GL、GIS 等前端开发技术领域`,
+  keywords: ['技术文章', '前端开发', 'Vue.js', 'Nuxt 3', 'TypeScript', 'GIS', 'Mapbox'],
+  type: 'website',
 })
 
 // 选择分类

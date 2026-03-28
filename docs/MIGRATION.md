@@ -10,10 +10,10 @@
 - [x] 支持暗色/亮色主题
 - [x] 提供返回首页和快速导航
 
-### 2. 文章数据缓存
-- [ ] 创建 `composables/usePostsCache.ts` 文章状态管理
-- [ ] 实现文章列表缓存
-- [ ] 添加缓存失效策略（按需刷新）
+### 2. 文章数据缓存 ✅
+- [x] 创建 `composables/usePostsCache.ts` 文章状态管理
+- [x] 实现文章列表缓存
+- [x] 添加缓存失效策略（按需刷新）
 
 ### 3. ESLint 配置 ✅
 - [x] 安装 `eslint` + `@typescript-eslint/parser` + `@typescript-eslint/eslint-plugin`
@@ -21,10 +21,11 @@
 - [x] 创建 `eslint.config.js` 配置文件
 - [x] 添加 `pnpm lint` 脚本
 
-### 4. 类型优化
-- [ ] `utils/markdown.ts` 中 `any[]` 替换为严格类型
-- [ ] 定义 `MarkdownToken` 接口
-- [ ] 定义 `FrontmatterMeta` 接口
+### 4. 类型优化 ✅
+- [x] `types/index.ts` 中 `any` 替换为严格类型
+- [x] 定义 `MetaTag` 接口（useSeo.ts）
+- [x] 定义 `ContentDoc` 接口（search.index.get.ts）
+- [x] 消除 `pages/posts/index.vue` 中的 `any` 类型
 
 ## 中优先级
 
@@ -124,6 +125,8 @@
 
 | 日期 | 完成项 | 备注 |
 |------|--------|------|
+| 2026-03-28 | 文章数据缓存 | usePostsCache composable + 分类/路径查询 + 刷新策略 |
+| 2026-03-28 | 类型优化 | 替换 any → unknown/MetaTag/ContentDoc，消除页面级 any |
 | 2026-03-28 | SEO 优化 | useSeo composable + Open Graph + Twitter Card |
 | 2026-03-28 | FlexSearch 搜索 | SearchModal + useSearch + 快捷键 |
 | 2026-03-28 | 骨架屏组件 | PostCardSkeleton + PostDetailSkeleton |

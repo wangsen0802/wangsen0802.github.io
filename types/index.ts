@@ -26,7 +26,7 @@ export interface Post {
   date: string
   updated?: string
   cover?: string
-  body?: any
+  body?: unknown
 }
 
 /**
