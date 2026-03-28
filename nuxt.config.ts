@@ -41,6 +41,9 @@ export default defineNuxtConfig({
         },
       },
     },
+    optimizeDeps: {
+      include: ['monaco-editor'],
+    },
   },
 
   // Google Fonts
