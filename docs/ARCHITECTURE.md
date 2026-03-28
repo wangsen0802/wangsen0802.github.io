@@ -48,6 +48,7 @@
 | Pinia / useState | 状态管理 |
 | SCSS | 样式预处理器 |
 | Ant Design Vue | UI 组件库 |
+| lucide-vue-next | 图标库（功能性图标统一来源） |
 | @nuxt/content | Markdown 内容管理 |
 | Shiki / highlight.js | 代码高亮 |
 | FlexSearch | 本地全文搜索（规划） |
@@ -444,7 +445,39 @@ export default defineNuxtConfig({
 - 文件命名：PascalCase（组件）、camelCase（工具）
 - composables 以 `use` 开头
 
-### 8.2 目录规范
+### 8.2 图标规范
+
+**图标库**：[lucide-vue-next](https://lucide.dev/) — 项目唯一的功能性图标来源
+
+**引入方式**：组件中按需 import
+
+```vue
+<script setup lang="ts">
+import { Search, Moon, Sun } from 'lucide-vue-next'
+</script>
+
+<template>
+  <Search :size="20" />
+</template>
+```
+
+**使用规则**：
+
+| 规则 | 说明 |
+|------|------|
+| 统一使用 lucide-vue-next | 禁止使用 Emoji、内联 SVG、其他图标库作为功能性图标 |
+| 尺寸 | 通过 `:size` prop 传入，默认 20px |
+| 颜色 | 继承 `currentColor`，通过 CSS `color` 控制 |
+| 暗色适配 | 图标按钮需设置 `color: var(--text-primary)` 确保暗色模式可见 |
+| 可访问性 | 装饰性图标 `aria-hidden="true"`，功能性图标 `aria-label` |
+
+**不做图标用途的例外**：
+
+- `SvgLogo.vue` — 品牌 logo
+- `SvgBackground.vue` — 动态背景装饰
+- `SvgDivider.vue` — 装饰性分割线
+
+### 8.3 目录规范
 
 | 目录 | 自动导入 | 说明 |
 |------|---------|------|

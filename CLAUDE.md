@@ -19,6 +19,7 @@
 | 状态 | Pinia 3 | ^3.0 |
 | 样式 | SCSS | - |
 | UI | Ant Design Vue | ^4.2 |
+| 图标 | lucide-vue-next | ^1.0 |
 | 解析 | markdown-it | ^14.1 |
 | 高亮 | highlight.js | ^11.11 |
 | 动画 | GSAP | ^3.13 |
