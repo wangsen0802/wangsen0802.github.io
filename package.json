@@ -26,8 +26,7 @@
     "gsap": "^3.13.0",
     "highlight.js": "^11.11.1",
     "markdown-it": "^14.1.0",
-    "remark-gfm": "^4.0.1",
-    "three": "^0.180.0"
+    "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
     "@eslint/js": "10",
@@ -38,7 +37,6 @@
     "@prettier/plugin-pug": "^3.4.2",
     "@types/markdown-it": "^14.1.2",
     "@types/node": "^24.9.1",
-    "@types/three": "^0.180.0",
     "eslint": "^10.1.0",
     "eslint-plugin-vue": "^10.8.0",
     "nuxt": "^3.21.2",
