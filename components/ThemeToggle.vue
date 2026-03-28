@@ -25,10 +25,12 @@ const toggleTheme = () => {
 
 <style scoped lang="scss">
 .theme-toggle {
+  color: var(--text-primary);
   transition: all 0.3s ease;
 
   &:hover {
     transform: translateY(-2px);
+    color: var(--accent-primary);
   }
 }
 </style>

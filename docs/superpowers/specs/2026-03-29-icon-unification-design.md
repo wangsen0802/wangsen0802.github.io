@@ -15,7 +15,7 @@
 - **唯一图标库**：`lucide-vue-next`，按需 import
 - **引入方式**：组件中直接 `import { IconName } from 'lucide-vue-next'`
 - **移除依赖**：`@ant-design/icons-vue`
-- **保留不变**：SvgLogo、SvgBackground、SvgDivider（品牌/装饰组件）
+- **保留不变**：SvgLogo、SvgBackground、SvgDivider（品牌/装饰组件）`
 
 ## 图标映射表
 

@@ -276,10 +276,12 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .search-trigger-button {
+  color: var(--text-primary);
   transition: all 0.3s ease;
 
   &:hover {
     transform: translateY(-2px);
+    color: var(--accent-primary);
   }
 }
 
