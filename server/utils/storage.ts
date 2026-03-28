@@ -44,11 +44,11 @@ export interface StatsStorage {
   getTrend(period: 'day' | 'week' | 'month', days: number): Promise<TrendItem[]>
 }
 
-export function createStorage(): StatsStorage {
+export async function createStorage(): Promise<StatsStorage> {
   if (process.env.VERCEL) {
-    const { VercelKVStorage } = require('./kv-storage')
+    const { VercelKVStorage } = await import('./kv-storage')
     return new VercelKVStorage()
   }
-  const { SQLiteStorage } = require('./sqlite-storage')
+  const { SQLiteStorage } = await import('./sqlite-storage')
   return new SQLiteStorage()
 }

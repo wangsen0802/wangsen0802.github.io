@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
     return cachedData.data
   }
 
-  const storage = createStorage()
+  const storage = await createStorage()
   const data = await storage.getTrend(period, days)
 
   cachedData = {

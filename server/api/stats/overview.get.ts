@@ -11,7 +11,7 @@ export default defineEventHandler(async () => {
     return cachedData
   }
 
-  const storage = createStorage()
+  const storage = await createStorage()
   const stats = await storage.getOverview()
 
   cachedData = {

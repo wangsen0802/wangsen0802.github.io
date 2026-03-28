@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
     return cached.data
   }
 
-  const storage = createStorage()
+  const storage = await createStorage()
   const data = await storage.getPageStats(path)
 
   pageCache.set(path, { data, at: now })

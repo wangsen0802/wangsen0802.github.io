@@ -45,7 +45,7 @@ export default defineEventHandler(async (event) => {
   recentVisits.set(dedupKey, now)
 
   // 记录访问
-  const storage = createStorage()
+  const storage = await createStorage()
   await storage.recordVisit({
     pagePath,
     ipHash,
