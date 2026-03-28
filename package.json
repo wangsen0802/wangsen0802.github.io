@@ -26,6 +26,7 @@
     "highlight.js": "^11.11.1",
     "lucide-vue-next": "^1.0.0",
     "markdown-it": "^14.1.0",
+    "monaco-editor": "^0.55.1",
     "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
