@@ -6,13 +6,14 @@
     @click="toggleTheme"
   >
     <template #icon>
-      <span v-if="isDark">🌙</span>
-      <span v-else>☀️</span>
+      <Moon v-if="isDark" :size="18" />
+      <Sun v-else :size="18" />
     </template>
   </a-button>
 </template>
 
 <script setup lang="ts">
+import { Moon, Sun } from 'lucide-vue-next'
 const colorMode = useColorMode()
 
 const isDark = computed(() => colorMode.value === 'dark')

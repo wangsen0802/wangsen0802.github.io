@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Eye, Users, FileText } from 'lucide-vue-next'
+
 interface Stats {
   totalViews: number
   totalUniqueVisitors: number
@@ -43,21 +45,21 @@ const formatPath = (path: string) => {
   <div class="stats-overview" v-if="stats">
     <div class="stats-cards">
       <div class="stat-card">
-        <div class="stat-icon">👁️</div>
+        <div class="stat-icon"><Eye :size="20" /></div>
         <div class="stat-info">
           <div class="stat-value">{{ formatNumber(stats.totalViews) }}</div>
           <div class="stat-label">总浏览量</div>
         </div>
       </div>
       <div class="stat-card">
-        <div class="stat-icon">👥</div>
+        <div class="stat-icon"><Users :size="20" /></div>
         <div class="stat-info">
           <div class="stat-value">{{ formatNumber(stats.totalUniqueVisitors) }}</div>
           <div class="stat-label">独立访客</div>
         </div>
       </div>
       <div class="stat-card">
-        <div class="stat-icon">📄</div>
+        <div class="stat-icon"><FileText :size="20" /></div>
         <div class="stat-info">
           <div class="stat-value">{{ stats.totalPages }}</div>
           <div class="stat-label">页面数</div>

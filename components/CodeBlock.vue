@@ -9,9 +9,9 @@
       @click="handleCopy"
     >
       <template #icon>
-        <CheckOutlined v-if="isCopied" class="check-icon" />
-        <CloseCircleOutlined v-else-if="copyError" class="error-icon" />
-        <CopyOutlined v-else class="copy-icon" />
+        <Check v-if="isCopied" :size="16" class="check-icon" />
+        <CircleX v-else-if="copyError" :size="16" class="error-icon" />
+        <Copy v-else :size="16" class="copy-icon" />
       </template>
       <span v-if="showLabel" class="copy-label">
         {{ copyError || (isCopied ? '已复制' : '复制') }}
@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
-import { CopyOutlined, CheckOutlined, CloseCircleOutlined } from '@ant-design/icons-vue'
+import { Copy, Check, CircleX } from 'lucide-vue-next'
 import { useCodeCopy } from '~/composables/useCodeCopy'
 
 interface Props {

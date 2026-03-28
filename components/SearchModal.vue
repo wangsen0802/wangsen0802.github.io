@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
-import { SearchOutlined, CloseOutlined, FileTextOutlined } from '@ant-design/icons-vue'
+import { Search, X, FileText } from 'lucide-vue-next'
 import type { SearchResult } from '~/composables/useSearch'
 
 // Router
@@ -163,7 +163,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
     <!-- 搜索按钮 -->
     <a-button
       type="text"
@@ -172,10 +171,9 @@ onMounted(() => {
       @click="isOpen = true"
     >
       <template #icon>
-        <SearchOutlined />
+        <Search :size="16" />
       </template>
     </a-button>
-
     <!-- 搜索弹窗 -->
     <a-modal
       v-model:open="isOpen"
@@ -190,7 +188,7 @@ onMounted(() => {
       <div class="search-modal">
         <!-- 搜索输入框 -->
         <div class="search-input-wrapper">
-          <SearchOutlined class="search-icon" />
+          <Search :size="16" class="search-icon" />
           <input
             ref="searchInput"
             v-model="searchQuery"
@@ -208,7 +206,7 @@ onMounted(() => {
             @click="searchQuery = ''"
           >
             <template #icon>
-              <CloseOutlined />
+              <X :size="16" />
             </template>
           </a-button>
         </div>
@@ -223,7 +221,7 @@ onMounted(() => {
 
           <!-- 无结果 -->
           <div v-else-if="showNoResults" class="search-no-results">
-            <FileTextOutlined class="no-results-icon" />
+            <FileText :size="48" class="no-results-icon" />
             <p>未找到相关文章</p>
             <span class="hint">试试其他关键词</span>
           </div>
@@ -274,7 +272,6 @@ onMounted(() => {
         </div>
       </div>
     </a-modal>
-  </div>
 </template>
 
 <style scoped lang="scss">
