@@ -88,5 +88,8 @@ export default defineNuxtConfig({
   // 构建配置
   nitro: {
     preset: 'vercel',
+    rollupConfig: {
+      external: ['better-sqlite3'],
+    },
   },
 })

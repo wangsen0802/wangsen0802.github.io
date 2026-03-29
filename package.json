@@ -19,6 +19,7 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
+    "@upstash/redis": "^1.37.0",
     "ant-design-vue": "^4.2.6",
     "better-sqlite3": "^12.8.0",
     "chart.js": "^4.5.1",

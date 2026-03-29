@@ -45,7 +45,7 @@ export interface StatsStorage {
 }
 
 export async function createStorage(): Promise<StatsStorage> {
-  if (process.env.VERCEL) {
+  if (process.env.UPSTASH_REDIS_REST_URL) {
     const { VercelKVStorage } = await import('./kv-storage')
     return new VercelKVStorage()
   }
