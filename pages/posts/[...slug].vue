@@ -44,6 +44,13 @@ const { data: pageStats } = await useFetch<{ viewCount: number; uniqueVisitors: 
   },
 )
 
+// 目录导航数据
+const tocLinks = computed(() => {
+  const toc = (post.value as any)?.body?.toc
+  return toc?.links || []
+})
+const hasToc = computed(() => tocLinks.value.length > 0)
+
 // 格式化日期
 const formatDate = (dateStr: string) => {
   if (!dateStr) return ''
@@ -130,9 +137,17 @@ onMounted(() => {
       </svg>
     </div>
 
-    <!-- 文章内容 -->
-    <div class="post-content prose markdown-content">
-      <ContentRenderer :value="post" v-if="post" />
+    <!-- 文章内容 + 目录 -->
+    <div class="post-body">
+      <!-- 文章内容 -->
+      <div class="post-content prose markdown-content">
+        <ContentRenderer :value="post" v-if="post" />
+      </div>
+
+      <!-- 右侧目录导航 -->
+      <aside class="post-toc" v-if="hasToc">
+        <TableOfContents :links="tocLinks" />
+      </aside>
     </div>
 
     <!-- 文章底部 -->
@@ -170,7 +185,7 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .post-detail {
-  max-width: var(--container-md);
+  max-width: var(--container-xl);
   margin: 0 auto;
   padding: var(--space-2xl) var(--space-xl);
   opacity: 0;
@@ -190,10 +205,11 @@ onMounted(() => {
   position: fixed;
   top: 0;
   left: 0;
-  height: 2px;
-  background: var(--accent-primary);
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
   z-index: 1000;
   transition: width 0.1s ease;
+  box-shadow: 0 0 8px var(--accent-subtle);
 }
 
 /* ============================================
@@ -317,11 +333,28 @@ onMounted(() => {
 }
 
 /* ============================================
-   文章内容
+   文章内容 + 目录布局
    ============================================ */
+.post-body {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, var(--container-md)) 180px 1fr;
+  column-gap: var(--space-2xl);
+}
+
 .post-content {
+  grid-column: 2;
   padding: 0 0 var(--space-3xl);
   min-height: 400px;
+}
+
+.post-toc {
+  grid-column: 3;
+  padding-top: var(--space-lg);
+  position: sticky;
+  top: 100px;
+  align-self: start;
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
 }
 
 /* ============================================
@@ -396,7 +429,21 @@ onMounted(() => {
 /* ============================================
    响应式
    ============================================ */
+@media (max-width: 1280px) {
+  .post-body {
+    grid-template-columns: 1fr minmax(0, var(--container-md)) 1fr;
+  }
+
+  .post-toc {
+    display: none;
+  }
+}
+
 @media (max-width: 768px) {
+  .post-body {
+    grid-template-columns: 1fr;
+  }
+
   .post-detail {
     padding: var(--space-lg);
   }
