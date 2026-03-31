@@ -32,14 +32,6 @@ onMounted(() => {
     <!-- Hero 区域 -->
     <section class="hero">
       <div class="hero-container">
-        <!-- 装饰线条 SVG -->
-        <div class="hero-decoration">
-          <svg viewBox="0 0 200 200" class="deco-svg">
-            <circle cx="100" cy="100" r="80" fill="none" stroke="var(--border-primary)" stroke-width="0.5" class="deco-circle" />
-            <circle cx="100" cy="100" r="60" fill="none" stroke="var(--accent-primary)" stroke-width="0.5" opacity="0.3" class="deco-circle-inner" />
-            <circle cx="100" cy="100" r="4" fill="var(--accent-primary)" class="deco-dot" />
-          </svg>
-        </div>
 
         <!-- 主内容 -->
         <div class="hero-content" :class="{ loaded: isLoaded }">
@@ -87,38 +79,6 @@ onMounted(() => {
   position: relative;
 }
 
-.hero-decoration {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 400px;
-  height: 400px;
-  opacity: 0.4;
-  pointer-events: none;
-
-  .deco-svg {
-    width: 100%;
-    height: 100%;
-  }
-
-  .deco-circle {
-    stroke-dasharray: 502;
-    stroke-dashoffset: 502;
-    animation: drawCircle 3s ease-out forwards;
-  }
-
-  .deco-circle-inner {
-    stroke-dasharray: 377;
-    stroke-dashoffset: 377;
-    animation: drawCircle 2s ease-out 0.5s forwards;
-  }
-
-  .deco-dot {
-    opacity: 0;
-    animation: dotAppear 0.5s ease-out 1s forwards;
-  }
-}
 
 @keyframes drawCircle {
   to { stroke-dashoffset: 0; }
