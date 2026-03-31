@@ -375,12 +375,36 @@ a {
     border: 1px solid var(--border-primary);
     border-radius: var(--radius-md);
     padding: var(--space-lg);
+    padding-left: 3.5rem;
     overflow-x: auto;
     margin: var(--space-xl) 0;
+    counter-reset: line;
+    position: relative;
 
     code {
       background: transparent;
       padding: 0;
+      display: grid;
+
+      .line {
+        display: block;
+        counter-increment: line;
+        padding-left: 0;
+
+        &::before {
+          content: counter(line);
+          position: absolute;
+          left: 0;
+          width: 2.5rem;
+          text-align: right;
+          padding-right: 1rem;
+          color: var(--text-muted);
+          font-family: var(--font-mono);
+          font-size: 0.8em;
+          user-select: none;
+          pointer-events: none;
+        }
+      }
     }
   }
 
@@ -480,6 +504,12 @@ a {
     pre {
       font-size: 0.875rem;
       padding: var(--space-md);
+      padding-left: 2.5rem;
+
+      code .line::before {
+        width: 1.75rem;
+        font-size: 0.75em;
+      }
     }
   }
 }

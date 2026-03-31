@@ -11,7 +11,12 @@ export default defineNuxtConfig({
   },
 
   // 模块
-  modules: ['@nuxt/content', '@nuxtjs/google-fonts', '@nuxtjs/color-mode', '@nuxtjs/sitemap'],
+  modules: [
+    '@nuxt/content',
+    '@nuxtjs/google-fonts',
+    '@nuxtjs/color-mode',
+    '@nuxtjs/sitemap',
+  ],
 
   // Sitemap 配置
   sitemap: {
@@ -64,9 +69,16 @@ export default defineNuxtConfig({
     head: {
       title: 'wanGISen - 技术博客',
       meta: [
-        { name: 'description', content: '个人技术博客，专注于前端开发和 GIS 技术' },
+        {
+          name: 'description',
+          content: '个人技术博客，专注于前端开发和 GIS 技术',
+        },
         { name: 'author', content: '王森' },
-        { name: 'keywords', content: 'Vue.js, Nuxt 3, TypeScript, GIS, Mapbox, 前端开发, 全栈开发' },
+        {
+          name: 'keywords',
+          content:
+            'Vue.js, Nuxt 3, TypeScript, GIS, Mapbox, 前端开发, 全栈开发',
+        },
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         // Open Graph 默认配置
@@ -83,7 +95,6 @@ export default defineNuxtConfig({
       ],
     },
   },
-
 
   // 构建配置
   nitro: {
