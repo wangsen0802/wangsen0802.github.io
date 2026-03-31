@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Home, BookOpen, User, ArrowLeft } from 'lucide-vue-next'
+import { Home, BookOpen, ArrowLeft } from 'lucide-vue-next'
 
 // SEO
 useHead({
@@ -79,10 +79,6 @@ const handleError = () => {
             <NuxtLink to="/posts" class="quick-link">
               <BookOpen :size="20" class="link-icon" />
               <span class="link-text">文章列表</span>
-            </NuxtLink>
-            <NuxtLink to="/about" class="quick-link">
-              <User :size="20" class="link-icon" />
-              <span class="link-text">关于我</span>
             </NuxtLink>
           </div>
         </div>
