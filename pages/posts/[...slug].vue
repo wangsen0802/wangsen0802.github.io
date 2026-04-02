@@ -139,6 +139,9 @@ onMounted(() => {
 
     <!-- 文章内容 + 目录 -->
     <div class="post-body">
+      <!-- 左侧留白 -->
+      <aside class="post-left" />
+
       <!-- 文章内容 -->
       <div class="post-content prose markdown-content">
         <ContentRenderer :value="post" v-if="post" />
@@ -333,12 +336,16 @@ onMounted(() => {
 }
 
 /* ============================================
-   文章内容 + 目录布局
+   文章内容 + 目录布局（三栏）
    ============================================ */
 .post-body {
   display: grid;
-  grid-template-columns: 1fr minmax(0, var(--container-md)) 180px 1fr;
+  grid-template-columns: 1fr minmax(0, var(--container-md)) 200px;
   column-gap: var(--space-2xl);
+}
+
+.post-left {
+  /* 左侧留白，暂无内容 */
 }
 
 .post-content {
@@ -432,6 +439,10 @@ onMounted(() => {
 @media (max-width: 1280px) {
   .post-body {
     grid-template-columns: 1fr minmax(0, var(--container-md)) 1fr;
+  }
+
+  .post-left {
+    display: none;
   }
 
   .post-toc {
